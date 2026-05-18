@@ -1,4 +1,4 @@
-#include "/home/cycolonn/m4/Cube_3D/inc/cube_3d.h"
+#include "../inc/cube_3d.h"
 
 int main(int ac, char **av)
 {
