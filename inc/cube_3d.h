@@ -1,6 +1,7 @@
-#ifndef CUBE3D_H
-# define CUBE3D_H
+#ifndef CUBE_3D_H
+# define CUBE_3D_H
 
+# include "color.h" 
 # include "../libft/inc/libft.h"
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
@@ -73,7 +74,7 @@ typedef struct s_ray
 	double	perp_wall_dist;
 	int		step_x;
 	int		step_y;
-	int		side;       // 0 pour Nord/Sud, 1 pour Est/Ouest
+	int		side;       
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
@@ -96,23 +97,25 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	t_img		image;     // L'image principale (le buffer)
-	t_img		tex[4];     // Tes 4 textures de murs
+	t_img		image;     
+	t_img		tex[4];    
 	t_map		map;
 	t_player	player;
 	t_ray		ray;
 }	t_data;
 
 // Initialisation
-int	ft_init_data(t_data *data);
+void	ft_init_data(t_data *data);
+void 	ft_init_mlx(t_data *data);
 
 
-// Parsing (Ton futur gros morceau)
+// Parsing
 
-// Engine (Raycasting & Rendu)
+// Render
 
 // Inputs
 
 // Nettoyage
+void	ft_free_data(t_data *data);
 
 #endif

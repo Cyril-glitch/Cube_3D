@@ -16,8 +16,13 @@ MLX_LIB_FILE = $(MLX_DIR)libmlx.a
 MLX_INC = -I$(MLX_DIR)
 MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
-MAIN = src/main.c
-SRC = $(MAIN)
+MAIN_SRC = src/main.c
+
+INIT_SRC = src/init.c
+
+GAME_EXIT_SRC = src/game_exit.c
+
+SRC = $(MAIN_SRC) $(INIT_SRC) $(GAME_EXIT_SRC)
 OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 
 VPATH = src:.
