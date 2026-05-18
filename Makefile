@@ -18,14 +18,12 @@ MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
 MAIN_SRC = src/main.c
 
-INIT_SRC = src/init.c
+INIT_SRC = src/init_src/init.c
 
-GAME_EXIT_SRC = src/game_exit.c
+GAME_EXIT_SRC = src/cleanup_src/game_exit.c
 
 SRC = $(MAIN_SRC) $(INIT_SRC) $(GAME_EXIT_SRC)
-OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
-
-VPATH = src:.
+OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 all: $(NAME)
 
@@ -33,8 +31,8 @@ $(NAME): $(OBJ) $(LIB) $(MLX_LIB_FILE)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MLX_LIB_FILE) $(MLX_FLAGS) $(MLX_INC) -o $(NAME)
 
-$(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(MLX_INC) -c $< -o $@
 
 $(LIB):
