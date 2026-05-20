@@ -1,0 +1,53 @@
+#include "raycasting.h"
+
+void	move_up(t_var *var)
+{
+	t_player	*player = &var->player;
+
+	if (var->map[(int)(player->pos_y + player->dir_y * player->move_speed)][(int)player->pos_x] &&
+		var->map[(int)(player->pos_y + player->dir_y * player->move_speed)][(int)player->pos_x] == '0')
+		player->pos_y += player->dir_y * player->move_speed;
+	if (var->map[(int)(player->pos_y)][(int)(player->pos_x + player->dir_x * player->move_speed)] &&
+		var->map[(int)(player->pos_y)][(int)(player->pos_x + player->dir_x * player->move_speed)] == '0')
+		player->pos_x += player->dir_x * player->move_speed;
+}
+
+void	move_down(t_var *var)
+{
+	t_player	*player = &var->player;
+
+	if (var->map[(int)(player->pos_y + player->dir_y * player->move_speed)][(int)player->pos_x] &&
+		var->map[(int)(player->pos_y + player->dir_y * player->move_speed)][(int)player->pos_x] == '0')
+		player->pos_y -= player->dir_y * player->move_speed;
+	if (var->map[(int)(player->pos_y)][(int)(player->pos_x + player->dir_x * player->move_speed)] &&
+		var->map[(int)(player->pos_y)][(int)(player->pos_x + player->dir_x * player->move_speed)] == '0')
+		player->pos_x -= player->dir_x * player->move_speed;
+}
+
+void	move_right(t_var *var)
+{
+	t_player	*player = &var->player;
+	double		old_dir_x;
+	double		old_plane_x;
+
+	old_dir_x = player->dir_x;
+	player->dir_x = player->dir_x *  cos(-player->rot_speed) - player->dir_y * sin(-player->rot_speed);
+	player->dir_y = old_dir_x *  sin(-player->rot_speed) + player->dir_y * cos(-player->rot_speed);
+	old_plane_x = player->plane_x;
+	player->plane_x = player->plane_x * cos(-player->rot_speed) - player->plane_y * sin(-player->rot_speed);
+	player->plane_y = old_plane_x * sin(-player->rot_speed) + player->plane_y * cos(-player->rot_speed);
+}
+
+void	move_left(t_var *var)
+{
+	t_player	*player = &var->player;
+	double		old_dir_x;
+	double		old_plane_x;
+
+	old_dir_x = player->dir_x;
+	player->dir_x = player->dir_x *  cos(player->rot_speed) - player->dir_y * sin(player->rot_speed);
+	player->dir_y = old_dir_x *  sin(player->rot_speed) + player->dir_y * cos(player->rot_speed);
+	old_plane_x = player->plane_x;
+	player->plane_x = player->plane_x * cos(player->rot_speed) - player->plane_y * sin(player->rot_speed);
+	player->plane_y = old_plane_x * sin(player->rot_speed) + player->plane_y * cos(player->rot_speed);
+}

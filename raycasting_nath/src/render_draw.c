@@ -1,6 +1,5 @@
 #include "raycasting.h"
 
-
 int	choose_color(int n)
 {
 	if (n == 1)
@@ -18,37 +17,56 @@ int	choose_color(int n)
 
 int    ft_set_color(t_ray ray, char **map)
 {
-    int color;
+	int color;
 
-    color = choose_color(map[ray.map_y][ray.map_x] - 48);
-    if (ray.side)
-        color /= 2;
-    return color;
+	color = choose_color(map[ray.map_y][ray.map_x] - 48);
+	if (ray.side)
+		color /= 2;
+	return color;
 }
 
-void    ft_wall_draw(t_ray *ray, t_var *var, char **map, int w, int h)
+void    ft_wall_draw(t_ray *ray, t_var *var)
 {
-    int x;
-    int y;
-    int color;
+	int x;
+	int y;
+	int	tex_x;
+	int	tex_y;
+	int color;
 
-    x = 0;
-    y = 0;
-    while(x < w)
-    {
-        color = ft_set_color(ray[x], map);
-        y = 0;
-        while(y < h)
-        {
-            if (y >= ray[x].draw_start && y <= ray[x].draw_end)
-                mlx_pixel_put(var->mlx, var->mlx_win, x, y, color);  
-            y++;
-        }
-        x++;
-    }
+	x = 0;
+	y = 0;
+	while(x < var->win_size.x)
+	{
+		y = 0;
+		while (y < ray[x].draw_start)
+		{
+			color = 0xCCCCFF;
+			my_mlx_pixel_put(&var->screen, x, y, color);
+			y++;
+		}
+		y = ray[x].draw_start;
+		while(y < ray[x].draw_end)
+		{
+			tex_x = ray[x].tex_x;
+			tex_y = (int)ray[x].tex_pos & (var->textures[ray[x].tex_num].h - 1);
+			ray[x].tex_pos += ray[x].step;
+			color = get_pixel(&var->textures[ray[x].tex_num], tex_x, tex_y);
+			if (ray[x].side == 1)
+				color = (color >> 1) & 8355711;
+			my_mlx_pixel_put(&var->screen, x, y, color);
+			y++;
+		}
+		while (y < var->win_size.y)
+		{
+			color = 0x94FF9D;
+			my_mlx_pixel_put(&var->screen, x, y, color);
+			y++;
+		}
+		x++;
+	}
 }
 
 void    ft_render_draw(t_ray *ray, t_var *var)
 {
-    ft_wall_draw(ray, var, var->map, var->win_size.x, var->win_size.y);
+	ft_wall_draw(ray, var);
 }

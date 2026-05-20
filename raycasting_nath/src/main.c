@@ -1,45 +1,35 @@
 #include "raycasting.h"
 
-
-void	ft_free(char ***s)
-{
-	int	i;
-
-	i = 0;
-	while ((*s)[i])
-	{
-		free((*s)[i]);
-		(*s)[i] = NULL;
-		i++;
-	}
-	free(*s);
-	*s = NULL;
-}
-
 int	main(void)
 {
-	t_var	*var = malloc(sizeof(t_var));
-	t_ray 	*ray;
+	t_var	var;
 	int		i;
 
-	var->map = map_init();
-	i = 0;
-	if (!var->map)
+	init_null(&var);
+	var.map = map_init();
+	if (!var.map)
 		return (ft_printf("error creating map\n"), 1);
-	while (var->map[i])
-		ft_printf("%s\n", var->map[i++]);
-	var->win_size.x = 640;
-	var->win_size.y = 480;
-	var->mlx = mlx_init();
-	if (!var->mlx)
-		printf("ok\n");
-	var->mlx_win = mlx_new_window(var->mlx, var->win_size.x,
-			var->win_size.y, "Raycaster");
-	init_hooks(var);
-	ray = ft_raycaster(var);
-	ft_render_draw(ray, var);
-	mlx_loop(var->mlx);
-	ft_free(&var->map);
-	free(var);
+	i = 0;
+	var.map_height = 0;
+	while (var.map[i])
+	{
+		ft_printf("%s\n", var.map[i++]);
+		var.map_height++;
+	}
+	var.win_size.x = 640;
+	var.win_size.y = 480;
+	var.start = get_time(0);
+	var.time = var.start;
+	if (!init_mlx_and_ray(&var))
+		return (safe_cleanup(&var), 1);
+	if (!init_screen(&var))
+		return (safe_cleanup(&var), 1);
+	if (!init_textures(&var))
+		return (safe_cleanup(&var), 1);
+	init_player_pos(&var);
+	init_keys(&var);
+	init_hooks(&var);
+	mlx_loop(var.mlx);
+	safe_cleanup(&var);
 	return (0);
 }

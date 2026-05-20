@@ -4,6 +4,11 @@
 # include <fcntl.h>
 # include <mlx.h>
 # include <stdio.h>
+# include <sys/time.h>
+# include <math.h>
+# include <X11/keysym.h>
+
+typedef struct timeval	t_timeval;
 
 typedef struct s_player
 {
@@ -13,12 +18,8 @@ typedef struct s_player
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
-	int		move_up;
-	int		move_down;
-	int		move_left;
-	int		move_right;
-	int		rotate_left;
-	int		rotate_right;
+	double	move_speed;
+	double	rot_speed;
 }	t_player;
 
 typedef struct s_ray
@@ -39,6 +40,10 @@ typedef struct s_ray
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
+	int		tex_num;
+	int		tex_x;
+	double	tex_pos;
+	double	step;
 }	t_ray;
 
 typedef struct s_img
@@ -58,18 +63,53 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
+typedef struct s_keys
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	left;
+	int	right;
+}	t_keys;
+
 typedef struct s_var
 {
 	void	*mlx;
 	void	*mlx_win;
 	char	**map;
+	int		map_height;
+	t_img	screen;
+	t_img	*textures;
 	t_point	map_size;
 	t_point	player_pos;
 	t_point	win_size;
+	double	start;
+	double	old_time;
+	double	time;
+	double	frame_time;
+	t_keys		keys;
+	t_player	player;
+	t_ray		*ray;
 }	t_var;
 
+// map_builder
 char	**map_init(void);
+
+// utils
 void	ft_free(char ***s);
+double	get_time(double start);
+
+// init
+void	init_null(t_var *var);
+void	init_player_pos(t_var *var);
+void	init_keys(t_var *var);
+int		init_mlx_and_ray(t_var *var);
+int		init_screen(t_var *var);
+int		init_textures(t_var *var);
+
+// hooks
+void	safe_cleanup(t_var *var);
 void	init_hooks(t_var *var);
 
 // pixel management
@@ -81,6 +121,7 @@ void        	put_img(t_img *dst, t_img *src, int pos_x, int pos_y);
 void        	put_tr(t_img *dst, t_img *src, int pos_x, int pos_y);
 void        	put_tr2(t_img *dst, t_img *src, int pos_x, int pos_y);
 
+// trgb
 unsigned int	gett1(int trgb);
 unsigned int	getr1(int trgb);
 unsigned int	getg1(int trgb);
@@ -88,7 +129,19 @@ unsigned int	getb1(int trgb);
 unsigned int	ft_abs(int n);
 double	ft_abs2(double n);
 
-t_ray *ft_raycaster(t_var *var);
+// raycasting
+void	ft_raycaster(t_var *var, t_ray *ray);
+
+// render draw
 void    ft_render_draw(t_ray *ray, t_var *var);
+
+// move
+void	move_up(t_var *var);
+void	move_down(t_var *var);
+void	move_right(t_var *var);
+void	move_left(t_var *var);
+
+// update
+int	update(t_var *var);
 
 #endif 

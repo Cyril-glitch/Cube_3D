@@ -1,13 +1,13 @@
 NAME = raycasting
 
 SOURCES = $(addprefix $(SRC_DIR)/, hooks.c raycasting.c render_draw.c main.c map_builder.c \
-			pixel_management_1.c pixel_management_2.c trgb.c)
+			pixel_management_1.c pixel_management_2.c trgb.c init.c update.c move.c utils.c)
 
 OBJECTS = $(SOURCES:src/%.c=obj/%.o)
 
 SRC_DIR = src
 
-CFLAGS = -Wall -Wextra -Werror -Wno-error=cast-function-type -Iminilibx-linux/include -Iincludes -g
+CFLAGS = -Wall -Wextra -Werror -Werror=bad-function-cast -Iminilibx-linux/include -Iincludes -g
 LDFLAGS = -no-pie
 
 LIBS = -Lminilibx-linux/lib -lmlx -lX11 -lXext -lm
