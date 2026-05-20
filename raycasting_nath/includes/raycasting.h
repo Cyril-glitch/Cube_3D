@@ -5,6 +5,42 @@
 # include <mlx.h>
 # include <stdio.h>
 
+typedef struct s_player
+{
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	int		move_up;
+	int		move_down;
+	int		move_left;
+	int		move_right;
+	int		rotate_left;
+	int		rotate_right;
+}	t_player;
+
+typedef struct s_ray
+{
+	double	camera_x;
+	double	dir_x;
+	double	dir_y;
+	int		map_x;
+	int		map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		side;       
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}	t_ray;
+
 typedef struct s_img
 {
 	void	*img;
@@ -52,6 +88,7 @@ unsigned int	getb1(int trgb);
 unsigned int	ft_abs(int n);
 double	ft_abs2(double n);
 
-int raycasting(t_var *var);
+t_ray *ft_raycaster(t_var *var);
+void    ft_render_draw(t_ray *ray, t_var *var);
 
 #endif 
