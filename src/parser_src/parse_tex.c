@@ -1,6 +1,6 @@
 #include "../inc/cube_3d.h"
 
-int    ft_is_cardinal(char *line)
+static int    ft_is_cardinal(char *line)
 {
 
     if (!ft_strncmp("NO ", line, 3) || !ft_strncmp("SO ", line, 3))
@@ -10,11 +10,12 @@ int    ft_is_cardinal(char *line)
     return 0;
 }
 
-void    ft_is_tex_line(t_data *data,char *line)
+int    ft_is_tex_line(t_data *data,char *line)
 { 
     if (ft_is_cardinal(line))
         line += 3;
     while (ft_isspace(*line))
         line++;
     ft_open_file(data, line);
+    return 1;
 }

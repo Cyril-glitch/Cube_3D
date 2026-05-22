@@ -20,7 +20,7 @@ static int str_append_str(char **s1, char *s2)
 }
 
 
-char *get_next_line(int fd)
+char *ft_get_next_line(int fd)
 {
   static char b[BUFFER_SIZE + 1] = "";
   char *ret = NULL;

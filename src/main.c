@@ -8,6 +8,6 @@ int main(int ac, char **av)
     if (ac != 2)
         return 0;     
     ft_init_data(&data);
-    ft_parser(&data.map, av[1]);
+    ft_parser(&data, &data.map, av[1]);
     printf("hello world\n"); 
 }

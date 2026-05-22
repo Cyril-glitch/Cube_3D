@@ -21,9 +21,17 @@ MAIN_SRC = src/main.c
 INIT_SRC = src/init_src/init.c
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
-			  src/cleanup_src/memory_cleaner.c
+			   src/cleanup_src/memory_cleaner.c
 
-SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC)
+PARSER_SRC = src/parser_src/get_next_line.c \
+		 	 src/parser_src/parse_assets.c \
+		 	 src/parser_src/parse_color.c \
+		 	 src/parser_src/parse_map.c \
+		 	 src/parser_src/parse_tex.c \
+		 	 src/parser_src/parser.c \
+		 	 src/parser_src/parser_utils.c
+
+SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 all: $(NAME)

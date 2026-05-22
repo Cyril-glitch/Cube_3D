@@ -31,15 +31,14 @@ static int    ft_is_valid_color(char *line)
     return (i == 3);
 }
 
-void    ft_is_color_line(t_data *data, char *line)
+int    ft_is_color_line(t_data *data, char *line)
 {
-    int i;
-
     if (ft_strncmp("F ", line, 2) && ft_strncmp("C ", line, 2))
-        return ;
+        return 0;
     line += 2;
     while (ft_isspace(*line))
         line++;        
-    if (!ft_valid_color(line))
+    if (!ft_is_valid_color(line))
         ft_game_exit(data, "colors settings failed");
+    return 1;
 }
