@@ -13,7 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "../inc/libft.h"
+# include "libft.h"
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -56,9 +56,7 @@ int			ft_utoabase(unsigned long nbr, const char *base, t_format *fmt);
 t_flags		*ft_flaginit(void);
 int			ft_enableflags(const char *str, t_flags *f, int *count);
 void		ft_normalize(t_flags *f);
-void		ft_flagstate(t_flags *f);
 void		ft_flagzero(t_flags *f);
-int			ft_invalideflags(char end, t_flags *f);
 
 // ft_format_utils.c
 int			ft_prefix(long n, char conv, t_flags *f, t_format *fmt);

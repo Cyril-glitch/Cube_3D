@@ -20,9 +20,10 @@ MAIN_SRC = src/main.c
 
 INIT_SRC = src/init_src/init.c
 
-GAME_EXIT_SRC = src/cleanup_src/game_exit.c
+CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
+			  src/cleanup_src/memory_cleaner.c
 
-SRC = $(MAIN_SRC) $(INIT_SRC) $(GAME_EXIT_SRC)
+SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 all: $(NAME)

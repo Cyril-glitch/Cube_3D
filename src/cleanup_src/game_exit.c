@@ -1,17 +1,18 @@
 #include "../inc/cube_3d.h"
 
-void	ft_free_data(t_data *data)
+void	ft_error_log(char *error)
 {
-	if (!data)
+	if (!error)
 		return ;
-	if (data->image.img_ptr)
-		mlx_destroy_image(data->mlx, data->image.img_ptr);
-	if (data->win)
-		mlx_destroy_window(data->mlx, data->win);
-	if (data->mlx)
-	{
-		mlx_loop_end(data->mlx);
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-	}
+	ft_putstr_fd(B_L_RED "Error: ", 2);
+	ft_putstr_fd(error , 2);
+	ft_putstr_fd("\n" RESET , 2);
+}
+
+void	ft_game_exit(t_data *data, char *error)
+{
+	if (error)
+		ft_error_log(error);
+	ft_free_data(data);
+	exit(1);
 }

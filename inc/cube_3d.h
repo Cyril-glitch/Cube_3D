@@ -11,6 +11,11 @@
 # include <stdint.h>
 
 /* --- CONFIGURATION --- */
+
+# ifndef	BUFFER_SIZE
+#  define	BUFFER_SIZE 1
+# endif
+
 # define WIN_W 1024
 # define WIN_H 768
 # define TEX_W 64
@@ -97,7 +102,7 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	t_img		image;     
+	t_img		image;    
 	t_img		tex[4];    
 	t_map		map;
 	t_player	player;
@@ -106,16 +111,20 @@ typedef struct s_data
 
 // Initialisation
 void	ft_init_data(t_data *data);
-void 	ft_init_mlx(t_data *data);
-
 
 // Parsing
+void ft_parser(t_data *data, t_map *map, char *file_path);
+int	ft_open_file(t_data *data, char *file_path);
+char *get_next_line(int fd);
+int	ft_isspace_line(char *line);
+int	ft_isfull_dig(char *s);
 
 // Render
 
 // Inputs
 
 // Nettoyage
+void	ft_game_exit(t_data *data, char *error);
 void	ft_free_data(t_data *data);
 
 #endif
