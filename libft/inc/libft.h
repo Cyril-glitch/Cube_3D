@@ -97,6 +97,7 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 int					ft_countword(const char *s, char set);
+int					ft_set_countword(char const *s, char *set);
 char				**ft_split(char const *s, char c);
 char				**ft_set_split(char const *s, char *set);
 void				ft_sort(int size, char **tab);

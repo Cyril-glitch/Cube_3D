@@ -6,7 +6,10 @@ int ft_open_file(t_data *data, char *file_path)
 
 	fd = open(file_path, O_RDONLY);
     if (fd == -1)
-        ft_game_exit(data, "can't open file.");
+    {
+        ft_error_file(file_path);
+        ft_game_exit(data, NULL);
+    }
     return (fd); 
 }
 

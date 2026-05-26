@@ -114,7 +114,7 @@ void	ft_init_data(t_data *data);
 
 // Parsing
 void ft_parser(t_data *data, t_map *map, char *file_path);
-void    ft_parse_assets(t_data *data, t_map *map, char *file_path);
+void ft_parse_assets(t_data *data, t_map *map, char *file_path);
 int	ft_open_file(t_data *data, char *file_path);
 char *ft_get_next_line(int fd);
 int	ft_isspace_line(char *line);
@@ -129,5 +129,7 @@ int ft_is_tex_line(t_data *data, char *line);
 // Nettoyage
 void	ft_game_exit(t_data *data, char *error);
 void	ft_free_data(t_data *data);
+void	ft_error_file(char *file_path);
+void	ft_error_log(char *error);
 
 #endif

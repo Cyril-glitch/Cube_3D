@@ -43,7 +43,7 @@ char	**ft_set_split(char const *s, char *set)
 
 	if (!s)
 		return (NULL);
-	len = ft_countword(s, set);
+	len = ft_set_countword(s, set);
 	tab = malloc(sizeof(char *) * (len + 1));
 	if (!tab)
 		return (NULL);

@@ -52,6 +52,9 @@ $(MLX_LIB_FILE):
 
 .PHONY: all clean fclean re
 
+start:	all
+	valgrind --leak-check=full --show-leak-kinds=all ./bin/cube3d map.cub
+
 clean:
 	rm -rf $(OBJ_DIR)
 	make clean -C $(LIBDIR)

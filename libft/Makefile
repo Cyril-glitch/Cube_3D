@@ -36,6 +36,7 @@ SRC_LIBFT =  src/libft_src/ft_atoi.c \
        src/libft_src/ft_strncmp.c \
        src/libft_src/ft_strtrim.c \
        src/libft_src/ft_countword.c \
+       src/libft_src/ft_set_countword.c \
        src/libft_src/ft_ischarset.c \
        src/libft_src/ft_isspace.c \
        src/libft_src/ft_memcpy.c \
