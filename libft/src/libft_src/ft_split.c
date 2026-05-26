@@ -30,6 +30,7 @@ static int	ft_load(char **tab, char const *s, char c, int index)
 	if (!tab[index])
 		return (0);
 	ft_memcpy(tab[index], s, len);
+	tab[index][len] = 0;
 	if (ft_load(tab, s + len, c, index + 1))
 		return (1);
 	free(tab[index]);

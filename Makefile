@@ -1,7 +1,7 @@
 NAME = bin/cube3d
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g2
+CFLAGS = -Wall -Wextra -Werror -g3
 OBJ_DIR = obj
 BIN_DIR = bin
 
@@ -53,7 +53,7 @@ $(MLX_LIB_FILE):
 .PHONY: all clean fclean re
 
 start:	all
-	valgrind --leak-check=full --show-leak-kinds=all ./bin/cube3d map.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./bin/cube3d config/map.cub | cat -e
 
 clean:
 	rm -rf $(OBJ_DIR)

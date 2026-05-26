@@ -1,15 +1,14 @@
 #include    "../inc/cube_3d.h"
 
-void ft_init_data(t_data *data)
-{
-        ft_bzero(data, sizeof(*data));
-}
-
 int main()
 {
-    t_data  data;
+    char **tab;
+    int i = 0;
 
-    ft_init_data(&data);
-    printf("plane x = %f\n", data.player.plane_x);
-    return 0;
+    tab = ft_split("255,545,12", ',');
+    while (i < 3)
+    {
+        printf("%s\n", tab[i]);
+        i++;
+    }
 }

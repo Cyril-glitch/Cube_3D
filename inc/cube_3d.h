@@ -121,6 +121,7 @@ int	ft_isspace_line(char *line);
 int	ft_isfull_dig(char *s);
 int ft_is_color_line(t_data *data, char *line);
 int ft_is_tex_line(t_data *data, char *line);
+void ft_trim_newline(char *line);
 
 // Render
 

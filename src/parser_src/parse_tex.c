@@ -11,11 +11,25 @@ static int    ft_is_cardinal(char *line)
 }
 
 int    ft_is_tex_line(t_data *data,char *line)
-{ 
-    if (ft_is_cardinal(line))
-        line += 3;
-    while (ft_isspace(*line))
-        line++;
-    ft_open_file(data, line);
+{
+    int fd;
+    char *tmp;
+    
+    tmp = line;
+    if (!ft_is_cardinal(tmp))
+        return 0;
+    tmp += 3;
+    while (ft_isspace(*tmp))
+        tmp++;
+    ft_trim_newline(tmp);
+    fd = open(tmp, O_RDONLY);
+    if (fd == -1)
+    {
+        ft_error_file(tmp);
+        free(line);
+        ft_game_exit(data, NULL);
+    }
+    close(fd);
+
     return 1;
 }

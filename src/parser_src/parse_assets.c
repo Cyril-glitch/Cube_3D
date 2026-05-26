@@ -14,15 +14,17 @@ void    ft_parse_assets(t_data *data, t_map *map, char *file_path)
         if (line == NULL)
             break ;
         if (ft_isspace_line(line))
+        {
+            free(line);
             continue ;
+        }
         else if (ft_is_tex_line(data, line))
             printf("%s\n", line);
-            //ft_load_texture(data, line);  
         else if (ft_is_color_line(data, line))
             printf("%s\n", line);
-            //ft_load_colors(data, line); 
         else 
             is_valid_line = 0;
+        free(line);
     }
 }
 	

@@ -1,5 +1,7 @@
 #include "../inc/cube_3d.h"
 
+#include "../inc/cube_3d.h"
+
 static char    **ft_split_color(char *line)
 {
     char    **tab;
@@ -8,7 +10,7 @@ static char    **ft_split_color(char *line)
     if (!tab || ft_tablen(tab) != 3)
     {
         if (tab)
-            free(tab);
+            ft_freedtab(tab);
         return NULL;
     } 
     return tab;
@@ -26,13 +28,16 @@ static int    ft_is_valid_color(char *line)
     while (i < 3)
     {
         if (!ft_isfull_dig(tab[i]))
-            i++;
+            return 0;
+        i++;
     }
-    return (i == 3);
+    ft_freedtab(tab);
+    return 1;
 }
 
 int    ft_is_color_line(t_data *data, char *line)
 {
+    ft_trim_newline(line);
     if (ft_strncmp("F ", line, 2) && ft_strncmp("C ", line, 2))
         return 0;
     line += 2;
