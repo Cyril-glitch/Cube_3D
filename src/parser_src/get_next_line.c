@@ -37,7 +37,7 @@ char *ft_get_next_line(int fd)
   }
   if (!b[0])
   	return (free(ret), NULL);
-  if (!str_append_mem(&ret, b, tmp - b + 1))
+  if (!str_append_mem(&ret, b, tmp - b))
   {
     free(ret);
     return NULL;
@@ -45,22 +45,3 @@ char *ft_get_next_line(int fd)
   ft_memmove(b, tmp + 1, ft_strlen(b));
   return ret;
 }
-
-/*
-int	main()
-{
-	int fd = 0;
-	char *line;
-
-	if ((fd = open("./test.txt", O_RDONLY)) == -1)
-	{
-		return 1;
-	}
-
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-}
-*/

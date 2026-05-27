@@ -25,9 +25,9 @@ CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 
 PARSER_SRC = src/parser_src/get_next_line.c \
 		 	 src/parser_src/parse_assets.c \
-		 	 src/parser_src/parse_color.c \
+		 	 src/parser_src/check_color.c \
 		 	 src/parser_src/parse_map.c \
-		 	 src/parser_src/parse_tex.c \
+		 	 src/parser_src/check_texture.c \
 		 	 src/parser_src/parser.c \
 		 	 src/parser_src/parser_utils.c
 

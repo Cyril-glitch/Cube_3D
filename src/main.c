@@ -9,5 +9,5 @@ int main(int ac, char **av)
         return 0;     
     ft_init_data(&data);
     ft_parser(&data, &data.map, av[1]);
-    printf("hello world\n"); 
+    ft_free_data(&data);
 }

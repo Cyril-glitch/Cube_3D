@@ -13,22 +13,36 @@ int ft_open_file(t_data *data, char *file_path)
     return (fd); 
 }
 
-int     ft_isspace_line(char *line)
+
+int     ft_skip_isspace_line(char *line)
 {
     while (*line)
     {
         if (ft_isspace(*line))
             line++;
         else
-            return 0;
+            return (0);
     }
-    return 1;
+    return free(line), (1);
+} 
+
+void   ft_skip_isspace(int start, char **line)
+{
+    *line += start;
+    while (ft_isspace(**line))
+        (*line)++;
 }
 
-void     ft_trim_newline(char *line)
+char    **ft_split_color(char *line)
 {
-    int len;
+    char    **tab;
 
-    len = ft_strlen(line);
-    ft_bzero(line + (len - 1), 1);
+    tab = ft_split(line, ',');
+    if (!tab || ft_tablen(tab) != 3)
+    {
+        if (tab)
+            ft_freedtab(tab);
+        return NULL;
+    } 
+    return tab;
 }

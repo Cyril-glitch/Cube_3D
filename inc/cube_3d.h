@@ -1,19 +1,19 @@
 #ifndef CUBE_3D_H
 # define CUBE_3D_H
 
-# include "color.h" 
 # include "../libft/inc/libft.h"
 # include "../minilibx-linux/mlx.h"
-# include <math.h>
+# include "color.h"
 # include <fcntl.h>
+# include <math.h>
+# include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdint.h>
 
 /* --- CONFIGURATION --- */
 
-# ifndef	BUFFER_SIZE
-#  define	BUFFER_SIZE 1
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
 # endif
 
 # define WIN_W 1024
@@ -42,95 +42,96 @@
 
 typedef struct s_img
 {
-	void	*img_ptr;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_img;
+	void		*img_ptr;
+	char		*addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
+}				t_img;
 
 typedef struct s_player
 {
-	double	pos_x;
-	double	pos_y;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
-	int		move_up;
-	int		move_down;
-	int		move_left;
-	int		move_right;
-	int		rotate_left;
-	int		rotate_right;
-}	t_player;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+	int			move_up;
+	int			move_down;
+	int			move_left;
+	int			move_right;
+	int			rotate_left;
+	int			rotate_right;
+}				t_player;
 
 typedef struct s_ray
 {
-	double	camera_x;
-	double	dir_x;
-	double	dir_y;
-	int		map_x;
-	int		map_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-	int		step_x;
-	int		step_y;
-	int		side;       
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
-}	t_ray;
+	double		camera_x;
+	double		dir_x;
+	double		dir_y;
+	int			map_x;
+	int			map_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+}				t_ray;
 
 typedef struct s_map
 {
-	char	**grid;
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	int		floor_color;
-	int		ceiling_color;
-	int		width;
-	int		height;
-}	t_map;
+	char		**grid;
+	char		*no_path;
+	char		*so_path;
+	char		*we_path;
+	char		*ea_path;
+	int			floor_color;
+	int			ceiling_color;
+	int			width;
+	int			height;
+}				t_map;
 
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	t_img		image;    
-	t_img		tex[4];    
+	t_img		image;
+	t_img		tex[4];
 	t_map		map;
 	t_player	player;
 	t_ray		ray;
-}	t_data;
+}				t_data;
 
 // Initialisation
-void	ft_init_data(t_data *data);
+void			ft_init_data(t_data *data);
 
 // Parsing
-void ft_parser(t_data *data, t_map *map, char *file_path);
-void ft_parse_assets(t_data *data, t_map *map, char *file_path);
-int	ft_open_file(t_data *data, char *file_path);
-char *ft_get_next_line(int fd);
-int	ft_isspace_line(char *line);
-int	ft_isfull_dig(char *s);
-int ft_is_color_line(t_data *data, char *line);
-int ft_is_tex_line(t_data *data, char *line);
-void ft_trim_newline(char *line);
+void			ft_parser(t_data *data, t_map *map, char *file_path);
+void			ft_parse_assets(t_data *data, t_map *map, char *file_path);
+int				ft_open_file(t_data *data, char *file_path);
+char			*ft_get_next_line(int fd);
+int				ft_skip_isspace_line(char *line);
+int				ft_isfull_dig(char *s);
+int				ft_valid_color_line(t_data *data, char *line);
+int				ft_is_tex_line(t_data *data, char *line);
+void			ft_skip_isspace(int start, char **line);
+char			**ft_split_color(char *line);
 
 // Render
 
 // Inputs
 
 // Nettoyage
-void	ft_game_exit(t_data *data, char *error);
-void	ft_free_data(t_data *data);
-void	ft_error_file(char *file_path);
-void	ft_error_log(char *error);
+void			ft_game_exit(t_data *data, char *error);
+void			ft_free_data(t_data *data);
+void			ft_error_file(char *file_path);
+void			ft_error_log(char *error);
 
 #endif
