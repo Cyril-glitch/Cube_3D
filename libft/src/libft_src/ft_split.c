@@ -6,11 +6,11 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 16:08:41 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/03/13 12:32:11 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/05/28 12:25:22 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/libft.h"
 
 static int	ft_load(char **tab, char const *s, char c, int index)
 {

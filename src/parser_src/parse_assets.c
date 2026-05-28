@@ -19,6 +19,7 @@ static void ft_display(t_map *map)
 
 }
 
+
 static int ft_shift_color(char **tab)
 {
     int r;
@@ -28,7 +29,6 @@ static int ft_shift_color(char **tab)
     r = ft_atoi(tab[0]);
     g = ft_atoi(tab[1]);
     b = ft_atoi(tab[2]);
-
 
     return (r << 16 | g << 8 | b);
 }

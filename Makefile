@@ -61,6 +61,7 @@ clean:
 	make clean -C $(MLX_DIR)
 
 fclean: clean
+	make fclean -C $(LIBDIR)
 	rm -rf $(BIN_DIR)
 
 re: fclean all

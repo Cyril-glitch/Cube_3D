@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:46:58 by cycolonn          #+#    #+#             */
-/*   Updated: 2025/12/31 11:54:21 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/05/28 11:33:42 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_atoi(const char *nptr)
 			signe *= -1;
 		i++;
 	}
-	while (ft_isdigit(nptr[i]))
+	while (nptr[i] && ft_isdigit(nptr[i]))
 	{
 		res *= 10 ;
 		res += nptr[i] - '0';
