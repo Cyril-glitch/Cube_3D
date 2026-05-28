@@ -53,7 +53,7 @@ $(MLX_LIB_FILE):
 .PHONY: all clean fclean re
 
 start:	all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./bin/cube3d config/map.cub | cat -e
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./bin/cube3d config/map.cub
 
 clean:
 	rm -rf $(OBJ_DIR)

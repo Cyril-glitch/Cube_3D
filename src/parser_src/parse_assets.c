@@ -2,21 +2,20 @@
 
 static void ft_display(t_map *map)
 {
-    /*
     printf(MINT "NO " RESET LAVENDER "%s\n" RESET, map->no_path);
     printf(MINT "SO " RESET LAVENDER "%s\n" RESET, map->so_path);
     printf(MINT "WE " RESET LAVENDER "%s\n" RESET, map->we_path);
-    printf(MINT "EA " RESET LAVENDER "%s\n" RESET, map->ea_path);
-    printf(MINT "F "  LAVENDER "%d\n" RESET, map->floor_color);
-    printf(MINT "C "  LAVENDER "%d\n" RESET, map->ceiling_color);
-    */
-    printf("NO %s\n", map->no_path);
-    printf("SO %s\n", map->so_path);
-    printf("WE %s\n", map->we_path);
-    printf("EA %s\n", map->ea_path);
-    printf("F %d\n" , map->floor_color);
-    printf("C %d\n" , map->ceiling_color);
+    printf(MINT "EA " RESET LAVENDER "%s\n\n" RESET, map->ea_path);
+    printf(MINT "F "  LAVENDER "%X\n" RESET, map->floor_color);
+    printf(MINT "C "  LAVENDER "%X\n\n" RESET, map->ceiling_color);
+}
 
+static  void    ft_check_assets(t_data *data, t_map *map)
+{
+    if (!map->no_path || !map->so_path || !map->we_path || !map->ea_path)
+        ft_game_exit(data, "texture setttings not found.");
+    else if (!map->ceiling_color ||  !map->floor_color)
+        ft_game_exit(data, "color settings not found.");
 }
 
 
@@ -77,29 +76,23 @@ static void    ft_load_texture(t_data *data, t_map *map, char *line)
         ft_game_exit(data, "memory allocation failed.");
 }
 
-void    ft_parse_assets(t_data *data, t_map *map, char *file_path)
+void    ft_parse_assets(t_data *data, t_map *map, char **line)
 {
-    (void)map;
-    int fd;
-    char *line;
-    int is_valid_line;
-
-    fd = ft_open_file(data, file_path);
-    is_valid_line = 1;
-    while (is_valid_line)
+    while (1)
     {
-        line = ft_get_next_line(fd);
-        if (!line)
+        *line = ft_get_next_line(data->fd);
+        if (!(*line))
             break ; 
-        if (ft_skip_isspace_line(line))
+        if (ft_skip_isspace_line(*line))
             continue ;
-        else if (ft_is_tex_line(data, line))
-           ft_load_texture(data, &data->map, line);  
-        else if (ft_valid_color_line(data, line))
-           ft_load_color(data, &data->map, line);  
-        else 
-            is_valid_line = 0; 
-        free(line);
+        else if (ft_valid_tex_line(data, *line))
+           ft_load_texture(data, map, *line);  
+        else if (ft_valid_color_line(data, *line))
+           ft_load_color(data, map, *line);  
+        else
+            break;
+        free(*line);
     }
+    ft_check_assets(data, map);
     ft_display(&data->map);
 }	

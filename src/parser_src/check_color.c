@@ -20,14 +20,10 @@ static int    ft_check_color(char *line)
     while (tab[i])
     {
         if (!ft_isfull_dig(tab[i]) || ft_color_overflow(tab[i]))
-        {
-            ft_freedtab(tab);
-            return 0; 
-        }
+            return ft_freedtab(tab), 0;
         i++;
     }
-    ft_freedtab(tab);
-    return 1;
+    return ft_freedtab(tab), 1;
 }
 
 static  int    ft_is_color_component(char *line)

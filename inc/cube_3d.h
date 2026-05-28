@@ -100,6 +100,8 @@ typedef struct s_map
 
 typedef struct s_data
 {
+	int			fd;
+	char		*line;
 	void		*mlx;
 	void		*win;
 	t_img		image;
@@ -112,17 +114,22 @@ typedef struct s_data
 // Initialisation
 void			ft_init_data(t_data *data);
 
-// Parsing
+// Parsing assets
 void			ft_parser(t_data *data, t_map *map, char *file_path);
-void			ft_parse_assets(t_data *data, t_map *map, char *file_path);
-int				ft_open_file(t_data *data, char *file_path);
+void    		ft_parse_assets(t_data *data, t_map *map, char **line);
 char			*ft_get_next_line(int fd);
-int				ft_skip_isspace_line(char *line);
-int				ft_isfull_dig(char *s);
 int				ft_valid_color_line(t_data *data, char *line);
-int				ft_is_tex_line(t_data *data, char *line);
+int				ft_valid_tex_line(t_data *data, char *line);
+
+//parsing map
+void    		ft_parse_map(t_data *data, t_map *map, char **line);
+
+//parsing utils
+int				ft_skip_isspace_line(char *line);
 void			ft_skip_isspace(int start, char **line);
 char			**ft_split_color(char *line);
+int				ft_open_file(t_data *data, char *file_path);
+
 
 // Render
 

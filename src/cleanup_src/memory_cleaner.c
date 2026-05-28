@@ -37,10 +37,15 @@ static void ft_free_map(t_map *map)
         free(map->we_path);
 }
 
+
 void	ft_free_data(t_data *data)
 {
-    if(!data)
+    if (!data)
         return;
+    if (data->fd)
+        close(data->fd);
+    if (data->line)
+        free(data->line);
     ft_free_mlx(data->mlx);
     ft_free_texture();
     ft_free_map(&data->map);
