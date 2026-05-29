@@ -8,6 +8,20 @@ static int    ft_color_overflow(char *nbr)
     return (n < 0 || n > 255);
 }
 
+char    **ft_split_color(char *line)
+{
+    char    **tab;
+
+    tab = ft_split(line, ',');
+    if (!tab || ft_tablen(tab) != 3)
+    {
+        if (tab)
+            ft_freedtab(tab);
+        return NULL;
+    } 
+    return tab;
+}
+
 static int    ft_check_color(char *line)
 {
     int i;

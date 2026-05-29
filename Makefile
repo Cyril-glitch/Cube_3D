@@ -23,13 +23,16 @@ INIT_SRC = src/init_src/init.c
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 			   src/cleanup_src/memory_cleaner.c
 
-PARSER_SRC = src/parser_src/get_next_line.c \
+PARSER_SRC = src/parser_src/gnl_no_nl.c \
+			 src/parser_src/gnl.c \
 		 	 src/parser_src/parse_assets.c \
-		 	 src/parser_src/check_color.c \
+		 	 src/parser_src/parse_color.c \
 		 	 src/parser_src/parse_map.c \
-		 	 src/parser_src/check_texture.c \
+		 	 src/parser_src/parse_texture.c \
 		 	 src/parser_src/parser.c \
-		 	 src/parser_src/parser_utils.c
+		 	 src/parser_src/parser_utils.c \
+		 	 src/parser_src/parse_map_utils.c \
+		 	 src/parser_src/parse_map_utils_2.c 
 
 SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
@@ -54,6 +57,9 @@ $(MLX_LIB_FILE):
 
 start:	all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./bin/cube3d config/map.cub
+
+lldb : all
+	lldb ./bin/cube3d config/map.cub
 
 clean:
 	rm -rf $(OBJ_DIR)

@@ -63,7 +63,9 @@ SRC_LIBFT =  src/libft_src/ft_atoi.c \
        src/libft_src/ft_tablen.c \
        src/libft_src/ft_atoll.c \
        src/libft_src/ft_sort_dtab.c \
-       src/libft_src/ft_isfull_dig.c
+       src/libft_src/ft_isfull_dig.c \
+       src/libft_src/ft_str_apend_str.c \
+       src/libft_src/ft_str_apend_mem.c 
 
 SRC_PRINTF = src/ft_printf_src/ft_flags.utils.c \
        src/ft_printf_src/ft_printf.c \

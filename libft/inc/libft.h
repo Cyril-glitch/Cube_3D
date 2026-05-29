@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:59:48 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/04/10 17:59:28 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/05/29 12:00:38 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,9 @@ char				*ft_strnstr(const char *haystack, const char *needle,
 int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
+
+int 				ft_str_append_str(char **s1, char *s2);
+int 				ft_str_append_mem(char **s1, char *s2, size_t size2);
 char				*ft_strtrim(char const *s1, char const *set);
 int					ft_countword(const char *s, char set);
 int					ft_set_countword(char const *s, char *set);

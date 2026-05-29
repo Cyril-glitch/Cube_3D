@@ -1,15 +1,5 @@
 #include "../inc/cube_3d.h"
 
-static void ft_display(t_map *map)
-{
-    printf(MINT "NO " RESET LAVENDER "%s\n" RESET, map->no_path);
-    printf(MINT "SO " RESET LAVENDER "%s\n" RESET, map->so_path);
-    printf(MINT "WE " RESET LAVENDER "%s\n" RESET, map->we_path);
-    printf(MINT "EA " RESET LAVENDER "%s\n\n" RESET, map->ea_path);
-    printf(MINT "F "  LAVENDER "%X\n" RESET, map->floor_color);
-    printf(MINT "C "  LAVENDER "%X\n\n" RESET, map->ceiling_color);
-}
-
 static  void    ft_check_assets(t_data *data, t_map *map)
 {
     if (!map->no_path || !map->so_path || !map->we_path || !map->ea_path)
@@ -80,7 +70,7 @@ void    ft_parse_assets(t_data *data, t_map *map, char **line)
 {
     while (1)
     {
-        *line = ft_get_next_line(data->fd);
+        *line = ft_gnl_no_nl(data->fd);
         if (!(*line))
             break ; 
         if (ft_skip_isspace_line(*line))
@@ -94,5 +84,4 @@ void    ft_parse_assets(t_data *data, t_map *map, char **line)
         free(*line);
     }
     ft_check_assets(data, map);
-    ft_display(&data->map);
 }	

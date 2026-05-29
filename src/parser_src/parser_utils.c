@@ -33,16 +33,21 @@ void   ft_skip_isspace(int start, char **line)
         (*line)++;
 }
 
-char    **ft_split_color(char *line)
+void ft_map_display(char **grid)
 {
-    char    **tab;
-
-    tab = ft_split(line, ',');
-    if (!tab || ft_tablen(tab) != 3)
+    while(*grid)
     {
-        if (tab)
-            ft_freedtab(tab);
-        return NULL;
-    } 
-    return tab;
+        printf("%s\n",*grid);
+        grid++;
+    }
+}
+
+void ft_assets_display(t_map *map)
+{
+    printf(MINT "NO " RESET LAVENDER "%s\n" RESET, map->no_path);
+    printf(MINT "SO " RESET LAVENDER "%s\n" RESET, map->so_path);
+    printf(MINT "WE " RESET LAVENDER "%s\n" RESET, map->we_path);
+    printf(MINT "EA " RESET LAVENDER "%s\n\n" RESET, map->ea_path);
+    printf(MINT "F "  LAVENDER "%X\n" RESET, map->floor_color);
+    printf(MINT "C "  LAVENDER "%X\n\n" RESET, map->ceiling_color);
 }
