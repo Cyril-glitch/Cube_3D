@@ -114,35 +114,46 @@ typedef struct s_data
 // Initialisation
 void			ft_init_data(t_data *data);
 
-// Parsing assets
+//Parsing
 void			ft_parser(t_data *data, t_map *map, char *file_path);
+
+//Parsing utils
+void 			ft_assets_display(t_map *map);
+void 			ft_map_display(char **grid);
+
+// Parsing assets
 void    		ft_parse_assets(t_data *data, t_map *map, char **line);
 char			*ft_gnl(int fd);
 char			*ft_gnl_no_nl(int fd);
-int				ft_valid_color_line(t_data *data, char *line);
-int				ft_valid_tex_line(t_data *data, char *line);
+
+//parsing assets utils
+int				ft_skip_isspace_line(char *line);
+void			ft_skip_isspace(int start, char **line);
+int				ft_open_file(t_data *data, char *file_path);
+
+//parse texture
+int    ft_parse_texture(t_data *data, t_map *map,char *line);
+
+//parse color
+int    ft_parse_color(t_data *data, t_map *map, char *line);
+
+//parse color utils
+char    **ft_split_color(char *line);
+int    ft_color_overflow(char *nbr);
+int 	ft_shift_color(char **tab);
 
 //parsing map
 void    		ft_parse_map(t_data *data, t_map *map, char **line);
 
-//parse map utils
-void ft_map_checker(t_data *data, t_player *player, char **grid);
-int	ft_is_surrounded(char **grid, int y, int x);
+//map checker
+void 	ft_map_checker(t_data *data, t_player *player, char **grid);
 
-//parse map utils 2
+//map checker utils
 int	ft_is_map_content(char c);
 int	ft_is_walkable(char c);
 int	ft_pit_fall(char c);
 int	ft_is_offset(char **grid, int y, int x);
 int ft_is_limit_component(char **grid, int y, int x);
-
-//parsing utils
-int				ft_skip_isspace_line(char *line);
-void			ft_skip_isspace(int start, char **line);
-char			**ft_split_color(char *line);
-int				ft_open_file(t_data *data, char *file_path);
-void 			ft_assets_display(t_map *map);
-void 			ft_map_display(char **grid);
 
 
 // Render

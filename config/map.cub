@@ -1,7 +1,7 @@
-NO /home/cycolonn/m4/Cube_3D/config/test_tex.txt
-SO /home/cycolonn/m4/Cube_3D/config/test_tex.txt
-WE /home/cycolonn/m4/Cube_3D/config/test_tex.txt
-EA /home/cycolonn/m4/Cube_3D/config/test_tex.txt
+NO ./config/test_tex.txt
+SO ./config/test_tex.txt
+WE ./config/test_tex.txt
+EA ./config/test_tex.txt
 
 F 220,100,1
 C 225,30,1

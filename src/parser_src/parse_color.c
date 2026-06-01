@@ -1,43 +1,20 @@
 #include "../inc/cube_3d.h"
 
-static int    ft_color_overflow(char *nbr)
-{
-    int n;
 
-    n = ft_atoi(nbr);
-    return (n < 0 || n > 255);
-}
-
-char    **ft_split_color(char *line)
-{
-    char    **tab;
-
-    tab = ft_split(line, ',');
-    if (!tab || ft_tablen(tab) != 3)
-    {
-        if (tab)
-            ft_freedtab(tab);
-        return NULL;
-    } 
-    return tab;
-}
-
-static int    ft_check_color(char *line)
+static void ft_check_color(t_data *data, char **color)
 {
     int i;
-    char **tab;
 
-    tab = ft_split_color(line);
-    if (!tab)
-        return 0;
     i = 0;
-    while (tab[i])
+    while (color[i])
     {
-        if (!ft_isfull_dig(tab[i]) || ft_color_overflow(tab[i]))
-            return ft_freedtab(tab), 0;
+        if (!ft_isfull_dig(color[i]) || ft_color_overflow(color[i]))
+        {
+            ft_freedtab(color);
+            ft_game_exit(data, "colors settings failed");
+        }
         i++;
     }
-    return ft_freedtab(tab), 1;
 }
 
 static  int    ft_is_color_component(char *line)
@@ -47,15 +24,29 @@ static  int    ft_is_color_component(char *line)
     return 1;
 }
 
-int    ft_valid_color_line(t_data *data, char *line)
+static void    ft_load_color(t_map *map, char *line, char **color)
+{ 
+    if(*line == 'F')
+        map->floor_color = ft_shift_color(color);
+    else if (*line == 'C')
+        map->ceiling_color = ft_shift_color(color); 
+}
+
+int    ft_parse_color(t_data *data, t_map *map, char *line)
 {
     char *tmp;
+    char **color;
 
     tmp = line;
     if (!ft_is_color_component(line))
         return 0; 
     ft_skip_isspace(2, &tmp);
-    if (!ft_check_color(tmp))
-        ft_game_exit(data, "colors settings failed");
+    color = ft_split_color(tmp);
+    if (!color)
+        ft_game_exit(data, "memory allocation failed");
+    ft_check_color(data, color);
+    ft_load_color(map, line, color);
+    ft_freedtab(color);
+    free(line);
     return 1;
 }

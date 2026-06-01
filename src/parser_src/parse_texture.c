@@ -23,7 +23,19 @@ static int    ft_is_tex_component(char *line)
     return 0;
 }
 
-int    ft_valid_tex_line(t_data *data,char *line)
+static void    ft_load_texture(t_map *map, char *tmp,char *line)
+{
+    if (*line == 'N')
+        map->no_path = ft_strdup(tmp);    
+    else if (*line == 'S')
+        map->so_path = ft_strdup(tmp);
+    else if (*line == 'W')
+        map->we_path = ft_strdup(tmp);
+    else if (*line == 'E')
+        map->ea_path = ft_strdup(tmp);
+}
+
+int    ft_parse_texture(t_data *data, t_map *map,char *line)
 {
     char *tmp;
     
@@ -32,5 +44,7 @@ int    ft_valid_tex_line(t_data *data,char *line)
         return 0;
     ft_skip_isspace(3, &tmp);
     ft_check_path(data, tmp);
+    ft_load_texture(map, tmp, line);
+    free(line);
     return 1;
 }

@@ -21,7 +21,7 @@ int	ft_is_offset(char **grid, int y, int x)
 	return ((size_t)(x - 1) > ft_strlen(grid[y - 1]) || (size_t)(x - 1) > ft_strlen(grid[y + 1]));
 }
 
-int  ft_is_limit_component(char **grid, int x, int y)
+int  ft_is_limit_component(char **grid, int y, int x)
 {
     return (x == 0 || y == 0 || !grid[y + 1]); 
 }
