@@ -6,4 +6,5 @@ void    ft_parser(t_data *data,t_map *map, char *file_path)
     ft_parse_assets(data, map, &data->line);
     ft_assets_display(map);
     ft_parse_map(data, map, &data->line);
+    ft_map_display(map->grid);
 }
