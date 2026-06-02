@@ -47,9 +47,7 @@ void ft_map_display(char **grid)
             if (grid[y][x] == '1')
                 printf(B_BLUE "1" RESET);
             else if (ft_is_player(grid[y][x]))
-                printf(CORAL "%c" RESET, grid[y][x]);
-            else if (grid[y][x] == 'X')
-                printf(B_RED "X" RESET);
+                printf(CORAL "%c" RESET, grid[y][x]); 
             else 
                 printf("%c", grid[y][x]);
             x++;
@@ -69,17 +67,3 @@ void ft_assets_display(t_map *map)
     printf(MINT "C "  LAVENDER "%X\n\n" RESET, map->ceiling_color);
 }
 
-#include "../inc/cube_3d.h"
-
-void    ft_display_logo(void)
-{
-    printf(MINT);
-    printf(" ██████╗██╗   ██╗██████╗ ███████╗        ██████╗ ██████╗ \n");
-    printf("██╔════╝██║   ██║██╔══██╗██╔════╝        ╚════██╗██╔══██╗\n");
-    printf("██║     ██║   ██║██████╔╝█████╗           █████╔╝██║  ██║\n");
-    printf("██║     ██║   ██║██╔══██╗██╔══╝           ╚═══██╗██║  ██║\n");
-    printf("╚██████╗╚██████╔╝██████╔╝███████╗███████╗██████╔╝██████╔╝\n");
-    printf(" ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝╚═════╝ ╚═════╝ \n");
-    printf(RESET);
-    printf("\n");
-}
