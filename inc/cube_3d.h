@@ -1,174 +1,172 @@
 #ifndef CUBE_3D_H
 # define CUBE_3D_H
-
-# include "../libft/inc/libft.h"
-# include "../minilibx-linux/mlx.h"
-# include "color.h"
+# include "../inc/libft.h"
 # include <fcntl.h>
-# include <math.h>
-# include <stdint.h>
+# include <mlx.h>
 # include <stdio.h>
-# include <stdlib.h>
+# include <sys/time.h>
+# include <math.h>
+# include <X11/keysym.h>
 
-/* --- CONFIGURATION --- */
+# define WALL_PADDING 0.2
+# define PI 3.14159265358979323846
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
+typedef struct timeval	t_timeval;
 
-# define WIN_W 1024
-# define WIN_H 768
-# define TEX_W 64
-# define TEX_H 64
-
-/* --- TOUCHES (MAC/LINUX) --- */
-# ifdef __APPLE__
-#  define K_W 13
-#  define K_A 0
-#  define K_S 1
-#  define K_D 2
-#  define K_ESC 53
-#  define K_LEFT 123
-#  define K_RIGHT 124
-# else
-#  define K_W 119
-#  define K_A 97
-#  define K_S 115
-#  define K_D 100
-#  define K_ESC 65307
-#  define K_LEFT 65361
-#  define K_RIGHT 65363
-# endif
-
-typedef struct s_img
+typedef struct s_point
 {
-	void		*img_ptr;
-	char		*addr;
-	int			bpp;
-	int			line_len;
-	int			endian;
-}				t_img;
+	int	x;
+	int	y;
+}	t_point;
 
 typedef struct s_player
 {
-	double		pos_x;
-	double		pos_y;
-	double		dir_x;
-	double		dir_y;
-	double		plane_x;
-	double		plane_y;
-	int			move_up;
-	int			move_down;
-	int			move_left;
-	int			move_right;
-	int			rotate_left;
-	int			rotate_right;
-}				t_player;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	move_speed;
+	double	rot_speed;
+}	t_player;
 
 typedef struct s_ray
 {
-	double		camera_x;
-	double		dir_x;
-	double		dir_y;
-	int			map_x;
-	int			map_y;
-	double		side_dist_x;
-	double		side_dist_y;
-	double		delta_dist_x;
-	double		delta_dist_y;
-	double		perp_wall_dist;
-	int			step_x;
-	int			step_y;
-	int			side;
-	int			line_height;
-	int			draw_start;
-	int			draw_end;
-}				t_ray;
+	double	camera_x;
+	double	dir_x;
+	double	dir_y;
+	int		map_x;
+	int		map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		tex_num;
+	int		tex_x;
+	double	tex_pos;
+	double	step;
+}	t_ray;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		w;
+	int		h;
+}	t_img;
 
 typedef struct s_map
 {
-	char		**grid;
-	char		*no_path;
-	char		*so_path;
-	char		*we_path;
-	char		*ea_path;
-	int			floor_color;
-	int			ceiling_color;
-	int			width;
-	int			height;
-}				t_map;
+	t_img	image;
+	t_img	arrow;
+	t_img	rotation[64];
+	int		exist;
+	int		size;
+	int		tile_size;
+	int		radius;
+	int		player_radius;
+	int		center;
+	t_point	map_tile;
+	t_point	screen;
+}	t_map;
 
-typedef struct s_data
+typedef struct s_keys
 {
-	int			fd;
-	char		*line;
-	void		*mlx;
-	void		*win;
-	t_img		image;
-	t_img		tex[4];
-	t_map		map;
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	left;
+	int	right;
+}	t_keys;
+
+typedef struct s_var
+{
+	void	*mlx;
+	void	*mlx_win;
+	char	**map;
+	int		map_width;
+	int		map_height;
+	t_map	mini_map;
+	t_img	screen;
+	t_img	*textures;
+	t_point	map_size;
+	t_point	player_pos;
+	t_point	win_size;
+	double	start;
+	double	old_time;
+	double	time;
+	double	frame_time;
+	t_keys		keys;
 	t_player	player;
-	t_ray		ray;
-}				t_data;
+	t_ray		*ray;
+}	t_var;
 
-// Initialisation
-void			ft_init_data(t_data *data);
+// map_builder
+char	**map_init(void);
 
-// Parsing
-void			ft_parser(t_data *data, t_map *map, char *file_path);
+// utils
+void	ft_free(char ***s);
+double	get_time(double start);
 
-// Parsing utils
-void			ft_assets_display(t_map *map);
-void			ft_map_display(char **grid);
+// init
+void	init_null(t_var *var);
+void	init_player_pos(t_var *var);
+void	init_keys(t_var *var);
+int		init_mlx_and_ray(t_var *var);
+int		init_screen(t_var *var);
+int		init_textures(t_var *var);
 
-// Parsing assets
-void			ft_parse_assets(t_data *data, t_map *map, char **line);
-char			*ft_gnl(int fd);
-char			*ft_gnl_no_nl(int fd);
+// hooks
+void	safe_cleanup(t_var *var);
+void	init_hooks(t_var *var);
 
-// parsing assets utils
-int				ft_skip_isspace_line(char *line);
-void			ft_skip_isspace(int start, char **line);
-int				ft_open_file(t_data *data, char *file_path);
+// pixel management
+void	        my_mlx_pixel_put(t_img *img, int x, int y, int color);
+unsigned int    get_pixel(t_img *img, int x, int y);
+int	            is_close_color(int ref_color, int color);
+int	            is_transparent_color(int color);
+void        	put_img(t_img *dst, t_img *src, int pos_x, int pos_y);
+void        	put_tr(t_img *dst, t_img *src, int pos_x, int pos_y);
+void        	put_tr2(t_img *dst, t_img *src, int pos_x, int pos_y);
 
-// parse texture
-int				ft_parse_texture(t_data *data, t_map *map, char *line);
+// trgb
+unsigned int	gett1(int trgb);
+unsigned int	getr1(int trgb);
+unsigned int	getg1(int trgb);
+unsigned int	getb1(int trgb);
+unsigned int	ft_abs(int n);
+double	ft_abs2(double n);
 
-// parse color
-int				ft_parse_color(t_data *data, t_map *map, char *line);
+// raycasting
+void	ft_raycaster(t_var *var, t_ray *ray);
 
-// parse color utils
-char			**ft_split_color(char *line);
-int				ft_color_overflow(char *nbr);
-int				ft_shift_color(char **tab);
+// render draw
+void    ft_render_draw(t_ray *ray, t_var *var);
 
-// parsing map
-void			ft_parse_map(t_data *data, t_map *map, char **line);
+// draw_map
+int		get_map_tile(t_var *var, int x, int y);
+int		init_mini_map(t_var *var, t_map *map);
+void	draw_map_img(t_var *var, t_map *map, t_player player);
 
-// map checker
-void			ft_map_checker(t_data *data, t_player *player, char **grid);
+// move
+void	move_up(t_var *var);
+void	move_down(t_var *var);
+void	move_right(t_var *var);
+void	move_left(t_var *var);
 
-// map checker utils
-int				ft_is_map_content(char c);
-int				ft_is_walkable(char c);
-int				ft_pit_fall(char c);
-int				ft_is_offset(char **grid, int y, int x);
-int				ft_is_limit_component(char **grid, int y, int x);
-int				ft_is_player(char c);
-void			ft_display_logo(void);
-void			ft_init_player_pos(t_player *player, int y, int x);
-int				ft_check_player(t_player *player);
-int				ft_is_player(char c);
-void 			ft_display_map_error(char **grid, int err_y, int err_x);
+// update
+int	update(t_var *var);
 
-// Render
-
-// Inputs
-
-// Nettoyage
-void			ft_game_exit(t_data *data, char *error);
-void			ft_free_data(t_data *data);
-void			ft_error_file(char *file_path);
-void			ft_error_log(char *error);
-
-#endif
+#endif 
