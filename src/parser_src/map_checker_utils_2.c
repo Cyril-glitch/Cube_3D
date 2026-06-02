@@ -6,7 +6,7 @@ void	ft_init_player_pos(t_player *player, int y, int x)
 	player->pos_x = x;
 }
 
-int	ft_check_player(t_player *player)
+int	ft_player_is_set(t_player *player)
 {
 	if (player->pos_x || player->pos_y)
         return 1;
