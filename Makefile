@@ -1,7 +1,7 @@
 NAME = bin/cube3d
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g2
+CFLAGS = -Wall -Wextra -Werror -g3
 OBJ_DIR = obj
 BIN_DIR = bin
 
@@ -20,9 +20,23 @@ MAIN_SRC = src/main.c
 
 INIT_SRC = src/init_src/init.c
 
-GAME_EXIT_SRC = src/cleanup_src/game_exit.c
+CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
+			   src/cleanup_src/memory_cleaner.c
 
-SRC = $(MAIN_SRC) $(INIT_SRC) $(GAME_EXIT_SRC)
+PARSER_SRC = src/parser_src/gnl_no_nl.c \
+			 src/parser_src/gnl.c \
+			 src/parser_src/parse_assets.c \
+		 	 src/parser_src/parse_color.c \
+		 	 src/parser_src/parse_color_utils.c \
+		 	 src/parser_src/parse_map.c \
+		 	 src/parser_src/parse_texture.c \
+		 	 src/parser_src/parser.c \
+		 	 src/parser_src/parser_utils.c \
+			 src/parser_src/map_checker.c \
+		 	 src/parser_src/map_checker_utils_2.c \
+		 	 src/parser_src/map_checker_utils.c 
+
+SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 all: $(NAME)
@@ -43,12 +57,19 @@ $(MLX_LIB_FILE):
 
 .PHONY: all clean fclean re
 
+start:	all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./bin/cube3d config/map.cub
+
+gdb : all
+	gdb ./bin/cube3d
+
 clean:
 	rm -rf $(OBJ_DIR)
 	make clean -C $(LIBDIR)
 	make clean -C $(MLX_DIR)
 
 fclean: clean
+	make fclean -C $(LIBDIR)
 	rm -rf $(BIN_DIR)
 
 re: fclean all
