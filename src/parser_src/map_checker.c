@@ -5,13 +5,13 @@ static int	ft_is_surrounded(char **grid, int y, int x)
 	if (ft_is_walkable(grid[y][x]))
 	{
 		if (ft_is_limit_component(grid, y, x))
-			return (ft_display_map_error(grid, y, x), 0);
+			return (0);
 		if (ft_is_offset(grid, y, x))
-			return (ft_display_map_error(grid, y, x), 0);
+			return (0);
 		if (ft_pit_fall(grid[y - 1][x]) || ft_pit_fall(grid[y + 1][x]))
-			return (ft_display_map_error(grid, y, x), 0);
+			return (0);
 		else if (ft_pit_fall(grid[y][x - 1]) || ft_pit_fall(grid[y][x + 1]))
-			return (ft_display_map_error(grid, y, x), 0);
+			return (0);
 	}
 	return (1);
 }

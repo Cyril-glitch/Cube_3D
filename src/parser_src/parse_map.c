@@ -7,6 +7,21 @@ static void ft_add_nl(char **ret, char *line)
     ft_str_append_str(ret, "\n"); 
 }
 
+static void ft_is_cuted_map(t_data *data, char *line, char *ret)
+{
+    while (line)
+    {
+        if (!ft_skip_isspace_line(line))
+            break;
+        line = ft_gnl(data->fd);
+    } 
+    if (line)
+    {
+        free(ret);
+        ft_game_exit(data, "empty lines in map settings.");
+    }
+}
+
 static void ft_load_map(t_data *data , t_map *map, char *ret)
 {
     map->grid = ft_split(ret, '\n');
@@ -28,8 +43,7 @@ static void ft_extract_map(t_data *data ,t_map *map, char *line)
         ft_str_append_str(&ret, line); 
         free(line);
     }
-    if (line)
-        ft_game_exit(data, "empty lines in map settings.");
+    ft_is_cuted_map(data, line , ret);
     ft_load_map(data, map, ret);    
 }
 

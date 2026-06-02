@@ -6,7 +6,7 @@ void	ft_error_log(char *error)
 		return ;
 	ft_putstr_fd(B_L_RED "Error: ", 2);
 	ft_putstr_fd(error , 2);
-	ft_putstr_fd("\n" RESET , 2);
+	ft_putstr_fd("\n\n" RESET , 2);
 }
 
 void	ft_error_file(char *file_path)
