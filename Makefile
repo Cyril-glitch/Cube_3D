@@ -18,10 +18,22 @@ MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
 MAIN_SRC = src/main.c
 
-INIT_SRC = src/init_src/init.c
+INIT_SRC = src/init_src/init.c \
+		   src/init_src/mini_map_init.c
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 			   src/cleanup_src/memory_cleaner.c
+
+#UPDATE_SRC = src/update/hooks.c \
+			 src/update/move.c \
+			 src/update/update.c
+
+RENDER_SRC = src/render_src/mini_map_draw.c \
+			 src/render_src/pixel_management_1.c \
+			 src/render_src/pixel_management_2.c \
+			 src/render_src/raycasting.c \
+			 src/render_src/render_draw.c \
+			 src/render_src/trgb.c
 
 PARSER_SRC = src/parser_src/gnl_no_nl.c \
 			 src/parser_src/gnl.c \
@@ -36,7 +48,7 @@ PARSER_SRC = src/parser_src/gnl_no_nl.c \
 		 	 src/parser_src/map_checker_utils_2.c \
 		 	 src/parser_src/map_checker_utils.c 
 
-SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC)
+SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 all: $(NAME)

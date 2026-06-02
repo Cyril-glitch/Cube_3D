@@ -1,8 +1,8 @@
-#include "raycasting.h"
+#include "../inc/cube_3d.h"
 
-int	init_arrow(t_var *var, t_map *map)
+int	init_arrow(t_data *data, t_mini_map *map)
 {
-	map->arrow.img = mlx_xpm_file_to_image(var->mlx, "map_textures/arrow1.xpm",
+	map->arrow.img = mlx_xpm_file_to_image(data->mlx, "map_textures/arrow1.xpm",
 			&map->arrow.w, &map->arrow.h);
 	if (!map->arrow.img)
 		return (0);
@@ -49,11 +49,11 @@ void	fill_rotated_sprite(t_img *dest, t_img arrow, double angle)
 	}
 }
 
-t_img	rotate_sprite(t_var *var, t_map *map, t_img src, double angle)
+t_img	rotate_sprite(t_data *data, t_mini_map *map, t_img src, double angle)
 {
 	t_img	dest;
 
-	dest.img = mlx_new_image(var->mlx, map->arrow.w, map->arrow.h);
+	dest.img = mlx_new_image(data->mlx, map->arrow.w, map->arrow.h);
 	if (!dest.img)
 		return ((t_img){0});
 	dest.addr = mlx_get_data_addr(dest.img, &dest.bpp,
@@ -67,7 +67,7 @@ t_img	rotate_sprite(t_var *var, t_map *map, t_img src, double angle)
 	return (dest);
 }
 
-int	generate_rotated_arrows(t_var *var, t_map *map)
+int	generate_rotated_arrows(t_data *data, t_mini_map *map)
 {
 	double	angle;
 	int		i;
@@ -76,7 +76,7 @@ int	generate_rotated_arrows(t_var *var, t_map *map)
 	while (i < 64)
 	{
 		angle = (2 * PI * i) / 64;
-		map->rotation[i] = rotate_sprite(var, map, map->arrow, angle);
+		map->rotation[i] = rotate_sprite(data, map, map->arrow, angle);
 		if (map->rotation[i].img == NULL)
 			return (0);
 		i++;
@@ -84,21 +84,21 @@ int	generate_rotated_arrows(t_var *var, t_map *map)
 	return (1);
 }
 
-int	init_mini_map(t_var *var, t_map *map)
+int	init_mini_map(t_data *data, t_mini_map *map)
 {
 	map->image.img = NULL;
 	map->image.addr = NULL;
 	map->exist = 1;
-	map->size = var->win_size.x / 5;
+	map->size = data->win_size.x / 5;
 	map->image.w = map->size;
 	map->image.h = map->size;
 	printf("map size : %d\n", map->size);
-	if (map->size < 32 || map->size > var->win_size.y / 2)
+	if (map->size < 32 || map->size > data->win_size.y / 2)
 	{
 		map->exist = 0;
 		return (1);
 	}
-	map->image.img = mlx_new_image(var->mlx, map->size, map->size);
+	map->image.img = mlx_new_image(data->mlx, map->size, map->size);
 	if (!map->image.img)
 		return (0);
 	map->image.addr = mlx_get_data_addr(map->image.img, &map->image.bpp,
@@ -107,9 +107,9 @@ int	init_mini_map(t_var *var, t_map *map)
 		return (0);
 	map->tile_size = map->size / 13;
 	map->radius = 7;
-	if (!init_arrow(var, map))
+	if (!init_arrow(data, map))
 		return (0);
-	if (!generate_rotated_arrows(var, map))
+	if (!generate_rotated_arrows(data, map))
 		return (0);
 	return (1);
 }

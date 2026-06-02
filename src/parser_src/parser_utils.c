@@ -69,8 +69,6 @@ void ft_assets_display(t_map *map)
     printf(MINT "C "  LAVENDER "%X\n\n" RESET, map->ceiling_color);
 }
 
-#include "../inc/cube_3d.h"
-
 void    ft_display_logo(void)
 {
     printf(MINT);

@@ -1,124 +1,130 @@
-#include "raycasting.h"
+#include "../inc/cube_3d.h"
 
-void	init_null(t_var *var)
+void    ft_init_data(t_data *data)
+{
+        ft_bzero(data, sizeof(*data));
+        if (!data)
+                ft_game_exit(data, "memory allocation failed.\n");        
+}
+
+void	init_null(t_data *data)
 {
 	int	i;
 
-	var->mlx = NULL;
-	var->mlx_win = NULL;
-	var->map = NULL;
-	var->mini_map.image.img = NULL;
-	var->mini_map.arrow.img = NULL;
+	data->mlx = NULL;
+	data->mlx_win = NULL;
+	data->map.grid = NULL;
+	data->mini_map.image.img = NULL;
+	data->mini_map.arrow.img = NULL;
 	i = 0;
 	while (i < 64)
-		var->mini_map.rotation[i++].img = NULL;
-	var->screen.img = NULL;
-	var->screen.addr = NULL;
-	var->textures = NULL;
-	var->ray = NULL;
+		data->mini_map.rotation[i++].img = NULL;
+	data->screen.img = NULL;
+	data->screen.addr = NULL;
+	data->textures = NULL;
+	data->ray = NULL;
 }
 
-void	init_player_pos(t_var *var)
+void	init_player_pos(t_data *data)
 {
-	var->player.pos_x = 22;
-	var->player.pos_y = 12;
-	var->player.dir_x = 0;
-	var->player.dir_y = -1;
-	var->player.plane_x = (-var->player.dir_y) * 0.66;
-	var->player.plane_y = var->player.dir_x * 0.66;
+	data->player.pos_x = 22;
+	data->player.pos_y = 12;
+	data->player.dir_x = 0;
+	data->player.dir_y = -1;
+	data->player.plane_x = (-data->player.dir_y) * 0.66;
+	data->player.plane_y = data->player.dir_x * 0.66;
 }
 
-void	init_keys(t_var *var)
+void	init_keys(t_data *data)
 {
-	var->keys.w = 0;
-	var->keys.a = 0;
-	var->keys.s = 0;
-	var->keys.d = 0;
-	var->keys.right = 0;
-	var->keys.left = 0;
+	data->keys.w = 0;
+	data->keys.a = 0;
+	data->keys.s = 0;
+	data->keys.d = 0;
+	data->keys.right = 0;
+	data->keys.left = 0;
 }
 
-int	init_mlx_and_ray(t_var *var)
+int	init_mlx_and_ray(t_data *data)
 {
-	var->mlx = mlx_init();
-	if (!var->mlx)
+	data->mlx = mlx_init();
+	if (!data->mlx)
 		return (0);
-	mlx_get_screen_size(var->mlx, &var->win_size.x, &var->win_size.y);
-	printf("win_size_x : %d, win_size_y : %d\n", var->win_size.x, var->win_size.y);
-	var->mlx_win = mlx_new_window(var->mlx, var->win_size.x,
-			var->win_size.y, "Raycaster");
-	if (!var->mlx_win)
+	mlx_get_screen_size(data->mlx, &data->win_size.x, &data->win_size.y);
+	printf("win_size_x : %d, win_size_y : %d\n", data->win_size.x, data->win_size.y);
+	data->mlx_win = mlx_new_window(data->mlx, data->win_size.x,
+			data->win_size.y, "Raycaster");
+	if (!data->mlx_win)
 		return (0);
-	var->ray = malloc(sizeof(t_ray) * var->win_size.x);
-	if (!var->ray)
+	data->ray = malloc(sizeof(t_ray) * data->win_size.x);
+	if (!data->ray)
 		return (0);
 	return (1);
 }
 
-int	init_textures(t_var *var)
+int	init_textures(t_data *data)
 {
 	int	i;
-
-	var->textures = malloc(sizeof(t_img) * 4);
-	if (!var->textures)
+	data->textures = malloc(sizeof(t_img) * 4);
+	if (!data->textures)
 		return (0);
 	i = 0;
 	while (i < 4)
 	{
-		var->textures[i].img = NULL;
-		var->textures[i].addr = NULL;
+		data->textures[i].img = NULL;
+		data->textures[i].addr = NULL;
 		i++;
 	}
 
-	var->textures[0].img = mlx_xpm_file_to_image(var->mlx, "wolftex2/eagle.xpm",
-			&var->textures[0].w, &var->textures[0].h);
-	if (!var->textures[0].img)
+	data->textures[0].img = mlx_xpm_file_to_image(data->mlx, "wolftex2/eagle.xpm",
+			&data->textures[0].w, &data->textures[0].h);
+	if (!data->textures[0].img)
 		return (0);
-	var->textures[0].addr = mlx_get_data_addr(var->textures[0].img, &var->textures[0].bpp,
-			&var->textures[0].line_length, &var->textures[0].endian);
-	if (!var->textures[0].addr)
-		return (0);
-
-	var->textures[1].img = mlx_xpm_file_to_image(var->mlx, "wolftex2/redbrick.xpm",
-			&var->textures[1].w, &var->textures[1].h);
-	if (!var->textures[1].img)
-		return (0);
-	var->textures[1].addr = mlx_get_data_addr(var->textures[1].img, &var->textures[1].bpp,
-			&var->textures[1].line_length, &var->textures[1].endian);
-	if (!var->textures[1].addr)
+	data->textures[0].addr = mlx_get_data_addr(data->textures[0].img, &data->textures[0].bpp,
+			&data->textures[0].line_length, &data->textures[0].endian);
+	if (!data->textures[0].addr)
 		return (0);
 
-	var->textures[2].img = mlx_xpm_file_to_image(var->mlx, "wolftex2/purplestone.xpm",
-			&var->textures[2].w, &var->textures[2].h);
-	if (!var->textures[2].img)
+	data->textures[1].img = mlx_xpm_file_to_image(data->mlx, "wolftex2/redbrick.xpm",
+			&data->textures[1].w, &data->textures[1].h);
+	if (!data->textures[1].img)
 		return (0);
-	var->textures[2].addr = mlx_get_data_addr(var->textures[2].img, &var->textures[2].bpp,
-			&var->textures[2].line_length, &var->textures[2].endian);
-	if (!var->textures[2].addr)
+	data->textures[1].addr = mlx_get_data_addr(data->textures[1].img, &data->textures[1].bpp,
+			&data->textures[1].line_length, &data->textures[1].endian);
+	if (!data->textures[1].addr)
 		return (0);
 
-	var->textures[3].img = mlx_xpm_file_to_image(var->mlx, "wolftex2/greystone.xpm",
-			&var->textures[3].w, &var->textures[3].h);
-	if (!var->textures[3].img)
+	data->textures[2].img = mlx_xpm_file_to_image(data->mlx, "wolftex2/purplestone.xpm",
+			&data->textures[2].w, &data->textures[2].h);
+	if (!data->textures[2].img)
 		return (0);
-	var->textures[3].addr = mlx_get_data_addr(var->textures[3].img, &var->textures[3].bpp,
-			&var->textures[3].line_length, &var->textures[3].endian);
-	if (!var->textures[3].addr)
+	data->textures[2].addr = mlx_get_data_addr(data->textures[2].img, &data->textures[2].bpp,
+			&data->textures[2].line_length, &data->textures[2].endian);
+	if (!data->textures[2].addr)
+		return (0);
+
+	data->textures[3].img = mlx_xpm_file_to_image(data->mlx, "wolftex2/greystone.xpm",
+			&data->textures[3].w, &data->textures[3].h);
+	if (!data->textures[3].img)
+		return (0);
+	data->textures[3].addr = mlx_get_data_addr(data->textures[3].img, &data->textures[3].bpp,
+			&data->textures[3].line_length, &data->textures[3].endian);
+	if (!data->textures[3].addr)
 		return (0);
 	
 	return (1);
 }
 
-int	init_screen(t_var *var)
+int	init_screen(t_data *data)
 {
-	var->screen.img = mlx_new_image(var->mlx, var->win_size.x, var->win_size.y);
-	if (!var->screen.img)
+	data->screen.img = mlx_new_image(data->mlx, data->win_size.x, data->win_size.y);
+	if (!data->screen.img)
 		return (0);
-	var->screen.addr = mlx_get_data_addr(var->screen.img, &var->screen.bpp,
-			&var->screen.line_length, &var->screen.endian);
-	if (!var->screen.addr)
+	data->screen.addr = mlx_get_data_addr(data->screen.img, &data->screen.bpp,
+			&data->screen.line_length, &data->screen.endian);
+	if (!data->screen.addr)
 		return (0);
-	var->screen.w = var->win_size.x;
-	var->screen.h = var->win_size.y;
+	data->screen.w = data->win_size.x;
+	data->screen.h = data->win_size.y;
 	return (1);
 }

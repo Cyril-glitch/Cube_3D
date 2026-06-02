@@ -1,14 +1,13 @@
 #include "../inc/cube_3d.h"
 
-int	get_map_tile(t_var *var, int x, int y)
+int	get_map_tile(t_data *data, int x, int y)
 {
 	int	res;
-
-	if (x < 0 || x >= var->map_width)
+	if (x < 0 || x >= data->mini_map_w)
 		return (-1);
-	if (y < 0 || y >= var->map_height)
+	if (y < 0 || y >= data->mini_map_w)
 		return (-1);
-	res = var->map[y][x] - '0';
+	res = data->map.grid[y][x] - '0';
 	return (res);
 }
 
@@ -45,20 +44,20 @@ void	draw_big_pixel(t_img *img, int x, int y, int color)
 	}
 }
 
-int	is_edge_of_square(t_var *var, t_map *map, int x, int y)
+int	is_edge_of_square(t_data *data, t_mini_map *map, int x, int y)
 {
-	if (x == map->screen.x && get_map_tile(var, map->map_tile.x - 1, map->map_tile.y) != 1)
+	if (x == map->screen.x && get_map_tile(data, map->map_tile.x - 1, map->map_tile.y) != 1)
 		return (1);
-	if (x == map->screen.x + map->tile_size - 1 && get_map_tile(var, map->map_tile.x + 1, map->map_tile.y) != 1)
+	if (x == map->screen.x + map->tile_size - 1 && get_map_tile(data, map->map_tile.x + 1, map->map_tile.y) != 1)
 		return (1);
-	if (y == map->screen.y && get_map_tile(var, map->map_tile.x, map->map_tile.y - 1) != 1)
+	if (y == map->screen.y && get_map_tile(data, map->map_tile.x, map->map_tile.y - 1) != 1)
 		return (1);
-	if (y == map->screen.y + map->tile_size - 1 && get_map_tile(var, map->map_tile.x, map->map_tile.y + 1) != 1)
+	if (y == map->screen.y + map->tile_size - 1 && get_map_tile(data, map->map_tile.x, map->map_tile.y + 1) != 1)
 		return (1);
 	return (0);
 }
 
-void	draw_squares(t_var *var, t_map *map, int tile_value)
+void	draw_squares(t_data *data, t_mini_map *map, int tile_value)
 {
 	int	color;
 	int	x;
@@ -71,20 +70,20 @@ void	draw_squares(t_var *var, t_map *map, int tile_value)
 		y = map->screen.y;
 		while (y < map->screen.y + map->tile_size)
 		{
-			if (x < map->size && y < map->size && x >= 0 && y >= 0)
-				my_mlx_pixel_put(&map->image, x, y, color);
-			if (tile_value == 1)
-			{
-				if (is_edge_of_square(var, map, x, y))
-					my_mlx_pixel_put(&map->image, x, y, 0x000000);
-			}
+					if (x < map->size && y < map->size && x >= 0 && y >= 0)
+						my_mlx_pixel_put(&map->image, x, y, color);
+					if (tile_value == 1)
+					{
+						if (is_edge_of_square(data, map, x, y))
+							my_mlx_pixel_put(&map->image, x, y, 0x000000);
+					}
 			y++;
 		}
 		x++;
 	}
 }
 
-void	draw_player(t_map *map, t_player player)
+void	draw_player(t_mini_map *map, t_player player)
 {
 	double	angle;
 	int		size;
@@ -120,7 +119,7 @@ void	draw_player(t_map *map, t_player player)
 	}
 }
 
-void	draw_map_img(t_var *var, t_map *map, t_player player)
+void	draw_map_img(t_data *data, t_mini_map *map, t_player player)
 {
 	int	tile_value;
 
@@ -131,12 +130,12 @@ void	draw_map_img(t_var *var, t_map *map, t_player player)
 		map->map_tile.y = (int)player.pos_y - map->radius;
 		while (map->map_tile.y <= (int)player.pos_y + map->radius)
 		{
-			tile_value = get_map_tile(var, map->map_tile.x, map->map_tile.y);
+			tile_value = get_map_tile(data, map->map_tile.x, map->map_tile.y);
 			if (tile_value >= 0)
 			{
 				map->screen.x = map->center + (map->map_tile.x - player.pos_x) * map->tile_size;
 				map->screen.y = map->center + (map->map_tile.y - player.pos_y) * map->tile_size;
-				draw_squares(var, map, tile_value);
+				draw_squares(data, map, tile_value);
 			}
 			map->map_tile.y++;
 		}

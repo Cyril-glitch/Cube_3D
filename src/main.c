@@ -1,37 +1,51 @@
-#include "raycasting.h"
+#include "../inc/cube_3d.h"
 
+int main(int ac, char **av)
+{
+    (void)av;
+    t_data data;
+
+    if (ac != 2)
+        return 0;     
+    ft_init_data(&data);
+    ft_parser(&data, &data.map, av[1]);
+    ft_free_data(&data);
+}
+
+/*
 int	main(void)
 {
-	t_var	var;
+	t_data	data;
 	int		i;
 
-	ft_memset(&var, 0, sizeof(t_var));
-	init_null(&var);
-	var.map = map_init();
-	if (!var.map)
+	ft_memset(&data, 0, sizeof(t_data));
+	init_null(&data);
+	data.map = map_init();
+	if (!data.map)
 		return (ft_printf("error creating map\n"), 1);
 	i = 0;
-	var.map_width = ft_strlen(var.map[0]);
-	var.map_height = 0;
-	while (var.map[i])
+	data.map_width = ft_strlen(data.map[0]);
+	data.map_height = 0;
+	while (data.map[i])
 	{
-		ft_printf("%s\n", var.map[i++]);
-		var.map_height++;
+		ft_printf("%s\n", data.map[i++]);
+		data.map_height++;
 	}
-	var.start = get_time(0);
-	var.time = var.start;
-	if (!init_mlx_and_ray(&var))
-		return (safe_cleanup(&var), 1);
-	if (!init_screen(&var))
-		return (safe_cleanup(&var), 1);
-	if (!init_textures(&var))
-		return (safe_cleanup(&var), 1);
-	if (!init_mini_map(&var, &var.mini_map))
-		return (safe_cleanup(&var), 1);
-	init_player_pos(&var);
-	init_keys(&var);
-	init_hooks(&var);
-	mlx_loop(var.mlx);
-	safe_cleanup(&var);
+	data.start = get_time(0);
+	data.time = data.start;
+	if (!init_mlx_and_ray(&data))
+		return (safe_cleanup(&data), 1);
+	if (!init_screen(&data))
+		return (safe_cleanup(&data), 1);
+	if (!init_textures(&data))
+		return (safe_cleanup(&data), 1);
+	if (!init_mini_map(&data, &data.mini_map))
+		return (safe_cleanup(&data), 1);
+	init_player_pos(&data);
+	init_keys(&data);
+	init_hooks(&data);
+	mlx_loop(data.mlx);
+	safe_cleanup(&data);
 	return (0);
 }
+*/

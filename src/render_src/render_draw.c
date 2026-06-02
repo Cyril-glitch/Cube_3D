@@ -25,7 +25,7 @@ int    ft_set_color(t_ray ray, char **map)
 	return color;
 }
 
-void    ft_wall_draw(t_ray *ray, t_var *var)
+void    ft_wall_draw(t_ray *ray, t_data *data)
 {
 	int x;
 	int y;
@@ -35,38 +35,38 @@ void    ft_wall_draw(t_ray *ray, t_var *var)
 
 	x = 0;
 	y = 0;
-	while(x < var->win_size.x)
+	while(x < data->win_size.x)
 	{
 		y = 0;
 		while (y < ray[x].draw_start)
 		{
 			color = 0x750000;
-			my_mlx_pixel_put(&var->screen, x, y, color);
+			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
 		y = ray[x].draw_start;
 		while(y < ray[x].draw_end)
 		{
 			tex_x = ray[x].tex_x;
-			tex_y = (int)ray[x].tex_pos & (var->textures[ray[x].tex_num].h - 1);
+			tex_y = (int)ray[x].tex_pos & (data->textures[ray[x].tex_num].h - 1);
 			ray[x].tex_pos += ray[x].step;
-			color = get_pixel(&var->textures[ray[x].tex_num], tex_x, tex_y);
+			color = get_pixel(&data->textures[ray[x].tex_num], tex_x, tex_y);
 			if (ray[x].side == 1)
 				color = (color >> 1) & 8355711;
-			my_mlx_pixel_put(&var->screen, x, y, color);
+			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
-		while (y < var->win_size.y)
+		while (y < data->win_size.y)
 		{
 			color = 0x616161;
-			my_mlx_pixel_put(&var->screen, x, y, color);
+			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
 		x++;
 	}
 }
 
-void	ft_render_map(t_var *var, t_map *map)
+void	ft_render_map(t_data *data, t_mini_map *map)
 {
 	int	x;
 	int	y;
@@ -81,20 +81,20 @@ void	ft_render_map(t_var *var, t_map *map)
 			color = get_pixel(&map->image, x - 10, y - 10);
 			/*ft_putnbr_base((long)color, "0123456789ABCDEF");
 			write(1, "\n", 1);*/
-			my_mlx_pixel_put(&var->screen, x, y, color);
+			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
 		x++;
 	}
 }
 
-void    ft_render_draw(t_ray *ray, t_var *var)
+void    ft_render_draw(t_ray *ray, t_data *data)
 {
-	ft_wall_draw(ray, var);
-	if (var->mini_map.exist)
+	ft_wall_draw(ray, data);
+	if (data->mini_map.exist)
 	{
-		ft_memset(var->mini_map.image.addr, 0, var->mini_map.size * var->mini_map.size * 4);
-		draw_map_img(var, &var->mini_map, var->player);
-		ft_render_map(var, &var->mini_map);
+		ft_memset(data->mini_map.image.addr, 0, data->mini_map.size * data->mini_map.size * 4);
+		draw_map_img(data, &data->mini_map, data->player);
+		ft_render_map(data, &data->mini_map);
 	}
 }

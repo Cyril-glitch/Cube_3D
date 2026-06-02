@@ -67,7 +67,7 @@ void	ft_init_dda(t_ray *ray, t_player player)
 	ft_get_sidedist(ray, player);
 }
 
-void	ft_perform_dda(t_var *var, t_ray *ray, char **map)
+void	ft_perform_dda(t_data *data, t_ray *ray, char **map)
 {
 	int hit;
 
@@ -87,7 +87,7 @@ void	ft_perform_dda(t_var *var, t_ray *ray, char **map)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (get_map_tile(var, ray->map_x, ray->map_y) == -1)
+		if (get_map_tile(data, ray->map_x, ray->map_y) == -1)
 			hit = 1;
 		if (map[ray->map_y][ray->map_x] > '0')
 			hit = 1;
@@ -120,11 +120,11 @@ void	ft_get_draw_data(t_ray *ray, int h)
 		ray->draw_end = h - 1;
 }
 
-void    ft_get_tex_coordinates(t_var *var, t_ray *ray, t_player player)
+void    ft_get_tex_coordinates(t_data *data, t_ray *ray, t_player player)
 {
 	double  wall_x;
 
-	ray->tex_num = get_map_tile(var, ray->map_x, ray->map_y) - 1;
+	ray->tex_num = get_map_tile(data, ray->map_x, ray->map_y) - 1;
 	if (ray->tex_num < 0 || ray->tex_num > 1)
 		return ;
 	if (ray->side == 0)
@@ -147,26 +147,26 @@ void    ft_get_tex_coordinates(t_var *var, t_ray *ray, t_player player)
 	else
 		wall_x = player.pos_x + ray->perp_wall_dist * ray->dir_x;
 	wall_x -= floor(wall_x);
-	ray->tex_x = (int)(wall_x * (double)var->textures[ray->tex_num].w);
+	ray->tex_x = (int)(wall_x * (double)data->textures[ray->tex_num].w);
 	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
-		ray->tex_x = var->textures[ray->tex_num].w - ray->tex_x - 1;
-	ray->step = 1.0 * var->textures[ray->tex_num].h / ray->line_height;
-	ray->tex_pos = (ray->draw_start - var->win_size.y / 2 + ray->line_height / 2) * ray->step;
+		ray->tex_x = data->textures[ray->tex_num].w - ray->tex_x - 1;
+	ray->step = 1.0 * data->textures[ray->tex_num].h / ray->line_height;
+	ray->tex_pos = (ray->draw_start - data->win_size.y / 2 + ray->line_height / 2) * ray->step;
 }
 
-void	ft_raycaster(t_var *var, t_ray *ray)
+void	ft_raycaster(t_data *data, t_ray *ray)
 {
 	int	x;
 
 	x = 0;
-	while(x < var->win_size.x)
+	while(x < data->win_size.x)
 	{
-		ft_get_ray_dir(var->player, &ray[x], x, var->win_size.x);
-		ft_init_dda(&ray[x], var->player);
-		ft_perform_dda(var, &ray[x], var->map);
-		ft_get_draw_data(&ray[x], var->win_size.y);
-		ft_get_tex_coordinates(var, &ray[x], var->player);
+		ft_get_ray_dir(data->player, &ray[x], x, data->win_size.x);
+		ft_init_dda(&ray[x], data->player);
+		ft_perform_dda(data, &ray[x], data->map.grid);
+		ft_get_draw_data(&ray[x], data->win_size.y);
+		ft_get_tex_coordinates(data, &ray[x], data->player);
 		x++;
 	}
-	var->ray = ray;
+	data->ray = ray;
 }

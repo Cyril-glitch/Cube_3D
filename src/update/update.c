@@ -1,35 +1,35 @@
 #include "../inc/cube_3d.h"
 
-void	update_time(t_var *var)
+void	update_time(t_data *data)
 {
-	var->old_time = var->time;
-	var->time = get_time(var->start);
-	var->frame_time = (var->time - var->old_time) / 1000.0;
-	/*if (var->frame_time > 0)
-		printf("FPS : %f\n", 1 / var->frame_time);*/
-	var->player.rot_speed = var->frame_time * 5.0;
-	var->player.move_speed = var->frame_time * 3.0;
+	data->old_time = data->time;
+	data->time = get_time(data->start);
+	data->frame_time = (data->time - data->old_time) / 1000.0;
+	/*if (data->frame_time > 0)
+		printf("FPS : %f\n", 1 / data->frame_time);*/
+	data->player.rot_speed = data->frame_time * 5.0;
+	data->player.move_speed = data->frame_time * 3.0;
 }
 
-void	handle_movements(t_var *var)
+void	handle_movements(t_data *data)
 {
-	if (var->keys.w)
-		move_up(var);
-	if (var->keys.s)
-		move_down(var);
-	if (var->keys.a)
-		move_left(var);
-	if (var->keys.d)
-		move_right(var);
+	if (data->keys.w)
+		move_up(data);
+	if (data->keys.s)
+		move_down(data);
+	if (data->keys.a)
+		move_left(data);
+	if (data->keys.d)
+		move_right(data);
 }
 
-int	update(t_var *var)
+int	update(t_data *data)
 {
-	update_time(var);
-	handle_movements(var);
-	ft_memset(var->screen.addr, 0, var->win_size.y * var->win_size.x * 4);
-	ft_raycaster(var, var->ray);
-	ft_render_draw(var->ray, var);
-	mlx_put_image_to_window(var->mlx, var->mlx_win, var->screen.img, 0, 0);
+	update_time(data);
+	handle_movements(data);
+	ft_memset(data->screen.addr, 0, data->win_size.y * data->win_size.x * 4);
+	ft_raycaster(data, data->ray);
+	ft_render_draw(data->ray, data);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);
 	return (0);
 }
