@@ -114,47 +114,52 @@ typedef struct s_data
 // Initialisation
 void			ft_init_data(t_data *data);
 
-//Parsing
+// Parsing
 void			ft_parser(t_data *data, t_map *map, char *file_path);
 
-//Parsing utils
-void 			ft_assets_display(t_map *map);
-void 			ft_map_display(char **grid);
+// Parsing utils
+void			ft_assets_display(t_map *map);
+void			ft_map_display(char **grid);
 
 // Parsing assets
-void    		ft_parse_assets(t_data *data, t_map *map, char **line);
+void			ft_parse_assets(t_data *data, t_map *map, char **line);
 char			*ft_gnl(int fd);
 char			*ft_gnl_no_nl(int fd);
 
-//parsing assets utils
+// parsing assets utils
 int				ft_skip_isspace_line(char *line);
 void			ft_skip_isspace(int start, char **line);
 int				ft_open_file(t_data *data, char *file_path);
 
-//parse texture
-int    ft_parse_texture(t_data *data, t_map *map,char *line);
+// parse texture
+int				ft_parse_texture(t_data *data, t_map *map, char *line);
 
-//parse color
-int    ft_parse_color(t_data *data, t_map *map, char *line);
+// parse color
+int				ft_parse_color(t_data *data, t_map *map, char *line);
 
-//parse color utils
-char    **ft_split_color(char *line);
-int    ft_color_overflow(char *nbr);
-int 	ft_shift_color(char **tab);
+// parse color utils
+char			**ft_split_color(char *line);
+int				ft_color_overflow(char *nbr);
+int				ft_shift_color(char **tab);
 
-//parsing map
-void    		ft_parse_map(t_data *data, t_map *map, char **line);
+// parsing map
+void			ft_parse_map(t_data *data, t_map *map, char **line);
 
-//map checker
-void 	ft_map_checker(t_data *data, t_player *player, char **grid);
+// map checker
+void			ft_map_checker(t_data *data, t_player *player, char **grid);
 
-//map checker utils
-int	ft_is_map_content(char c);
-int	ft_is_walkable(char c);
-int	ft_pit_fall(char c);
-int	ft_is_offset(char **grid, int y, int x);
-int ft_is_limit_component(char **grid, int y, int x);
-
+// map checker utils
+int				ft_is_map_content(char c);
+int				ft_is_walkable(char c);
+int				ft_pit_fall(char c);
+int				ft_is_offset(char **grid, int y, int x);
+int				ft_is_limit_component(char **grid, int y, int x);
+int				ft_is_player(char c);
+void			ft_display_logo(void);
+void			ft_init_player_pos(t_player *player, int y, int x);
+int				ft_check_player(t_player *player);
+int				ft_is_player(char c);
+void 			ft_display_map_error(char **grid, int err_y, int err_x);
 
 // Render
 

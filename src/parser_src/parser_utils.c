@@ -35,10 +35,27 @@ void   ft_skip_isspace(int start, char **line)
 
 void ft_map_display(char **grid)
 {
-    while(*grid)
+    int y;
+    int x;
+
+    y = 0;
+    while(grid[y])
     {
-        printf("%s\n",*grid);
-        grid++;
+        x = 0;
+        while(grid[y][x])
+        {
+            if (grid[y][x] == '1')
+                printf(B_BLUE "1" RESET);
+            else if (ft_is_player(grid[y][x]))
+                printf(CORAL "%c" RESET, grid[y][x]);
+            else if (grid[y][x] == 'X')
+                printf(B_RED "X" RESET);
+            else 
+                printf("%c", grid[y][x]);
+            x++;
+        }
+        printf("\n");
+        y++;
     }
 }
 
@@ -51,3 +68,4 @@ void ft_assets_display(t_map *map)
     printf(MINT "F "  LAVENDER "%X\n" RESET, map->floor_color);
     printf(MINT "C "  LAVENDER "%X\n\n" RESET, map->ceiling_color);
 }
+

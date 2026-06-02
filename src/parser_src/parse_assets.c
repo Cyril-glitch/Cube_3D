@@ -26,4 +26,5 @@ void    ft_parse_assets(t_data *data, t_map *map, char **line)
             break;
     }
     ft_check_assets(data, map);
+    ft_assets_display(map);
 }	

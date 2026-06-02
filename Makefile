@@ -32,8 +32,9 @@ PARSER_SRC = src/parser_src/gnl_no_nl.c \
 		 	 src/parser_src/parse_texture.c \
 		 	 src/parser_src/parser.c \
 		 	 src/parser_src/parser_utils.c \
-		 	 src/parser_src/map_checker.c \
-		 	 src/parser_src/map_checker_utills.c 
+			 src/parser_src/map_checker.c \
+		 	 src/parser_src/map_checker_utils_2.c \
+		 	 src/parser_src/map_checker_utils.c 
 
 SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
