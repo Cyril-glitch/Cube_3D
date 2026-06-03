@@ -208,7 +208,7 @@ int						ft_is_walkable(char c);
 int						ft_pit_fall(char c);
 int						ft_is_offset(char **grid, int y, int x);
 int						ft_is_limit_component(char **grid, int y, int x);
-void					ft_init_player_pos(t_player *player, int y, int x);
+void					ft_init_player_pos(t_data *data, t_player *player, int y, int x);
 int						ft_player_is_set(t_player *player);
 int						ft_is_player(char c);
 void					ft_display_map_error(char **grid, int err_y, int err_x);

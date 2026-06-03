@@ -39,7 +39,7 @@ static void	ft_check_player(t_data *data, char **grid, int y, int x)
 			ft_display_map_error(grid, y, x);
 			ft_game_exit(data, "Multiple players.");
 		}
-		ft_init_player_pos(&data->player, y, x);
+		ft_init_player_pos(data, &data->player, y, x);
 	}
 }
 

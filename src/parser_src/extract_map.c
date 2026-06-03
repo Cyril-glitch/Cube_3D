@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 static void	ft_init_map_buf(char **ret, char **line)
 {
