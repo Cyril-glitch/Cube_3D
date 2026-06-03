@@ -202,6 +202,7 @@ int						ft_color_overflow(char *nbr);
 int						ft_shift_color(char **tab);
 
 // --- MAP CHECKER & UTILS ---
+void					ft_extract_map(t_data *data, t_map *map, char **line);
 void					ft_map_checker(t_data *data, t_player *player,
 							char **grid);
 int						ft_is_map_content(char c);
@@ -213,7 +214,6 @@ void					ft_init_player_pos(t_player *player, int y, int x);
 int						ft_player_is_set(t_player *player);
 int						ft_is_player(char c);
 void					ft_display_map_error(char **grid, int err_y, int err_x);
-char					**map_init(void);
 
 // --- HOOKS & UPDATES ---
 void					safe_cleanup(t_data *data);

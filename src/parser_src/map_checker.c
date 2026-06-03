@@ -18,10 +18,15 @@ static int	ft_is_surrounded(char **grid, int y, int x)
 
 static void	ft_check_map_content(t_data *data, char **grid, int y, int x)
 {
-	if (!ft_is_map_content(grid[y][x]) || !ft_is_surrounded(grid, y, x))
+	if (!ft_is_map_content(grid[y][x]))
 	{
 		ft_display_map_error(grid, y, x);
-		ft_game_exit(data, "invalid map components.");
+		ft_game_exit(data, "Invalid map component.");
+	}
+	else if (!ft_is_surrounded(grid, y, x))
+	{
+		ft_display_map_error(grid, y, x);
+		ft_game_exit(data,"Map is not properly closed.");
 	}
 }
 
@@ -30,7 +35,10 @@ static void	ft_check_player(t_data *data, char **grid, int y, int x)
 	if (ft_is_player(grid[y][x]))
 	{
 		if (ft_player_is_set(&data->player))
-			ft_game_exit(data, "multiple players.");
+		{
+			ft_display_map_error(grid, y, x);
+			ft_game_exit(data, "Multiple players.");
+		}
 		ft_init_player_pos(&data->player, y, x);
 	}
 }
@@ -48,7 +56,7 @@ void	ft_map_checker(t_data *data, t_player *player, char **grid)
 		while (grid[y][x])
 		{
 			ft_check_map_content(data, grid, y, x);
-			ft_check_player(data, grid, y , x);
+			ft_check_player(data, grid, y, x);
 			x++;
 		}
 		y++;

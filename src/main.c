@@ -4,7 +4,8 @@ int main(int ac, char **av)
 {
     (void)av;
     t_data data;
-
+	
+    ft_display_logo();
     if (ac != 2)
         return 0;     
     ft_init_data(&data);

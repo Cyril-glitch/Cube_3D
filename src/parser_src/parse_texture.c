@@ -1,5 +1,12 @@
 #include "../inc/cube_3d.h"
 
+static int   ft_tex_dup(t_data *data, char *file_path)
+{
+    if (file_path)
+        ft_game_exit(data, "duplicate settings detected in file.");
+    return 0;
+}
+
 static void   ft_check_path(t_data *data,char *file_path)
 {
     int fd;
@@ -23,15 +30,15 @@ static int    ft_is_tex_component(char *line)
     return 0;
 }
 
-static void    ft_load_texture(t_map *map, char *tmp,char *line)
+static void    ft_load_texture(t_data *data, t_map *map, char *tmp,char *line)
 {
-    if (*line == 'N')
-        map->no_path = ft_strdup(tmp);    
-    else if (*line == 'S')
+    if (*line == 'N' && !ft_tex_dup(data, map->no_path))
+        map->no_path = ft_strdup(tmp);   
+    else if (*line == 'S' && !ft_tex_dup(data, map->so_path))
         map->so_path = ft_strdup(tmp);
-    else if (*line == 'W')
+    else if (*line == 'W' && !ft_tex_dup(data, map->we_path))
         map->we_path = ft_strdup(tmp);
-    else if (*line == 'E')
+    else if (*line == 'E' && !ft_tex_dup(data, map->ea_path))
         map->ea_path = ft_strdup(tmp);
 }
 
@@ -44,7 +51,7 @@ int    ft_parse_texture(t_data *data, t_map *map,char *line)
         return 0;
     ft_skip_isspace(3, &tmp);
     ft_check_path(data, tmp);
-    ft_load_texture(map, tmp, line);
+    ft_load_texture(data, map, tmp, line);
     free(line);
     return 1;
 }
