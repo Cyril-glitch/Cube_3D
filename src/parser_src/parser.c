@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 static void    ft_check_extension(t_data *data, char *path)
 {

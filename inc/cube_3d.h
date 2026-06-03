@@ -3,7 +3,7 @@
 # define CUBE_3D_H
 
 # include "../libft/inc/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/include/mlx.h"
 # include "color.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -78,6 +78,7 @@ typedef struct s_img
 
 typedef struct s_player
 {
+	char				dir;
 	double				pos_x;
 	double				pos_y;
 	double				dir_x;
@@ -129,7 +130,6 @@ typedef struct s_map
 	int					ceiling_color;
 	int					width;
 	int					height;
-
 }						t_map;
 
 typedef struct s_mini_map
@@ -154,8 +154,6 @@ typedef struct s_data
 
 	void				*mlx;
 	void				*mlx_win;
-	int					mini_map_h;
-	int					mini_map_w;
 	t_mini_map			mini_map;
 	t_map				map;
 	t_point				win_size;
@@ -176,7 +174,7 @@ typedef struct s_data
 
 void					ft_init_data(t_data *data);
 void					init_null(t_data *data);
-void					init_player_pos(t_data *data);
+void					init_player_dir(t_data *data);
 void					init_keys(t_data *data);
 int						init_mlx_and_ray(t_data *data);
 int						init_screen(t_data *data);

@@ -1,7 +1,7 @@
 NAME = bin/cube3d
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 -Wno-incompatible-pointer-types
 OBJ_DIR = obj
 BIN_DIR = bin
 
@@ -9,7 +9,7 @@ UNAME_S := $(shell uname -s)
 
 LIBDIR = ./libft/
 LIB = $(LIBDIR)lib/libft.a
-MLX_DIR = ./minilibx-linux/
+MLX_DIR = ./minilibx-linux/lib/
 
 # MiniLibX 
 MLX_LIB_FILE = $(MLX_DIR)libmlx.a
@@ -22,9 +22,10 @@ INIT_SRC = src/init_src/init.c \
 		   src/init_src/mini_map_init.c
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
-			   src/cleanup_src/memory_cleaner.c
+			   src/cleanup_src/memory_cleaner.c \
+			   src/cleanup_src/utils.c
 
-#UPDATE_SRC = src/update/hooks.c \
+UPDATE_SRC = src/update/hooks.c \
 			 src/update/move.c \
 			 src/update/update.c
 
@@ -81,7 +82,6 @@ gdb : all
 clean:
 	rm -rf $(OBJ_DIR)
 	make clean -C $(LIBDIR)
-	make clean -C $(MLX_DIR)
 
 fclean: clean
 	make fclean -C $(LIBDIR)

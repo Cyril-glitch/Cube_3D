@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 static int   ft_color_dup(t_data *data, int asset, char **color)
 {

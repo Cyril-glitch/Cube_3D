@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 static int   ft_tex_dup(t_data *data, char *file_path)
 {

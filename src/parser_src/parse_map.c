@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 void	ft_parse_map(t_data *data, t_map *map, char **line)
 {

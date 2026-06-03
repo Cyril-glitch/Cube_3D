@@ -1,4 +1,4 @@
-#include    "../inc/cube_3d.h"
+#include    "../../inc/cube_3d.h"
 
 int ft_open_file(t_data *data, char *file_path)
 {

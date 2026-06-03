@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 static int	ft_is_surrounded(char **grid, int y, int x)
 {

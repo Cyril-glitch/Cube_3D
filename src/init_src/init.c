@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 void    ft_init_data(t_data *data)
 {
@@ -25,12 +25,18 @@ void	init_null(t_data *data)
 	data->ray = NULL;
 }
 
-void	init_player_pos(t_data *data)
+void	init_player_dir(t_data *data)
 {
-	data->player.pos_x = 22;
-	data->player.pos_y = 12;
-	data->player.dir_x = 0;
-	data->player.dir_y = -1;
+	if (data->player.dir == 'N')
+	{
+		data->player.dir_x = 0;
+		data->player.dir_y = -1;
+	}
+	else if (data->player.dir == 'S')
+	{
+		data->player.dir_x = -1;
+		data->player.dir_y = 0;
+	}
 	data->player.plane_x = (-data->player.dir_y) * 0.66;
 	data->player.plane_y = data->player.dir_x * 0.66;
 }
@@ -76,7 +82,7 @@ int	init_textures(t_data *data)
 		i++;
 	}
 
-	data->textures[0].img = mlx_xpm_file_to_image(data->mlx, "wolftex2/eagle.xpm",
+	data->textures[0].img = mlx_xpm_file_to_image(data->mlx, data->map.no_path,
 			&data->textures[0].w, &data->textures[0].h);
 	if (!data->textures[0].img)
 		return (0);
@@ -85,7 +91,7 @@ int	init_textures(t_data *data)
 	if (!data->textures[0].addr)
 		return (0);
 
-	data->textures[1].img = mlx_xpm_file_to_image(data->mlx, "wolftex2/redbrick.xpm",
+	data->textures[1].img = mlx_xpm_file_to_image(data->mlx, data->map.so_path,
 			&data->textures[1].w, &data->textures[1].h);
 	if (!data->textures[1].img)
 		return (0);
@@ -94,7 +100,7 @@ int	init_textures(t_data *data)
 	if (!data->textures[1].addr)
 		return (0);
 
-	data->textures[2].img = mlx_xpm_file_to_image(data->mlx, "wolftex2/purplestone.xpm",
+	data->textures[2].img = mlx_xpm_file_to_image(data->mlx, data->map.we_path,
 			&data->textures[2].w, &data->textures[2].h);
 	if (!data->textures[2].img)
 		return (0);
@@ -103,7 +109,7 @@ int	init_textures(t_data *data)
 	if (!data->textures[2].addr)
 		return (0);
 
-	data->textures[3].img = mlx_xpm_file_to_image(data->mlx, "wolftex2/greystone.xpm",
+	data->textures[3].img = mlx_xpm_file_to_image(data->mlx, data->map.ea_path,
 			&data->textures[3].w, &data->textures[3].h);
 	if (!data->textures[3].img)
 		return (0);

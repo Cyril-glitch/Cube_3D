@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 static void	ft_free_mlx(t_data *data)
 {
@@ -22,12 +22,28 @@ static void	ft_free_mlx(t_data *data)
 
 static void ft_free_texture(t_data *data)
 {
+	int	i;
+
 	if (!data)
 		return ;
 	if (data->textures)
 	{
+		i = 0;
+		while (i < 4)
+		{
+			if (data->textures[i].img)
+				mlx_destroy_image(data->mlx, data->textures[i].img);
+			i++;
+		}
 		free(data->textures);
 		data->textures = NULL;
+	}
+	i = 0;
+	while (i < 64)
+	{
+		if (data->mini_map.rotation[i].img)
+			mlx_destroy_image(data->mlx, data->mini_map.rotation[i].img);
+		i++;
 	}
 }
 
@@ -53,7 +69,8 @@ void	ft_free_data(t_data *data)
 {
 	if (!data)
 		return;
+	free(data->ray);
+	ft_free_texture(data);
     ft_free_maps_settings(data);
 	ft_free_mlx(data);
-	ft_free_texture(data);
 }

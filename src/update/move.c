@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 void	move_up(t_data *data)
 {
@@ -8,11 +8,15 @@ void	move_up(t_data *data)
 
 	new_pos_y = player->pos_y + player->dir_y * (player->move_speed + WALL_PADDING);
 	new_pos_x = player->pos_x + player->dir_x * (player->move_speed + WALL_PADDING);
-	if (get_map_tile(data, (int)new_pos_y, (int)player->pos_x) >= 0 &&
+	/*if (get_map_tile(data, (int)new_pos_y, (int)player->pos_x) >= 0 &&
 		data->map.grid[(int)new_pos_y][(int)player->pos_x] == '0')
 		player->pos_y += player->dir_y * player->move_speed;
 	if (get_map_tile(data, (int)player->pos_y, (int)new_pos_x) >= 0 &&
 		data->map.grid[(int)(player->pos_y)][(int)new_pos_x] == '0')
+		player->pos_x += player->dir_x * player->move_speed;*/
+	if (data->map.grid[(int)new_pos_y][(int)player->pos_x] == '0')
+		player->pos_y += player->dir_y * player->move_speed;
+	if (data->map.grid[(int)(player->pos_y)][(int)new_pos_x] == '0')
 		player->pos_x += player->dir_x * player->move_speed;
 }
 
@@ -25,11 +29,15 @@ void	move_down(t_data *data)
 
 	new_pos_y = player->pos_y + player->dir_y * (player->move_speed + WALL_PADDING);
 	new_pos_x = player->pos_x + player->dir_x * (player->move_speed + WALL_PADDING);
-	if (get_map_tile(data, (int)new_pos_y, (int)player->pos_x) >= 0 &&
+	/*if (get_map_tile(data, (int)new_pos_y, (int)player->pos_x) >= 0 &&
 		data->map.grid[(int)new_pos_y][(int)player->pos_x] == '0')
 		player->pos_y -= player->dir_y * player->move_speed;
 	if (get_map_tile(data, (int)player->pos_y, (int)new_pos_x) >= 0 &&
 		data->map.grid[(int)(player->pos_y)][(int)new_pos_x] == '0')
+		player->pos_x -= player->dir_x * player->move_speed;*/
+	if (data->map.grid[(int)new_pos_y][(int)player->pos_x] == '0')
+		player->pos_y -= player->dir_y * player->move_speed;
+	if (data->map.grid[(int)(player->pos_y)][(int)new_pos_x] == '0')
 		player->pos_x -= player->dir_x * player->move_speed;
 }
 
