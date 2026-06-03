@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 int	choose_color(int n)
 {
@@ -40,7 +40,7 @@ void    ft_wall_draw(t_ray *ray, t_data *data)
 		y = 0;
 		while (y < ray[x].draw_start)
 		{
-			color = 0x750000;
+			color = data->map.ceiling_color;
 			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
@@ -58,7 +58,7 @@ void    ft_wall_draw(t_ray *ray, t_data *data)
 		}
 		while (y < data->win_size.y)
 		{
-			color = 0x616161;
+			color = data->map.floor_color;
 			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}

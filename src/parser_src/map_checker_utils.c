@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 int	ft_is_map_content(char c)
 {

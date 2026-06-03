@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 void	ft_error_log(char *error)
 {

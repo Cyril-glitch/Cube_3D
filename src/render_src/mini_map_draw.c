@@ -1,11 +1,16 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 int	get_map_tile(t_data *data, int x, int y)
 {
 	int	res;
-	if (x < 0 || x >= data->mini_map_w)
+	int	len;
+
+	if (y > 13 || y < 0)
 		return (-1);
-	if (y < 0 || y >= data->mini_map_w)
+	len = ft_strlen(data->map.grid[y]);
+	if (x < 0 || x >= len)
+		return (-1);
+	if (y < 0 || y > 13)
 		return (-1);
 	res = data->map.grid[y][x] - '0';
 	return (res);

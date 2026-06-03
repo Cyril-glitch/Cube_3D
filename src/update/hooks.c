@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 void	safe_cleanup(t_data *data)
 {
@@ -45,8 +45,7 @@ int	close_handler(void *param)
 {
 	t_data *data = (t_data *)param;
 
-	safe_cleanup(data);
-	exit(0);
+	ft_game_exit(data, NULL);
 	return (0);
 }
 

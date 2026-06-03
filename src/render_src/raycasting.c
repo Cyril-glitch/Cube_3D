@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 void	ft_get_ray_dir(t_player player, t_ray *ray, int x, int w)
 {
@@ -71,6 +71,7 @@ void	ft_perform_dda(t_data *data, t_ray *ray, char **map)
 {
 	int hit;
 
+	(void)data;
 	hit = 0;
 	while (hit == 0)
 	{
@@ -87,9 +88,9 @@ void	ft_perform_dda(t_data *data, t_ray *ray, char **map)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (get_map_tile(data, ray->map_x, ray->map_y) == -1)
-			hit = 1;
-		if (map[ray->map_y][ray->map_x] > '0')
+		/*if (get_map_tile(data, ray->map_x, ray->map_y) == -1)
+			hit = 1;*/
+		if (map[ray->map_y][ray->map_x] == '1')
 			hit = 1;
 	}
 }
@@ -141,7 +142,6 @@ void    ft_get_tex_coordinates(t_data *data, t_ray *ray, t_player player)
 		else
 			ray->tex_num = 0;
 	}
-	ray->tex_num = ray->tex_num;
 	if (ray->side == 0)
 		wall_x = player.pos_y + ray->perp_wall_dist * ray->dir_y;
 	else

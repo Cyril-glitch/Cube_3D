@@ -1,6 +1,6 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
-static void   ft_check_path(t_data *data,char *file_path)
+static void   ft_check_path(t_data *data, char *file_path)
 {
     int fd;
 
@@ -26,7 +26,7 @@ static int    ft_is_tex_component(char *line)
 static void    ft_load_texture(t_map *map, char *tmp,char *line)
 {
     if (*line == 'N')
-        map->no_path = ft_strdup(tmp);    
+        map->no_path = ft_strdup(tmp);   
     else if (*line == 'S')
         map->so_path = ft_strdup(tmp);
     else if (*line == 'W')

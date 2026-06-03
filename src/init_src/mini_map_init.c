@@ -1,8 +1,8 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 int	init_arrow(t_data *data, t_mini_map *map)
 {
-	map->arrow.img = mlx_xpm_file_to_image(data->mlx, "map_textures/arrow1.xpm",
+	map->arrow.img = mlx_xpm_file_to_image(data->mlx, "assets/map_textures/arrow1.xpm",
 			&map->arrow.w, &map->arrow.h);
 	if (!map->arrow.img)
 		return (0);
