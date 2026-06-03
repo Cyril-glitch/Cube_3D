@@ -5,15 +5,42 @@ static int	ft_is_surrounded(char **grid, int y, int x)
 	if (ft_is_walkable(grid[y][x]))
 	{
 		if (ft_is_limit_component(grid, y, x))
-			return ft_display_map_error(grid, y, x),0;
+			return (0);
 		if (ft_is_offset(grid, y, x))
-			return ft_display_map_error(grid, y, x),0;
+			return (0);
 		if (ft_pit_fall(grid[y - 1][x]) || ft_pit_fall(grid[y + 1][x]))
-			return ft_display_map_error(grid, y, x),0;
+			return (0);
 		else if (ft_pit_fall(grid[y][x - 1]) || ft_pit_fall(grid[y][x + 1]))
-			return ft_display_map_error(grid, y, x),0;
+			return (0);
 	}
 	return (1);
+}
+
+static void	ft_check_map_content(t_data *data, char **grid, int y, int x)
+{
+	if (!ft_is_map_content(grid[y][x]))
+	{
+		ft_display_map_error(grid, y, x);
+		ft_game_exit(data, "Invalid map component.");
+	}
+	else if (!ft_is_surrounded(grid, y, x))
+	{
+		ft_display_map_error(grid, y, x);
+		ft_game_exit(data,"Map is not properly closed.");
+	}
+}
+
+static void	ft_check_player(t_data *data, char **grid, int y, int x)
+{
+	if (ft_is_player(grid[y][x]))
+	{
+		if (ft_player_is_set(&data->player))
+		{
+			ft_display_map_error(grid, y, x);
+			ft_game_exit(data, "Multiple players.");
+		}
+		ft_init_player_pos(&data->player, y, x);
+	}
 }
 
 void	ft_map_checker(t_data *data, t_player *player, char **grid)
@@ -28,18 +55,12 @@ void	ft_map_checker(t_data *data, t_player *player, char **grid)
 		x = 0;
 		while (grid[y][x])
 		{
-			if (!ft_is_map_content(grid[y][x]) || !ft_is_surrounded(grid, y, x))
-				ft_game_exit(data, "invalid map components.");
-			if (ft_is_player(grid[y][x]))
-			{
-				if (ft_check_player(player))
-					ft_game_exit(data, "multiple players.");
-				ft_init_player_pos(data, player, y, x);
-			}
+			ft_check_map_content(data, grid, y, x);
+			ft_check_player(data, grid, y, x);
 			x++;
 		}
 		y++;
 	}
-	if (!ft_check_player(player))
-		ft_game_exit(data, "no player.");	
+	if (!ft_player_is_set(player))
+		ft_game_exit(data, "no player.");
 }

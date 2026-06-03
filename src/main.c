@@ -2,10 +2,10 @@
 
 int	main(int ac, char **av)
 {
-	(void)av;
-    t_data	data;
-	//int		i;
-
+    (void)av;
+    t_data data;
+	
+    ft_display_logo();
     if (ac != 2)
 		return (0);
 	init_null(&data);

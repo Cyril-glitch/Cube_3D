@@ -16,10 +16,13 @@ int ft_open_file(t_data *data, char *file_path)
 
 int     ft_skip_isspace_line(char *line)
 {
-    while (*line)
+    char *tmp;
+
+    tmp = line;
+    while (*tmp)
     {
-        if (ft_isspace(*line))
-            line++;
+        if (ft_isspace(*tmp))
+            tmp++;
         else
             return (0);
     }
@@ -47,9 +50,7 @@ void ft_map_display(char **grid)
             if (grid[y][x] == '1')
                 printf(B_BLUE "1" RESET);
             else if (ft_is_player(grid[y][x]))
-                printf(CORAL "%c" RESET, grid[y][x]);
-            else if (grid[y][x] == 'X')
-                printf(B_RED "X" RESET);
+                printf(GOLD "%c" RESET, grid[y][x]);
             else 
                 printf("%c", grid[y][x]);
             x++;
