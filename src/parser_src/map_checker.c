@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 static int	ft_is_surrounded(char **grid, int y, int x)
 {
@@ -34,7 +34,7 @@ void	ft_map_checker(t_data *data, t_player *player, char **grid)
 			{
 				if (ft_check_player(player))
 					ft_game_exit(data, "multiple players.");
-				ft_init_player_pos(player, y, x);
+				ft_init_player_pos(data, player, y, x);
 			}
 			x++;
 		}

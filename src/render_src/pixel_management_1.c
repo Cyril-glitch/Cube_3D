@@ -1,4 +1,4 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {

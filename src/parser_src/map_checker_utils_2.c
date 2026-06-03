@@ -1,9 +1,11 @@
-#include "../inc/cube_3d.h"
+#include "../../inc/cube_3d.h"
 
-void	ft_init_player_pos(t_player *player, int y, int x)
+void	ft_init_player_pos(t_data *data, t_player *player, int y, int x)
 {
 	player->pos_y = y;
 	player->pos_x = x;
+    player->dir = data->map.grid[y][x];
+    data->map.grid[y][x] = '0';
 }
 
 int	ft_check_player(t_player *player)
