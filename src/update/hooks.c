@@ -89,12 +89,13 @@ int	key_release(int keycode, void *param)
 	return (0);
 }
 
+
 void	init_hooks(t_data *data)
 {
 	mlx_hook(data->mlx_win, 2, 1L << 0, key_press, data);
 	mlx_hook(data->mlx_win, 3, 1L << 1, key_release, data);
 	mlx_hook(data->mlx_win, 17, 0, close_handler, data);
-	mlx_hook(data->mlx_win, 6, 1L << 6, ft_mouse_move, data);
-
+	mlx_mouse_hide(data->mlx, data->mlx_win);
+	mlx_hook(data->mlx_win, 6, 1L << 6, ft_mouse_rot, data);
 	mlx_loop_hook(data->mlx, update, data);
 }

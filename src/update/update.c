@@ -26,18 +26,13 @@ void	handle_movements(t_data *data)
 void	handle_camera(t_data *data)
 {
 	if (data->keys.left)
-		ft_look_left(data);
+		ft_rot_left(data);
 	if (data->keys.right)
-		ft_look_right(data);
+		ft_rot_right(data);
 }
 
 
-void	ft_mouse_move(t_data *data)
-{
-	(void)data;
 
-
-}
 
 int	update(t_data *data)
 {

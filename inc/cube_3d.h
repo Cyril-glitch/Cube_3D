@@ -25,6 +25,7 @@
 # define TEX_H 64
 # define WALL_PADDING 0.2
 # define PI 3.14159265358979323846
+# define SENS 0.0004
 
 /* --- TOUCHES (MAC/LINUX) --- */
 # ifdef __APPLE__
@@ -216,7 +217,7 @@ void					ft_display_map_error(char **grid, int err_y, int err_x);
 // --- HOOKS & UPDATES ---
 void					safe_cleanup(t_data *data);
 void					init_hooks(t_data *data);
-void					ft_mouse_move(t_data *data);
+int						ft_mouse_rot(int mouse_x, int mouse_y,t_data *data);
 int						update(t_data *data);
 
 // --- MOUVEMENTS ---
@@ -224,8 +225,8 @@ void					move_up(t_data *data);
 void					move_down(t_data *data);
 void					move_left(t_data *data);
 void					move_right(t_data *data);
-void					ft_look_left(t_data *data);
-void					ft_look_right(t_data *data);
+void					ft_rot_left(t_data *data);
+void					ft_rot_right(t_data *data);
 
 // --- GESTION DES PIXELS ET COULEURS ---
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);

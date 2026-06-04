@@ -27,7 +27,7 @@ CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 
 UPDATE_SRC = src/update/hooks.c \
 			 src/update/move.c \
-			 src/update/camera.c \
+			 src/update/rotate.c \
 			 src/update/update.c
 
 RENDER_SRC = src/render_src/mini_map_draw.c \
