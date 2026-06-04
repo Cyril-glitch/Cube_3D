@@ -3,7 +3,7 @@
 # define CUBE_3D_H
 
 # include "../libft/inc/libft.h"
-# include "../minilibx-linux/include/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "color.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -216,13 +216,16 @@ void					ft_display_map_error(char **grid, int err_y, int err_x);
 // --- HOOKS & UPDATES ---
 void					safe_cleanup(t_data *data);
 void					init_hooks(t_data *data);
+void					ft_mouse_move(t_data *data);
 int						update(t_data *data);
 
 // --- MOUVEMENTS ---
 void					move_up(t_data *data);
 void					move_down(t_data *data);
-void					move_right(t_data *data);
 void					move_left(t_data *data);
+void					move_right(t_data *data);
+void					ft_look_left(t_data *data);
+void					ft_look_right(t_data *data);
 
 // --- GESTION DES PIXELS ET COULEURS ---
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);

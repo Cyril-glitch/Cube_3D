@@ -9,10 +9,10 @@ UNAME_S := $(shell uname -s)
 
 LIBDIR = ./libft/
 LIB = $(LIBDIR)lib/libft.a
-MLX_DIR = ./minilibx-linux/lib/
+MLX_DIR = ./minilibx-linux
 
 # MiniLibX 
-MLX_LIB_FILE = $(MLX_DIR)libmlx.a
+MLX_LIB_FILE = $(MLX_DIR)/libmlx.a
 MLX_INC = -I$(MLX_DIR)
 MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
@@ -27,6 +27,7 @@ CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 
 UPDATE_SRC = src/update/hooks.c \
 			 src/update/move.c \
+			 src/update/camera.c \
 			 src/update/update.c
 
 RENDER_SRC = src/render_src/mini_map_draw.c \
@@ -75,6 +76,9 @@ $(MLX_LIB_FILE):
 
 start:	all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./bin/cube3d config/map.cub
+
+it:
+	./bin/cube3d config/map.cub
 
 gdb : all
 	gdb ./bin/cube3d
