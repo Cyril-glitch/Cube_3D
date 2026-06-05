@@ -35,7 +35,8 @@ RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/pixel_management_2.c \
 			 src/render_src/raycasting.c \
 			 src/render_src/render_draw.c \
-			 src/render_src/trgb.c
+			 src/render_src/trgb.c \
+			 src/render_src/render_fc.c
 
 PARSER_SRC = src/parser_src/gnl_no_nl.c \
 			 src/parser_src/gnl.c \
@@ -51,9 +52,11 @@ PARSER_SRC = src/parser_src/gnl_no_nl.c \
              src/parser_src/map_checker_utils.c \
 			 src/parser_src/extract_map.c
 
+GAME_SRC = 	 src/game_src/game.c
 
 
-SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC)
+
+SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC) $(GAME_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 all: $(NAME)

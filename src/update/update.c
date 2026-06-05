@@ -31,17 +31,9 @@ void	handle_camera(t_data *data)
 		ft_rot_right(data);
 }
 
-
-
-
-int	update(t_data *data)
+void	update(t_data *data)
 {
 	update_time(data);
 	handle_movements(data);
 	handle_camera(data);
-	ft_memset(data->screen.addr, 0, data->win_size.y * data->win_size.x * 4);
-	ft_raycaster(data, data->ray);
-	ft_render_draw(data->ray, data);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);
-	return (0);
 }

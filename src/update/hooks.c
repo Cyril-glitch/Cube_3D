@@ -97,5 +97,5 @@ void	init_hooks(t_data *data)
 	mlx_hook(data->mlx_win, 17, 0, close_handler, data);
 	mlx_mouse_hide(data->mlx, data->mlx_win);
 	mlx_hook(data->mlx_win, 6, 1L << 6, ft_mouse_rot, data);
-	mlx_loop_hook(data->mlx, update, data);
+	mlx_loop_hook(data->mlx, ft_game_loop, data);
 }
