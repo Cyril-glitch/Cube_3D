@@ -29,7 +29,7 @@ static void ft_free_texture(t_data *data)
 	if (data->textures)
 	{
 		i = 0;
-		while (i < 4)
+		while (i < 5)
 		{
 			if (data->textures[i].img)
 				mlx_destroy_image(data->mlx, data->textures[i].img);
@@ -70,6 +70,7 @@ void	ft_free_data(t_data *data)
 	if (!data)
 		return;
 	free(data->ray);
+	free(data->sprites);
 	ft_free_texture(data);
     ft_free_maps_settings(data);
 	ft_free_mlx(data);

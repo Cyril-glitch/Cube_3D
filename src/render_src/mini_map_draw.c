@@ -1,16 +1,23 @@
 #include "../../inc/cube_3d.h"
 
+typedef struct s_player_icon
+{
+	double	angle;
+	int		size;
+	int		index;
+	t_point	src;
+	t_point	start;
+}	t_player_icon;
+
 int	get_map_tile(t_data *data, int x, int y)
 {
 	int	res;
 	int	len;
 
-	if (y > 13 || y < 0)
+	if (y < 0 || y > 13)
 		return (-1);
 	len = ft_strlen(data->map.grid[y]);
 	if (x < 0 || x >= len)
-		return (-1);
-	if (y < 0 || y > 13)
 		return (-1);
 	res = data->map.grid[y][x] - '0';
 	return (res);
@@ -19,16 +26,16 @@ int	get_map_tile(t_data *data, int x, int y)
 int	get_tile_color(int a)
 {
 	if (a == 0)
-		return (0x00D4D4D4); // jaune clair
+		return (0x00D4D4D4);
 	else if (a == 1)
-		return (0x00555555); // mur gris foncé
+		return (0x00555555);
 	else if (a == 2)
-		return (0x008B4513); // mur marron
+		return (0x00D4D4D4);
 	else if (a == 3)
-		return (0x00336699); // mur bleu
+		return (0x00336699);
 	else if (a == 4)
-		return (0x00777777); // mur pierre
-	return (0x00FF00FF); // fallback magenta
+		return (0x00777777);
+	return (0x00FF00FF);
 }
 
 void	draw_big_pixel(t_img *img, int x, int y, int color)
@@ -75,13 +82,13 @@ void	draw_squares(t_data *data, t_mini_map *map, int tile_value)
 		y = map->screen.y;
 		while (y < map->screen.y + map->tile_size)
 		{
-					if (x < map->size && y < map->size && x >= 0 && y >= 0)
-						my_mlx_pixel_put(&map->image, x, y, color);
-					if (tile_value == 1)
-					{
-						if (is_edge_of_square(data, map, x, y))
-							my_mlx_pixel_put(&map->image, x, y, 0x000000);
-					}
+			if (x < map->size && y < map->size && x >= 0 && y >= 0)
+				my_mlx_pixel_put(&map->image, x, y, color);
+			if (tile_value == 1)
+			{
+				if (is_edge_of_square(data, map, x, y))
+					my_mlx_pixel_put(&map->image, x, y, 0x000000);
+			}
 			y++;
 		}
 		x++;
@@ -90,34 +97,30 @@ void	draw_squares(t_data *data, t_mini_map *map, int tile_value)
 
 void	draw_player(t_mini_map *map, t_player player)
 {
-	double	angle;
-	int		size;
-	int		index;
-	int		color;
-	int		x;
-	int		y;
-	t_point	src;
-	t_point	start;
+	t_player_icon	icon;
+	int				color;
+	int				x;
+	int				y;
 
-	angle = atan2(player.dir_y, player.dir_x);
-	if (angle < 0)
-		angle += 2 * PI;
-	size = map->size / 7;
-	index = (angle * 64) / (2 * PI);
-	index %= 64;
-	start.x = map->size / 2 - size / 2;
-	start.y = map->size / 2 - size / 2;
+	icon.angle = atan2(player.dir_y, player.dir_x);
+	if (icon.angle < 0)
+		icon.angle += 2 * PI;
+	icon.size = map->size / 7;
+	icon.index = (icon.angle * 64) / (2 * PI);
+	icon.index %= 64;
+	icon.start.x = map->size / 2 - icon.size / 2;
+	icon.start.y = map->size / 2 - icon.size / 2;
 	x = 0;
-	while (x < size)
+	while (x < icon.size)
 	{
 		y = 0;
-		while (y < size)
+		while (y < icon.size)
 		{
-			src.x = x * map->rotation[index].w / size;
-			src.y = y * map->rotation[index].h / size;
-			color = get_pixel(&map->rotation[index], src.x, src.y);
+			icon.src.x = x * map->rotation[icon.index].w / icon.size;
+			icon.src.y = y * map->rotation[icon.index].h / icon.size;
+			color = get_pixel(&map->rotation[icon.index], icon.src.x, icon.src.y);
 			if (!is_close_color(0x0000FF, color) && !is_close_color(0x000000, color))
-				my_mlx_pixel_put(&map->image, start.x + x, start.y + y, color);
+				my_mlx_pixel_put(&map->image, icon.start.x + x, icon.start.y + y, color);
 			y++;
 		}
 		x++;

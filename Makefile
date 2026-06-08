@@ -55,11 +55,14 @@ PARSER_SRC = src/parser_src/gnl_no_nl.c \
              src/parser_src/map_checker_utils.c \
 			 src/parser_src/extract_map.c
 
+SPRITES_SRC = src/sprites_src/draw_sprites.c \
+				src/sprites_src/init_sprites.c
+
 GAME_SRC = 	 src/game_src/game.c
 
 
 
-SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC) $(GAME_SRC)
+SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC) $(SPRITES_SRC) $(GAME_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 all: $(NAME)
