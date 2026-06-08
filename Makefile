@@ -18,8 +18,11 @@ MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
 MAIN_SRC = src/main.c
 
-INIT_SRC = src/init_src/init.c \
-		   src/init_src/mini_map_init.c
+INIT_SRC = src/init_src/data_init.c \
+		   src/init_src/mini_map_init.c \
+		   src/init_src/texture_init.c \
+		   src/init_src/mlx_init.c 
+
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 			   src/cleanup_src/memory_cleaner.c \

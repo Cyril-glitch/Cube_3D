@@ -38,12 +38,14 @@ void    ft_wall_draw(t_ray *ray, t_data *data)
 	while(x < data->win_size.x)
 	{
 		y = 0;
+		/*
 		while (y < ray[x].draw_start)
 		{
 			color = data->map.ceiling_color;
 			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
+		*/
 		y = ray[x].draw_start;
 		while(y < ray[x].draw_end)
 		{
@@ -56,12 +58,14 @@ void    ft_wall_draw(t_ray *ray, t_data *data)
 			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
+		/*
 		while (y < data->win_size.y)
 		{
 			color = data->map.floor_color;
 			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
+		*/
 		x++;
 	}
 }
@@ -90,12 +94,8 @@ void	ft_render_map(t_data *data, t_mini_map *map)
 
 void    ft_render_draw(t_ray *ray, t_data *data)
 {
-	t_floor flr;
-
+	ft_render_fc(data, &data->bgrd, &data->bgrd.floor, &data->bgrd.cieling);
 	ft_wall_draw(ray, data);
-	ft_init_fc_tex(data , &flr.cieling);
-	ft_init_fc_tex(data , &flr.floor);
-	ft_render_fc(data, &flr, &flr.floor, &flr.cieling);
 	if (data->mini_map.exist)
 	{
 		ft_memset(data->mini_map.image.addr, 0, data->mini_map.size * data->mini_map.size * 4);

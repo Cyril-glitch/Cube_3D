@@ -8,6 +8,7 @@ static void ft_game_update(t_data *data)
 static void ft_game_engine(t_data *data)
 {
 	ft_raycaster(data, data->ray);
+    
 }
 
 static void ft_game_draw(t_data *data) 

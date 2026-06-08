@@ -148,7 +148,7 @@ typedef struct s_mini_map
 	t_point				screen;
 }						t_mini_map;
 
-typedef struct s_floor
+typedef struct s_backgrd
 {
     double dist;
     double dir_x_left;
@@ -162,9 +162,9 @@ typedef struct s_floor
     double row_dist;
 	int	tex_x;
 	int	tex_y;
-	t_img  *floor;
-	t_img  *cieling;
-}   		t_floor;
+	t_img  floor;
+	t_img  cieling;
+}   		t_backgrd;
 
 
 
@@ -180,7 +180,7 @@ typedef struct s_data
 	t_point				win_size;
 	t_img				screen;
 	t_img				*textures;
-	t_floor				floor;
+	t_backgrd			 bgrd;
 
 	t_player			player;
 	t_ray				*ray;
@@ -201,7 +201,7 @@ void					init_keys(t_data *data);
 int						init_mlx_and_ray(t_data *data);
 int						init_screen(t_data *data);
 int						init_textures(t_data *data);
-void					ft_init_fc_tex(t_data *data, t_img *image);
+int					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -269,7 +269,7 @@ unsigned int			getb1(int trgb);
 // --- RAYCASTING & RENDER ---
 void					ft_raycaster(t_data *data, t_ray *ray);
 void					ft_render_draw(t_ray *ray, t_data *data);
-void    				ft_render_fc(t_data *data, t_floor *flr,t_img *floor, t_img *cieling);
+void    				ft_render_fc(t_data *data, t_backgrd *flr,t_img *floor, t_img *cieling);
 
 
 // --- MINIMAP ---

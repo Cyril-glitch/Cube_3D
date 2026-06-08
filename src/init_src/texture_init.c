@@ -1,73 +1,5 @@
 #include "../../inc/cube_3d.h"
 
-void    ft_init_data(t_data *data)
-{
-        ft_bzero(data, sizeof(*data));
-        if (!data)
-                ft_game_exit(data, "memory allocation failed.\n");        
-}
-
-void	init_null(t_data *data)
-{
-	int	i;
-
-	data->mlx = NULL;
-	data->mlx_win = NULL;
-	data->map.grid = NULL;
-	data->mini_map.image.img = NULL;
-	data->mini_map.arrow.img = NULL;
-	i = 0;
-	while (i < 64)
-		data->mini_map.rotation[i++].img = NULL;
-	data->screen.img = NULL;
-	data->screen.addr = NULL;
-	data->textures = NULL;
-	data->ray = NULL;
-}
-
-void	init_player_dir(t_data *data)
-{
-	if (data->player.dir == 'N')
-	{
-		data->player.dir_x = 0;
-		data->player.dir_y = -1;
-	}
-	else if (data->player.dir == 'S')
-	{
-		data->player.dir_x = -1;
-		data->player.dir_y = 0;
-	}
-	data->player.plane_x = (-data->player.dir_y) * 0.66;
-	data->player.plane_y = data->player.dir_x * 0.66;
-}
-
-void	init_keys(t_data *data)
-{
-	data->keys.w = 0;
-	data->keys.a = 0;
-	data->keys.s = 0;
-	data->keys.d = 0;
-	data->keys.right = 0;
-	data->keys.left = 0;
-}
-
-int	init_mlx_and_ray(t_data *data)
-{
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		return (0);
-	mlx_get_screen_size(data->mlx, &data->win_size.x, &data->win_size.y);
-	printf("win_size_x : %d, win_size_y : %d\n", data->win_size.x, data->win_size.y);
-	data->mlx_win = mlx_new_window(data->mlx, data->win_size.x,
-			data->win_size.y, "Raycaster");
-	if (!data->mlx_win)
-		return (0);
-	data->ray = malloc(sizeof(t_ray) * data->win_size.x);
-	if (!data->ray)
-		return (0);
-	return (1);
-}
-
 int	init_textures(t_data *data)
 {
 	int	i;
@@ -133,4 +65,22 @@ int	init_screen(t_data *data)
 	data->screen.w = data->win_size.x;
 	data->screen.h = data->win_size.y;
 	return (1);
+}
+
+int	ft_init_backgrd(t_data *data, t_backgrd *b)
+{
+	b->floor.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/floor.xpm", &b->floor.w, &b->floor.h);
+	if (!b->floor.img)
+		return 0;
+	b->floor.addr = mlx_get_data_addr( b->floor.img, &b->floor.bpp, &b->floor.line_length, &b->floor.endian);
+	if (!b->floor.addr)
+		return 0;
+	b->cieling.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/ciel.xpm", &b->cieling.w, &b->cieling.h);
+	if (!b->cieling.img)
+		return 0;
+	b->cieling.addr = mlx_get_data_addr( b->cieling.img, &b->cieling.bpp, &b->cieling.line_length, &b->cieling.endian);
+	if (!b->cieling.addr)
+		return 0;
+
+	return 1;
 }
