@@ -1,5 +1,19 @@
 #include "../../inc/cube_3d.h"
 
+static char *ft_get_dir_str(t_map *map, int i)
+{
+	if (i == 0)
+		return (map->no_path);
+	else if (i == 1)
+		return (map->so_path);
+	else if (i == 2)
+		return (map->ea_path);
+	else if (i == 3)
+		return (map->we_path);
+	else
+		return ("./assets/wolftex2/barrel.xpm");
+}
+
 int	init_textures(t_data *data)
 {
 	int		i;

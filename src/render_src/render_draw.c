@@ -34,10 +34,8 @@ void    ft_wall_draw(t_ray *ray, t_data *data)
 	int color;
 
 	x = 0;
-	y = 0;
 	while(x < data->win_size.x)
 	{
-		y = 0;
 		/*
 		while (y < ray[x].draw_start)
 		{
@@ -94,6 +92,7 @@ void	ft_render_map(t_data *data, t_mini_map *map)
 
 void    ft_render_draw(t_ray *ray, t_data *data)
 {
+	(void)ray;
 	ft_render_fc(data, &data->bgrd, &data->bgrd.floor, &data->bgrd.cieling);
 	ft_wall_draw(ray, data);
 	if (!draw_sprites(data, &data->player))

@@ -190,7 +190,7 @@ typedef struct s_data
 	t_img				*textures;
 	t_sprite			*sprites;
 	int					nb_sprites;
-	t_backgrd			 bgrd;
+	t_backgrd			bgrd;
 
 	t_player			player;
 	t_ray				*ray;

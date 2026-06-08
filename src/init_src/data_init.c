@@ -23,6 +23,7 @@ void	init_null(t_data *data)
 	data->screen.addr = NULL;
 	data->textures = NULL;
 	data->ray = NULL;
+	data->sprites = NULL;
 }
 
 void	init_player_dir(t_data *data)
@@ -35,6 +36,16 @@ void	init_player_dir(t_data *data)
 	else if (data->player.dir == 'S')
 	{
 		data->player.dir_x = -1;
+		data->player.dir_y = 0;
+	}
+	else if (data->player.dir == 'W')
+	{
+		data->player.dir_x = -1;
+		data->player.dir_y = 0;
+	}
+	else if (data->player.dir == 'E')
+	{
+		data->player.dir_x = 1;
 		data->player.dir_y = 0;
 	}
 	data->player.plane_x = (-data->player.dir_y) * 0.66;
