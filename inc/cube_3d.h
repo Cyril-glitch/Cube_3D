@@ -3,7 +3,7 @@
 # define CUBE_3D_H
 
 # include "../libft/inc/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/include/mlx.h"
 # include "color.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -81,7 +81,8 @@ typedef struct s_sprite
 {
 	double	x;
 	double	y;
-	t_img	*texture;
+	t_img	*texture[15];
+	int		current_frame;
 }	t_sprite;
 
 
@@ -211,6 +212,7 @@ void					init_keys(t_data *data);
 int						init_mlx_and_ray(t_data *data);
 int						init_screen(t_data *data);
 int						init_textures(t_data *data);
+int						init_sprite_textures(t_data *data);
 int					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 
 // --- PARSING ---
@@ -290,7 +292,7 @@ void					draw_map_img(t_data *data, t_mini_map *map,
 
 // --- SPRITES ---
 int						count_sprites(t_map *map, int type);
-int						init_sprites_texture(t_data *data, int type);
+int						ft_assign_sprites_textures(t_data *data, int type);
 void					init_sprites_pos(t_sprite *sprites, t_map *map, int type);
 int						*sort_sprites(t_data *data, int count);
 int						draw_sprites(t_data *data, t_player *player);

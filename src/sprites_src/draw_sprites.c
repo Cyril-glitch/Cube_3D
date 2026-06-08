@@ -61,23 +61,27 @@ void	render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite)
 {
 	int	x;
 	int	y;
+	int	current_frame;
+	double	time;
 
 	x = sprite->draw_start_x;
 	while (x < sprite->draw_end_x)
 	{
-		int	tex_x = (int)(256 * (x - (- sprite->w / 2 + sprite->screen_x)) * data->sprites[sprite_id].texture->w / sprite->w) / 256;
+		time = get_time(data->start);
+		current_frame = (int)(time / 150.0) % 4;
+		int	tex_x = (int)(256 * (x - (- sprite->w / 2 + sprite->screen_x)) * data->sprites[sprite_id].texture[current_frame]->w / sprite->w) / 256;
 		if (sprite->transform_y > 0 && x > 0 && x < data->screen.w && sprite->transform_y < data->ray[x].perp_wall_dist)
 		{
 			y = sprite->draw_start_y;
 			while (y < sprite->draw_end_y)
 			{
 				int d = y * 256 - data->screen.h * 128 + sprite->h * 128;
-				int	tex_y = (d * data->sprites[sprite_id].texture->h / sprite->h) / 256;
-				if (tex_x < data->sprites[sprite_id].texture->w && tex_x >= 0
-					&& tex_y < data->sprites[sprite_id].texture->h && tex_y >= 0)
+				int	tex_y = (d * data->sprites[sprite_id].texture[current_frame]->h / sprite->h) / 256;
+				if (tex_x < data->sprites[sprite_id].texture[current_frame]->w && tex_x >= 0
+					&& tex_y < data->sprites[sprite_id].texture[current_frame]->h && tex_y >= 0)
 				{
-					sprite->color = get_pixel(data->sprites[sprite_id].texture, tex_x, tex_y);
-					if (sprite->color != 0)
+					sprite->color = get_pixel(data->sprites[sprite_id].texture[current_frame], tex_x, tex_y);
+					if (!is_close_color(sprite->color, 0))
 						my_mlx_pixel_put(&data->screen, x, y, sprite->color);
 				}
 				y++;

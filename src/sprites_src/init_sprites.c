@@ -34,10 +34,13 @@ int	count_sprites(t_map *map, int type)
 	return (res);
 }
 
-int	init_sprites_texture(t_data *data, int type)
+int	ft_assign_sprites_textures(t_data *data, int type)
 {
 	int	i;
+	int	j;
 
+	if (!init_sprite_textures(data))
+		return (0);
 	data->nb_sprites = count_sprites(&data->map, type);
 	printf("nb sprites : %d\n", data->nb_sprites);
 	data->sprites = malloc(sizeof(t_sprite) * data->nb_sprites);
@@ -46,7 +49,12 @@ int	init_sprites_texture(t_data *data, int type)
 	i = 0;
 	while (i < data->nb_sprites)
 	{
-		data->sprites[i].texture = &data->textures[type + 2];
+		j = 0;
+		while (j < 15)
+		{
+			data->sprites[i].texture[j] = &data->textures[j + 4];
+			j++;
+		}
 		i++;
 	}
 	return (1);

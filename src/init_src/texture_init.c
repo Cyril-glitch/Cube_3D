@@ -11,7 +11,7 @@ static char *ft_get_dir_str(t_map *map, int i)
 	else if (i == 3)
 		return (map->we_path);
 	else
-		return ("./assets/wolftex2/barrel.xpm");
+		return (map->no_path);
 }
 
 int	init_textures(t_data *data)
@@ -19,18 +19,18 @@ int	init_textures(t_data *data)
 	int		i;
 	char	*s;
 
-	data->textures = malloc(sizeof(t_img) * 5);
+	data->textures = malloc(sizeof(t_img) * 12);
 	if (!data->textures)
 		return (0);
 	i = 0;
-	while (i < 5)
+	while (i < 4)
 	{
 		data->textures[i].img = NULL;
 		data->textures[i].addr = NULL;
 		i++;
 	}
 	i = 0;
-	while (i < 5)
+	while (i < 4)
 	{
 		s = ft_get_dir_str(&data->map, i);
 		data->textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
@@ -41,6 +41,51 @@ int	init_textures(t_data *data)
 				&data->textures[i].line_length, &data->textures[i].endian);
 		if (!data->textures[i].addr)
 			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static char	*get_asset_path(int i, char *path, char *asset_name)
+{
+	char	*nb;
+	char	*dir;
+	char	*res;
+
+	nb = ft_itoa(i);
+	if (!nb)
+		return (NULL);
+	dir = ft_strjoin(path, nb);
+	free(nb);
+	if (!dir)
+		return (NULL);
+	res = ft_strjoin(dir, asset_name);
+	free(dir);
+	if (!res)
+		return (NULL);
+	return (res);
+}
+
+int	init_sprite_textures(t_data *data)
+{
+	int		i;
+	char	*s;
+
+	i = 4;
+	while (i < 12)
+	{
+		s = get_asset_path(i + 1 - 4, "assets/torches/", "_Torch Animated.xpm");
+		if (!s)
+			return (0);
+		data->textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
+			&data->textures[i].w, &data->textures[i].h);
+		if (!data->textures[i].img)
+			return (0);
+		data->textures[i].addr = mlx_get_data_addr(data->textures[i].img, &data->textures[i].bpp,
+				&data->textures[i].line_length, &data->textures[i].endian);
+		if (!data->textures[i].addr)
+			return (0);
+		free(s);
 		i++;
 	}
 	return (1);

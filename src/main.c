@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 		ft_game_exit(&data, "screen init");
 	if (!init_textures(&data))
 		ft_game_exit(&data, "textures init");
-	if (!init_sprites_texture(&data, 2))
+	if (!ft_assign_sprites_textures(&data, 2))
 		ft_game_exit(&data, "sprites init");
 	init_sprites_pos(data.sprites, &data.map, 2);
 	if (!init_mini_map(&data, &data.mini_map))

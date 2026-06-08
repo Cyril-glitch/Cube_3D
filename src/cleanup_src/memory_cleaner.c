@@ -29,7 +29,7 @@ static void ft_free_texture(t_data *data)
 	if (data->textures)
 	{
 		i = 0;
-		while (i < 5)
+		while (i < 12)
 		{
 			if (data->textures[i].img)
 				mlx_destroy_image(data->mlx, data->textures[i].img);
