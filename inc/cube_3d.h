@@ -23,7 +23,7 @@
 # define WIN_H 768
 # define TEX_W 64
 # define TEX_H 64
-# define WALL_PADDING 0.2
+# define WALL_PADDING 0.3
 # define PI 3.14159265358979323846
 
 /* --- TOUCHES (MAC/LINUX) --- */
@@ -75,6 +75,14 @@ typedef struct s_img
 	int					w;
 	int					h;
 }						t_img;
+
+typedef struct s_sprite
+{
+	double	x;
+	double	y;
+	t_img	*texture;
+}	t_sprite;
+
 
 typedef struct s_player
 {
@@ -159,6 +167,8 @@ typedef struct s_data
 	t_point				win_size;
 	t_img				screen;
 	t_img				*textures;
+	t_sprite			*sprites;
+	int					nb_sprites;
 
 	t_player			player;
 	t_ray				*ray;
@@ -246,6 +256,13 @@ int						get_map_tile(t_data *data, int x, int y);
 int						init_mini_map(t_data *data, t_mini_map *map);
 void					draw_map_img(t_data *data, t_mini_map *map,
 							t_player player);
+
+// --- SPRITES ---
+int						count_sprites(t_map *map, int type);
+int						init_sprites_texture(t_data *data, int type);
+void					init_sprites_pos(t_sprite *sprites, t_map *map, int type);
+int						*sort_sprites(t_data *data, int count);
+int						draw_sprites(t_data *data, t_player *player);
 
 // --- UTILITAIRES ---
 void					ft_display_logo(void);
