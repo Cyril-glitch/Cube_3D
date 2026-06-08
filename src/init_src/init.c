@@ -23,6 +23,7 @@ void	init_null(t_data *data)
 	data->screen.addr = NULL;
 	data->textures = NULL;
 	data->ray = NULL;
+	data->sprites = NULL;
 }
 
 void	init_player_dir(t_data *data)
@@ -34,7 +35,17 @@ void	init_player_dir(t_data *data)
 	}
 	else if (data->player.dir == 'S')
 	{
+		data->player.dir_x = 0;
+		data->player.dir_y = 1;
+	}
+	else if (data->player.dir == 'W')
+	{
 		data->player.dir_x = -1;
+		data->player.dir_y = 0;
+	}
+	else if (data->player.dir == 'E')
+	{
+		data->player.dir_x = 1;
 		data->player.dir_y = 0;
 	}
 	data->player.plane_x = (-data->player.dir_y) * 0.66;
@@ -68,56 +79,49 @@ int	init_mlx_and_ray(t_data *data)
 	return (1);
 }
 
+static char *ft_get_dir_str(t_map *map, int i)
+{
+	if (i == 0)
+		return (map->no_path);
+	else if (i == 1)
+		return (map->so_path);
+	else if (i == 2)
+		return (map->ea_path);
+	else if (i == 3)
+		return (map->we_path);
+	else
+		return ("./assets/wolftex2/barrel.xpm");
+}
+
 int	init_textures(t_data *data)
 {
-	int	i;
-	data->textures = malloc(sizeof(t_img) * 4);
+	int		i;
+	char	*s;
+
+	data->textures = malloc(sizeof(t_img) * 5);
 	if (!data->textures)
 		return (0);
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		data->textures[i].img = NULL;
 		data->textures[i].addr = NULL;
 		i++;
 	}
-
-	data->textures[0].img = mlx_xpm_file_to_image(data->mlx, data->map.no_path,
-			&data->textures[0].w, &data->textures[0].h);
-	if (!data->textures[0].img)
-		return (0);
-	data->textures[0].addr = mlx_get_data_addr(data->textures[0].img, &data->textures[0].bpp,
-			&data->textures[0].line_length, &data->textures[0].endian);
-	if (!data->textures[0].addr)
-		return (0);
-
-	data->textures[1].img = mlx_xpm_file_to_image(data->mlx, data->map.so_path,
-			&data->textures[1].w, &data->textures[1].h);
-	if (!data->textures[1].img)
-		return (0);
-	data->textures[1].addr = mlx_get_data_addr(data->textures[1].img, &data->textures[1].bpp,
-			&data->textures[1].line_length, &data->textures[1].endian);
-	if (!data->textures[1].addr)
-		return (0);
-
-	data->textures[2].img = mlx_xpm_file_to_image(data->mlx, data->map.we_path,
-			&data->textures[2].w, &data->textures[2].h);
-	if (!data->textures[2].img)
-		return (0);
-	data->textures[2].addr = mlx_get_data_addr(data->textures[2].img, &data->textures[2].bpp,
-			&data->textures[2].line_length, &data->textures[2].endian);
-	if (!data->textures[2].addr)
-		return (0);
-
-	data->textures[3].img = mlx_xpm_file_to_image(data->mlx, data->map.ea_path,
-			&data->textures[3].w, &data->textures[3].h);
-	if (!data->textures[3].img)
-		return (0);
-	data->textures[3].addr = mlx_get_data_addr(data->textures[3].img, &data->textures[3].bpp,
-			&data->textures[3].line_length, &data->textures[3].endian);
-	if (!data->textures[3].addr)
-		return (0);
-	
+	i = 0;
+	while (i < 5)
+	{
+		s = ft_get_dir_str(&data->map, i);
+		data->textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
+			&data->textures[i].w, &data->textures[i].h);
+		if (!data->textures[i].img)
+			return (0);
+		data->textures[i].addr = mlx_get_data_addr(data->textures[i].img, &data->textures[i].bpp,
+				&data->textures[i].line_length, &data->textures[i].endian);
+		if (!data->textures[i].addr)
+			return (0);
+		i++;
+	}
 	return (1);
 }
 

@@ -1,5 +1,16 @@
 #include "../../inc/cube_3d.h"
 
+typedef struct s_rotation
+{
+	int			center; // center of a square image (image width / 2)
+	double		cos_a; // cosinus de l'angle
+	double		sin_a; // sinus de l'angle
+	t_point		dst; // point dans l'image de destination
+	t_point		src; // point dans l'image source
+	t_point		d; // vecteur du centre vers le point de destination
+}	t_rotation;
+
+
 int	init_arrow(t_data *data, t_mini_map *map)
 {
 	map->arrow.img = mlx_xpm_file_to_image(data->mlx, "assets/map_textures/arrow1.xpm",
@@ -15,37 +26,33 @@ int	init_arrow(t_data *data, t_mini_map *map)
 
 void	fill_rotated_sprite(t_img *dest, t_img arrow, double angle)
 {
-	int		center;
-	int		color;
-	double		cos_a;
-	double		sin_a;
-	t_point	dst;
-	t_point	src;
-	t_point	d;
+	t_rotation	rotation;
+	int			color;
 
-	center = arrow.w / 2;
-	cos_a = cos(angle);
-	sin_a = sin(angle);
-	dst.y = 0;
-	while (dst.y < dest->h)
+	rotation.center = arrow.w / 2;
+	rotation.cos_a = cos(angle);
+	rotation.sin_a = sin(angle);
+	rotation.dst.y = 0;
+	while (rotation.dst.y < dest->h)
 	{
-		dst.x = 0;
-		while (dst.x < dest->w)
+		rotation.dst.x = 0;
+		while (rotation.dst.x < dest->w)
 		{
-			d.x = dst.x - center;
-			d.y = dst.y - center;
-			src.x = d.x * cos_a + d.y * sin_a;
-			src.y = -d.x * sin_a + d.y * cos_a;
-			src.x += center;
-			src.y += center;
-			if (src.x >= 0 && src.x < arrow.w && src.y >= 0 && src.y < arrow.h)
+			rotation.d.x = rotation.dst.x - rotation.center;
+			rotation.d.y = rotation.dst.y - rotation.center;
+			rotation.src.x = rotation.d.x * rotation.cos_a + rotation.d.y * rotation.sin_a;
+			rotation.src.y = -rotation.d.x * rotation.sin_a + rotation.d.y * rotation.cos_a;
+			rotation.src.x += rotation.center;
+			rotation.src.y += rotation.center;
+			if (rotation.src.x >= 0 && rotation.src.x < arrow.w
+				&& rotation.src.y >= 0 && rotation.src.y < arrow.h)
 			{
-				color = get_pixel(&arrow, src.x, src.y);
-				my_mlx_pixel_put(dest, dst.x, dst.y, color);
+				color = get_pixel(&arrow, rotation.src.x, rotation.src.y);
+				my_mlx_pixel_put(dest, rotation.dst.x, rotation.dst.y, color);
 			}
-			dst.x++;
+			rotation.dst.x++;
 		}
-		dst.y++;
+		rotation.dst.y++;
 	}
 }
 
@@ -92,7 +99,6 @@ int	init_mini_map(t_data *data, t_mini_map *map)
 	map->size = data->win_size.x / 5;
 	map->image.w = map->size;
 	map->image.h = map->size;
-	printf("map size : %d\n", map->size);
 	if (map->size < 32 || map->size > data->win_size.y / 2)
 	{
 		map->exist = 0;
