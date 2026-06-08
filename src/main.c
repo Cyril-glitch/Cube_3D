@@ -28,6 +28,7 @@ int	main(int ac, char **av)
 	init_player_dir(&data);
 	init_keys(&data);
 	init_hooks(&data);
+	ft_init_backgrd(&data, &data.bgrd);
 	mlx_loop(data.mlx);
 	ft_free_data(&data);
 	ft_memset(&data, 0, sizeof(t_data));

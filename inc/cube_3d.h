@@ -3,7 +3,7 @@
 # define CUBE_3D_H
 
 # include "../libft/inc/libft.h"
-# include "../minilibx-linux/include/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "color.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -25,6 +25,7 @@
 # define TEX_H 64
 # define WALL_PADDING 0.3
 # define PI 3.14159265358979323846
+# define SENS 0.0004
 
 /* --- TOUCHES (MAC/LINUX) --- */
 # ifdef __APPLE__
@@ -155,6 +156,26 @@ typedef struct s_mini_map
 	t_point				screen;
 }						t_mini_map;
 
+typedef struct s_backgrd
+{
+    double dist;
+    double dir_x_left;
+    double dir_y_left;
+    double dir_x_right;
+    double dir_y_right;
+    double pos_x_left;
+    double pos_y_left;
+    double pos_x_right; 
+    double pos_y_right;
+    double row_dist;
+	int	tex_x;
+	int	tex_y;
+	t_img  floor;
+	t_img  cieling;
+}   		t_backgrd;
+
+
+
 typedef struct s_data
 {
 	int					fd;
@@ -169,6 +190,7 @@ typedef struct s_data
 	t_img				*textures;
 	t_sprite			*sprites;
 	int					nb_sprites;
+	t_backgrd			 bgrd;
 
 	t_player			player;
 	t_ray				*ray;
@@ -189,6 +211,7 @@ void					init_keys(t_data *data);
 int						init_mlx_and_ray(t_data *data);
 int						init_screen(t_data *data);
 int						init_textures(t_data *data);
+int					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -223,16 +246,22 @@ int						ft_player_is_set(t_player *player);
 int						ft_is_player(char c);
 void					ft_display_map_error(char **grid, int err_y, int err_x);
 
+// --- GAME_LOOP ---
+int						ft_game_loop(t_data *data);
+
 // --- HOOKS & UPDATES ---
 void					safe_cleanup(t_data *data);
 void					init_hooks(t_data *data);
-int						update(t_data *data);
+int						ft_mouse_rot(int mouse_x, int mouse_y,t_data *data);
+void					update(t_data *data);
 
 // --- MOUVEMENTS ---
 void					move_up(t_data *data);
 void					move_down(t_data *data);
-void					move_right(t_data *data);
 void					move_left(t_data *data);
+void					move_right(t_data *data);
+void					ft_rot_left(t_data *data);
+void					ft_rot_right(t_data *data);
 
 // --- GESTION DES PIXELS ET COULEURS ---
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
@@ -250,6 +279,8 @@ unsigned int			getb1(int trgb);
 // --- RAYCASTING & RENDER ---
 void					ft_raycaster(t_data *data, t_ray *ray);
 void					ft_render_draw(t_ray *ray, t_data *data);
+void    				ft_render_fc(t_data *data, t_backgrd *flr,t_img *floor, t_img *cieling);
+
 
 // --- MINIMAP ---
 int						get_map_tile(t_data *data, int x, int y);

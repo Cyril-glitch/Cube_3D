@@ -15,21 +15,25 @@ void	handle_movements(t_data *data)
 {
 	if (data->keys.w)
 		move_up(data);
-	if (data->keys.s)
-		move_down(data);
 	if (data->keys.a)
 		move_left(data);
+	if (data->keys.s)
+		move_down(data);	
 	if (data->keys.d)
 		move_right(data);
 }
 
-int	update(t_data *data)
+void	handle_camera(t_data *data)
+{
+	if (data->keys.left)
+		ft_rot_left(data);
+	if (data->keys.right)
+		ft_rot_right(data);
+}
+
+void	update(t_data *data)
 {
 	update_time(data);
 	handle_movements(data);
-	ft_memset(data->screen.addr, 0, data->win_size.y * data->win_size.x * 4);
-	ft_raycaster(data, data->ray);
-	ft_render_draw(data->ray, data);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);
-	return (0);
+	handle_camera(data);
 }

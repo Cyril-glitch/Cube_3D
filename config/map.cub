@@ -1,10 +1,10 @@
-NO ./assets/wolftex2/bluestone.xpm
-SO ./assets/wolftex2/colorstone.xpm
-WE ./assets/wolftex2/greystone.xpm
-EA ./assets/wolftex2/purplestone.xpm
+NO ./assets/bonus/wall.xpm
+SO ./assets/bonus/wall.xpm
+WE ./assets/bonus/wall.xpm
+EA ./assets/bonus/wall.xpm
 
-F 220,100,1
-C 225,30,1
+F 95,99,95
+C 5,42,130
 
         1111111111111111111111111
         1000000000110000000000001

@@ -63,6 +63,10 @@ int	key_press(int keycode, void *param)
 		data->keys.s = 1;
 	if (keycode == XK_d)
 		data->keys.d = 1;
+	if (keycode == K_LEFT)
+		data->keys.left = 1;
+	if (keycode == K_RIGHT)
+		data->keys.right = 1;
 	return (0);
 }
 
@@ -78,13 +82,20 @@ int	key_release(int keycode, void *param)
 		data->keys.s = 0;
 	if (keycode == XK_d)
 		data->keys.d = 0;
+	if (keycode == K_LEFT)
+		data->keys.left = 0;
+	if (keycode == K_RIGHT)
+		data->keys.right = 0;
 	return (0);
 }
+
 
 void	init_hooks(t_data *data)
 {
 	mlx_hook(data->mlx_win, 2, 1L << 0, key_press, data);
 	mlx_hook(data->mlx_win, 3, 1L << 1, key_release, data);
 	mlx_hook(data->mlx_win, 17, 0, close_handler, data);
-	mlx_loop_hook(data->mlx, update, data);
+	mlx_mouse_hide(data->mlx, data->mlx_win);
+	mlx_hook(data->mlx_win, 6, 1L << 6, ft_mouse_rot, data);
+	mlx_loop_hook(data->mlx, ft_game_loop, data);
 }
