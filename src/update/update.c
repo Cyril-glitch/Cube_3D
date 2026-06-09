@@ -36,4 +36,5 @@ void	update(t_data *data)
 	update_time(data);
 	handle_movements(data);
 	handle_camera(data);
+	ft_bfs(data, &data->bfs);
 }

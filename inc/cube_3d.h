@@ -25,7 +25,7 @@
 # define TEX_H 64
 # define WALL_PADDING 0.3
 # define PI 3.14159265358979323846
-# define SENS 0.0004
+# define SENS 0.000007
 
 /* --- TOUCHES (MAC/LINUX) --- */
 # ifdef __APPLE__
@@ -55,6 +55,20 @@ typedef struct s_point
 	int					x;
 	int					y;
 }						t_point;
+
+typedef	struct s_bfs
+{
+	int		max_h;
+	int		max_w;
+	int		count;
+	int		waiters;
+	t_point start;
+	t_point target;
+	t_point *queue;
+	t_point *came_from;
+}	t_bfs;
+
+
 
 typedef struct s_keys
 {
@@ -193,6 +207,8 @@ typedef struct s_data
 	t_backgrd			bgrd;
 
 	t_player			player;
+	t_player			monster;
+	t_bfs				bfs;
 	t_ray				*ray;
 	t_keys				keys;
 
@@ -211,7 +227,9 @@ void					init_keys(t_data *data);
 int						init_mlx_and_ray(t_data *data);
 int						init_screen(t_data *data);
 int						init_textures(t_data *data);
-int					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
+int						ft_init_backgrd(t_data *data, t_backgrd *bgrd);
+void    				ft_init_bfs(t_data *data);
+
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -253,6 +271,14 @@ int						ft_game_loop(t_data *data);
 void					safe_cleanup(t_data *data);
 void					init_hooks(t_data *data);
 int						ft_mouse_rot(int mouse_x, int mouse_y,t_data *data);
+
+void    				ft_bfs(t_data *data, t_bfs *bfs);
+void 					ft_init_camefrom(t_bfs *bfs);
+void 					ft_init_start(t_player monster,t_bfs *bfs);
+void 					ft_init_target(t_player player, t_bfs *bfs);
+void 					ft_init_research(t_player monster, t_player player, t_bfs *bfs);
+
+int 					ft_get_index(t_point p, t_bfs bfs);
 void					update(t_data *data);
 
 // --- MOUVEMENTS ---

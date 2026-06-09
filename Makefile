@@ -21,7 +21,8 @@ MAIN_SRC = src/main.c
 INIT_SRC = src/init_src/data_init.c \
 		   src/init_src/mini_map_init.c \
 		   src/init_src/texture_init.c \
-		   src/init_src/mlx_init.c 
+		   src/init_src/mlx_init.c \
+		   src/init_src/bfs_init.c 
 
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
@@ -31,7 +32,11 @@ CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 UPDATE_SRC = src/update/hooks.c \
 			 src/update/move.c \
 			 src/update/rotate.c \
-			 src/update/update.c
+			 src/update/update.c \
+			 src/update/bfs.c \
+			 src/update/bfs_utils.c \
+			 src/update/set_bfs.c  
+
 
 RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/pixel_management_1.c \
