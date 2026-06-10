@@ -98,6 +98,22 @@ typedef struct s_sprite
 	t_img	*texture;
 }	t_sprite;
 
+typedef struct s_sprite_type
+{
+	int		color;
+	double	x;
+	double	y;
+	double	inv_det;
+	double	transform_x;
+	double	transform_y;
+	int		screen_x;
+	int		h;
+	int		w;
+	int		draw_start_y;
+	int		draw_start_x;
+	int		draw_end_y;
+	int		draw_end_x;
+}	t_sprite_type;
 
 typedef struct s_player
 {
@@ -116,6 +132,8 @@ typedef struct s_player
 	int					rotate_right;
 	double				move_speed;
 	double				rot_speed;
+	t_point				next_step;
+	t_sprite			sprite;
 }						t_player;
 
 typedef struct s_ray
@@ -229,6 +247,7 @@ int						init_screen(t_data *data);
 int						init_textures(t_data *data);
 int						ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 void    				ft_init_bfs(t_data *data);
+void   					ft_init_bot_tex(t_data *data, t_img *texture);
 
 
 // --- PARSING ---
@@ -277,6 +296,9 @@ void 					ft_init_camefrom(t_bfs *bfs);
 void 					ft_init_start(t_player monster,t_bfs *bfs);
 void 					ft_init_target(t_player player, t_bfs *bfs);
 void 					ft_init_research(t_player monster, t_player player, t_bfs *bfs);
+void 					ft_get_target_path(t_data *data, t_bfs *bfs, t_point *cur);
+void 					ft_get_next_step(t_player *monster, t_bfs *bfs, t_point start, t_point target);
+void    				ft_bot_move(t_data *data);
 
 int 					ft_get_index(t_point p, t_bfs bfs);
 void					update(t_data *data);
@@ -306,6 +328,7 @@ unsigned int			getb1(int trgb);
 void					ft_raycaster(t_data *data, t_ray *ray);
 void					ft_render_draw(t_ray *ray, t_data *data);
 void    				ft_render_fc(t_data *data, t_backgrd *flr,t_img *floor, t_img *cieling);
+void					ft_draw_bot(t_data *data, t_player *player);
 
 
 // --- MINIMAP ---
@@ -320,6 +343,9 @@ int						init_sprites_texture(t_data *data, int type);
 void					init_sprites_pos(t_sprite *sprites, t_map *map, int type);
 int						*sort_sprites(t_data *data, int count);
 int						draw_sprites(t_data *data, t_player *player);
+void					compute_sprite_transformation(t_data *data, t_player *player, int sprite_id, t_sprite_type *sprite);
+void					compute_sprite_bounds(t_data *data, t_sprite_type *sprite);
+void					render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite);
 
 // --- UTILITAIRES ---
 void					ft_display_logo(void);

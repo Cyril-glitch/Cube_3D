@@ -12,22 +12,6 @@
 
 #include "../../inc/cube_3d.h"
 
-typedef struct s_sprite_type
-{
-	int		color;
-	double	x;
-	double	y;
-	double	inv_det;
-	double	transform_x;
-	double	transform_y;
-	int		screen_x;
-	int		h;
-	int		w;
-	int		draw_start_y;
-	int		draw_start_x;
-	int		draw_end_y;
-	int		draw_end_x;
-}	t_sprite_type;
 
 void	compute_sprite_transformation(t_data *data, t_player *player, int sprite_id, t_sprite_type *sprite)
 {

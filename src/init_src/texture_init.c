@@ -77,3 +77,14 @@ int	ft_init_backgrd(t_data *data, t_backgrd *b)
 
 	return 1;
 }
+
+void   ft_init_bot_tex(t_data *data, t_img *texture)
+{
+    texture->img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/boo.xpm", &texture->w, &texture->h);
+    if (!texture->img)
+        ft_game_exit(data, "cannot load texture (boo)");
+    texture->addr = mlx_get_data_addr(texture->img, &texture->bpp, &texture->line_length, &texture->endian);
+    if (!texture->addr)
+        ft_game_exit(data, "cannot load texture (boo)");
+
+}

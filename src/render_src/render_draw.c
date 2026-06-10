@@ -95,6 +95,7 @@ void    ft_render_draw(t_ray *ray, t_data *data)
 	(void)ray;
 	ft_render_fc(data, &data->bgrd, &data->bgrd.floor, &data->bgrd.cieling);
 	ft_wall_draw(ray, data);
+	ft_draw_bot(data, &data->player);
 	if (!draw_sprites(data, &data->player))
 		return ;
 	if (data->mini_map.exist)

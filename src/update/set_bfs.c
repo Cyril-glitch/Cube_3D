@@ -27,9 +27,13 @@ void ft_init_target(t_player player, t_bfs *bfs)
 
 void ft_init_research(t_player monster, t_player player, t_bfs *bfs)
 {
+    bfs->count = 0;
+    bfs->waiters = 0;
+
     ft_init_start(monster, bfs);
     ft_init_target(player, bfs);
     ft_init_camefrom(bfs);
+    
     bfs->queue[bfs->waiters] = bfs->start;
     bfs->waiters++;
     bfs->came_from[ft_get_index(bfs->start, *bfs)] = bfs->start; 

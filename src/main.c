@@ -24,13 +24,17 @@ int	main(int ac, char **av)
 		ft_game_exit(&data, "sprites init");
 	init_sprites_pos(data.sprites, &data.map, 2);
 	if (!init_mini_map(&data, &data.mini_map))
-		ft_game_exit(&data, "mini map init");
-	
+		ft_game_exit(&data, "mini map init");	
 	init_player_dir(&data);
 	init_keys(&data);
 	init_hooks(&data);
 	ft_init_backgrd(&data, &data.bgrd);
+	data.monster.sprite.texture = malloc(sizeof(t_img));
+	if (!data.monster.sprite.texture)
+		ft_game_exit(&data, "Erreur : Malloc de la texture du bot a échoué.");
+	ft_init_bot_tex(&data, data.monster.sprite.texture);
 	ft_init_bfs(&data);
+    ft_bfs(&data, &data.bfs);
 	mlx_loop(data.mlx);
 	ft_free_data(&data);
 	ft_memset(&data, 0, sizeof(t_data));
