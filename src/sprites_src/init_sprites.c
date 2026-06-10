@@ -25,7 +25,7 @@ int	count_sprites(t_map *map, int type)
 		x = 0;
 		while (map->grid[y][x])
 		{
-			if (map->grid[y][x] == type + '0')
+			if (map->grid[y][x] == type)
 				res++;
 			x++;
 		}
@@ -50,9 +50,9 @@ int	ft_assign_sprites_textures(t_data *data, int type)
 	while (i < data->nb_sprites)
 	{
 		j = 0;
-		while (j < 15)
+		while (j < SPRITE_1_TEXT_NB)
 		{
-			data->sprites[i].texture[j] = &data->textures[j + 4];
+			data->sprites[i].texture[j] = &data->textures[j + 5];
 			j++;
 		}
 		i++;
@@ -73,7 +73,7 @@ void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)
 		x = 0;
 		while (map->grid[y][x])
 		{
-			if (map->grid[y][x] == type + '0')
+			if (map->grid[y][x] == type)
 			{
 				sprites[i].x = (double)x + 0.5;
 				sprites[i].y = (double)y + 0.5;

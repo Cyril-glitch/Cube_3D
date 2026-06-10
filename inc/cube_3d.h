@@ -12,6 +12,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 /* --- CONFIGURATION --- */
 
@@ -24,8 +25,21 @@
 # define TEX_W 64
 # define TEX_H 64
 # define WALL_PADDING 0.3
+# define INTERACT_DIST 1
 # define PI 3.14159265358979323846
 # define SENS 0.0004
+
+# define DOOR_TEXT 4
+# define SPRITE_1_TEXT_NB 63
+# define SPRITE_2_TEXT_NB 8
+# define SPRITE_3_TEXT_NB 8
+# define SPRITE_TEXT_TOTAL (SPRITE_1_TEXT_NB + SPRITE_2_TEXT_NB + SPRITE_3_TEXT_NB)
+
+# define HOR_DOOR '2'
+# define VER_DOOR '3'
+# define SPRITE_1 '4'
+# define SPRITE_2 '5'
+# define SPRITE_3 '6'
 
 /* --- TOUCHES (MAC/LINUX) --- */
 # ifdef __APPLE__
@@ -41,6 +55,7 @@
 #  define K_A 97
 #  define K_S 115
 #  define K_D 100
+#  define K_R 114
 #  define K_ESC 65307
 #  define K_LEFT 65361
 #  define K_RIGHT 65363
@@ -62,6 +77,7 @@ typedef struct s_keys
 	int					a;
 	int					s;
 	int					d;
+	int					r;
 	int					left;
 	int					right;
 }						t_keys;
@@ -81,10 +97,19 @@ typedef struct s_sprite
 {
 	double	x;
 	double	y;
-	t_img	*texture[15];
+	t_img	*texture[SPRITE_1_TEXT_NB];
 	int		current_frame;
 }	t_sprite;
 
+typedef struct s_door
+{
+	int		tile_x;
+	int		tile_y;
+	float	open;
+	bool	vertical; // true vertical, false horizontal
+	bool	opening;
+	bool	closing;
+}	t_door;
 
 typedef struct s_player
 {
@@ -127,6 +152,10 @@ typedef struct s_ray
 	int					tex_x;
 	double				tex_pos;
 	double				step;
+	int					hit;		// 0 si hit rien, 1 si hit mur, 2 si hit porte
+	t_door				*door;
+	double				door_dist;
+	int					debug;
 }						t_ray;
 
 typedef struct s_map
@@ -172,8 +201,8 @@ typedef struct s_backgrd
 	int	tex_x;
 	int	tex_y;
 	t_img  floor;
-	t_img  cieling;
-}   		t_backgrd;
+	t_img  ceiling;
+}	t_backgrd;
 
 
 
@@ -191,6 +220,8 @@ typedef struct s_data
 	t_img				*textures;
 	t_sprite			*sprites;
 	int					nb_sprites;
+	t_door				*doors;
+	int					nb_doors;
 	t_backgrd			bgrd;
 
 	t_player			player;
@@ -262,6 +293,7 @@ void					move_up(t_data *data);
 void					move_down(t_data *data);
 void					move_left(t_data *data);
 void					move_right(t_data *data);
+void					close_or_open_door(t_data *data);
 void					ft_rot_left(t_data *data);
 void					ft_rot_right(t_data *data);
 
@@ -296,6 +328,11 @@ int						ft_assign_sprites_textures(t_data *data, int type);
 void					init_sprites_pos(t_sprite *sprites, t_map *map, int type);
 int						*sort_sprites(t_data *data, int count);
 int						draw_sprites(t_data *data, t_player *player);
+
+// --- DOORS ---
+t_door					*get_door(char **grid, t_door *door, int x, int y);
+int						ft_count_doors(char **grid);
+int						init_doors(t_data *data, char **grid);
 
 // --- UTILITAIRES ---
 void					ft_display_logo(void);

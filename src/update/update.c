@@ -21,6 +21,8 @@ void	handle_movements(t_data *data)
 		move_down(data);	
 	if (data->keys.d)
 		move_right(data);
+	/*if (data->keys.r)
+		close_or_open_door(data);*/
 }
 
 void	handle_camera(t_data *data)
@@ -31,9 +33,39 @@ void	handle_camera(t_data *data)
 		ft_rot_right(data);
 }
 
+void	update_doors(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_doors)
+	{
+		if (data->doors[i].opening)
+		{
+			data->doors[i].open += data->frame_time * 1.5f;
+			if (data->doors[i].open >= 1.0f)
+			{
+				data->doors[i].open = 1.0f;
+				data->doors[i].opening = false;
+			}
+		}
+		if (data->doors[i].closing)
+		{
+			data->doors[i].open -= data->frame_time * 1.5f;
+			if (data->doors[i].open <= 0.0f)
+			{
+				data->doors[i].open = 0.0f;
+				data->doors[i].closing = false;
+			}
+		}
+		i++;
+	}
+}
+
 void	update(t_data *data)
 {
 	update_time(data);
 	handle_movements(data);
+	update_doors(data);
 	handle_camera(data);
 }

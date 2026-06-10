@@ -68,7 +68,7 @@ void	render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite)
 	while (x < sprite->draw_end_x)
 	{
 		time = get_time(data->start);
-		current_frame = (int)(time / 150.0) % 4;
+		current_frame = (int)(time / 150.0) % SPRITE_1_TEXT_NB;
 		int	tex_x = (int)(256 * (x - (- sprite->w / 2 + sprite->screen_x)) * data->sprites[sprite_id].texture[current_frame]->w / sprite->w) / 256;
 		if (sprite->transform_y > 0 && x > 0 && x < data->screen.w && sprite->transform_y < data->ray[x].perp_wall_dist)
 		{

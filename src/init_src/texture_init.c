@@ -10,8 +10,9 @@ static char *ft_get_dir_str(t_map *map, int i)
 		return (map->ea_path);
 	else if (i == 3)
 		return (map->we_path);
-	else
-		return (map->no_path);
+	else if (i == 4)
+		return ("assets/wolftex2/eagle.xpm");
+	return (map->no_path);
 }
 
 int	init_textures(t_data *data)
@@ -19,18 +20,18 @@ int	init_textures(t_data *data)
 	int		i;
 	char	*s;
 
-	data->textures = malloc(sizeof(t_img) * 12);
+	data->textures = malloc(sizeof(t_img) * (5 + SPRITE_TEXT_TOTAL));
 	if (!data->textures)
 		return (0);
 	i = 0;
-	while (i < 4)
+	while (i < (5 + SPRITE_TEXT_TOTAL))
 	{
 		data->textures[i].img = NULL;
 		data->textures[i].addr = NULL;
 		i++;
 	}
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		s = ft_get_dir_str(&data->map, i);
 		data->textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
@@ -71,10 +72,10 @@ int	init_sprite_textures(t_data *data)
 	int		i;
 	char	*s;
 
-	i = 4;
-	while (i < 12)
+	i = 5;
+	while (i < (5 + SPRITE_1_TEXT_NB))
 	{
-		s = get_asset_path(i + 1 - 4, "assets/torches/", "_Torch Animated.xpm");
+		s = get_asset_path(i + 1 - 5, "assets/carboard/", "_carboard.xpm");
 		if (!s)
 			return (0);
 		data->textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
@@ -109,16 +110,16 @@ int	ft_init_backgrd(t_data *data, t_backgrd *b)
 {
 	b->floor.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/floor.xpm", &b->floor.w, &b->floor.h);
 	if (!b->floor.img)
-		return 0;
+		return (0);
 	b->floor.addr = mlx_get_data_addr( b->floor.img, &b->floor.bpp, &b->floor.line_length, &b->floor.endian);
 	if (!b->floor.addr)
-		return 0;
-	b->cieling.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/ciel.xpm", &b->cieling.w, &b->cieling.h);
-	if (!b->cieling.img)
-		return 0;
-	b->cieling.addr = mlx_get_data_addr( b->cieling.img, &b->cieling.bpp, &b->cieling.line_length, &b->cieling.endian);
-	if (!b->cieling.addr)
-		return 0;
+		return (0);
+	b->ceiling.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/ciel.xpm", &b->ceiling.w, &b->ceiling.h);
+	if (!b->ceiling.img)
+		return (0);
+	b->ceiling.addr = mlx_get_data_addr( b->ceiling.img, &b->ceiling.bpp, &b->ceiling.line_length, &b->ceiling.endian);
+	if (!b->ceiling.addr)
+		return (0);
 
 	return 1;
 }

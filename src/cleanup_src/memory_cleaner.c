@@ -10,6 +10,10 @@ static void	ft_free_mlx(t_data *data)
 		mlx_destroy_image(data->mlx, data->mini_map.image.img);
 	if (data->mini_map.arrow.img)
 		mlx_destroy_image(data->mlx, data->mini_map.arrow.img);
+	if (data->bgrd.floor.img)
+		mlx_destroy_image(data->mlx, data->bgrd.floor.img);
+	if (data->bgrd.ceiling.img)
+		mlx_destroy_image(data->mlx, data->bgrd.ceiling.img);
 	if (data->mlx_win)
 		mlx_destroy_window(data->mlx, data->mlx_win);
 	if (data->mlx)
@@ -29,7 +33,7 @@ static void ft_free_texture(t_data *data)
 	if (data->textures)
 	{
 		i = 0;
-		while (i < 12)
+		while (i < (5 + SPRITE_TEXT_TOTAL))
 		{
 			if (data->textures[i].img)
 				mlx_destroy_image(data->mlx, data->textures[i].img);
@@ -71,6 +75,7 @@ void	ft_free_data(t_data *data)
 		return;
 	free(data->ray);
 	free(data->sprites);
+	free(data->doors);
 	ft_free_texture(data);
     ft_free_maps_settings(data);
 	ft_free_mlx(data);

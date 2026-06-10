@@ -20,10 +20,12 @@ void	init_null(t_data *data)
 	while (i < 64)
 		data->mini_map.rotation[i++].img = NULL;
 	data->screen.img = NULL;
-	data->screen.addr = NULL;
+	data->bgrd.floor.img = NULL;
+	data->bgrd.ceiling.img = NULL;
 	data->textures = NULL;
 	data->ray = NULL;
 	data->sprites = NULL;
+	data->doors = NULL;
 }
 
 void	init_player_dir(t_data *data)
@@ -58,6 +60,7 @@ void	init_keys(t_data *data)
 	data->keys.a = 0;
 	data->keys.s = 0;
 	data->keys.d = 0;
+	data->keys.r = 0;
 	data->keys.right = 0;
 	data->keys.left = 0;
 }

@@ -21,7 +21,8 @@ MAIN_SRC = src/main.c
 INIT_SRC = src/init_src/data_init.c \
 		   src/init_src/mini_map_init.c \
 		   src/init_src/texture_init.c \
-		   src/init_src/mlx_init.c 
+		   src/init_src/mlx_init.c \
+		   src/init_src/doors_init.c
 
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
@@ -59,7 +60,6 @@ SPRITES_SRC = src/sprites_src/draw_sprites.c \
 				src/sprites_src/init_sprites.c
 
 GAME_SRC = 	 src/game_src/game.c
-
 
 
 SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC) $(SPRITES_SRC) $(GAME_SRC)
