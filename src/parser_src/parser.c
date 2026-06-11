@@ -9,7 +9,7 @@ static void    ft_check_extension(t_data *data, char *path)
         ft_game_exit(data , "invalid file extension (expected .cub).");
 }
 
-void    ft_parser(t_data *data,t_map *map, char *file_path)
+void    ft_parser(t_data *data, t_map *map, char *file_path)
 {
     ft_check_extension(data, file_path);
     data->fd = ft_open_file(data, file_path);

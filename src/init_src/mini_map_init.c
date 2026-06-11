@@ -93,8 +93,6 @@ int	generate_rotated_arrows(t_data *data, t_mini_map *map)
 
 int	init_mini_map(t_data *data, t_mini_map *map)
 {
-	map->image.img = NULL;
-	map->image.addr = NULL;
 	map->exist = 1;
 	map->size = data->win_size.x / 5;
 	map->image.w = map->size;

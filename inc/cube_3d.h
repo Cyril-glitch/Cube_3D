@@ -77,7 +77,7 @@ typedef struct s_keys
 	int					a;
 	int					s;
 	int					d;
-	int					r;
+	int					e;
 	int					left;
 	int					right;
 }						t_keys;
@@ -213,8 +213,8 @@ typedef struct s_data
 
 	void				*mlx;
 	void				*mlx_win;
-	t_mini_map			mini_map;
 	t_map				map;
+	t_mini_map			mini_map;
 	t_point				win_size;
 	t_img				screen;
 	t_img				*textures;
@@ -244,7 +244,8 @@ int						init_mlx_and_ray(t_data *data);
 int						init_screen(t_data *data);
 int						init_textures(t_data *data);
 int						init_sprite_textures(t_data *data);
-int					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
+int						ft_init_backgrd(t_data *data, t_backgrd *bgrd);
+int 					init_global(t_data *data, char **av);
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);

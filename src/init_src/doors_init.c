@@ -25,7 +25,7 @@ int	ft_count_doors(char **grid)
 		x = 0;
 		while (grid[y][x])
 		{
-			if (grid[y][x] == '3' || grid[y][x] == '4')
+			if (grid[y][x] == VER_DOOR || grid[y][x] == HOR_DOOR)
 				res++;
 			x++;
 		}
@@ -38,9 +38,9 @@ void	ft_parse_door(t_door *door, int x, int y, int orientation)
 {
 	door->tile_x = x;
 	door->tile_y = y;
-	if (orientation == '3')
+	if (orientation == VER_DOOR)
 		door->vertical = true;
-	else if (orientation == '4')
+	else if (orientation == HOR_DOOR)
 		door->vertical = false;
 	door->opening = false;
 	door->closing = false;

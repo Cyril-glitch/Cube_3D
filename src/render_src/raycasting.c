@@ -41,7 +41,6 @@ void	ft_get_sidedist(t_ray *ray , t_player player)
 		ray->step_x = 1;
 		ray->side_dist_x = (ray->map_x + 1.0 - player.pos_x) * ray->delta_dist_x; 
 	}
-
 	if (ray->dir_y < 0)
 	{
 		ray->step_y = -1;
@@ -67,6 +66,32 @@ void	ft_init_dda(t_ray *ray, t_player player)
 	ft_get_sidedist(ray, player);
 }
 
+static int	get_hit_pos(t_data *data, t_ray *ray, double *t, double *hit_pos)
+{
+	if ((fabs(ray->dir_x) < 1e-8 && ray->door->vertical)
+		|| (fabs(ray->dir_y) < 1e-8 && !ray->door->vertical))
+	{
+		ray->door_dist = 1e30;
+		return (1);
+	}
+	if (ray->door->vertical)
+	{
+		*t = ((double)ray->map_x + 0.5 - data->player.pos_x) / ray->dir_x;
+		*hit_pos = data->player.pos_y + *t * ray->dir_y;
+		if (*hit_pos < ray->map_y || *hit_pos > ray->map_y + 1.0)
+			return (0);
+	}
+	else
+	{
+		*t = ((double)ray->map_y + 0.5 - data->player.pos_y) / ray->dir_y;
+		*hit_pos = data->player.pos_x + *t * ray->dir_x;
+		if (*hit_pos < ray->map_x || *hit_pos > ray->map_x + 1.0)
+			return (0);
+	}
+	*hit_pos -= floor(*hit_pos);
+	return (1);
+}
+
 int	ray_hits_visible_part_of_door(t_data *data, t_ray *ray)
 {
 	double	t;
@@ -75,34 +100,8 @@ int	ray_hits_visible_part_of_door(t_data *data, t_ray *ray)
 	ray->door = get_door(data->map.grid, data->doors, ray->map_x, ray->map_y);
 	if (!ray->door)
 		return (0);
-	if (ray->door->vertical)
-	{
-		if (fabs(ray->dir_x) < 1e-8)
-		{
-			ray->door_dist = 1e30;
-			return (1);
-		}
-		t = ((double)ray->map_x + 0.5 - data->player.pos_x) / ray->dir_x;
-		//t = ray->side_dist_x - 0.5 * ray->delta_dist_x;
-		hit_pos = data->player.pos_y + t * ray->dir_y;
-		if (hit_pos < ray->map_y || hit_pos > ray->map_y + 1.0)
-			return (0);
-		hit_pos -= floor(hit_pos);
-	}
-	else
-	{
-		if (fabs(ray->dir_y) < 1e-8)
-		{
-			ray->door_dist = 1e30;
-			return (1);
-		}
-		t = ((double)ray->map_y + 0.5 - data->player.pos_y) / ray->dir_y;
-		//t = ray->side_dist_y - 0.5 * ray->delta_dist_y;
-		hit_pos = data->player.pos_x + t * ray->dir_x;
-		if (hit_pos < ray->map_x || hit_pos > ray->map_x + 1.0)
-			return (0);
-		hit_pos -= floor(hit_pos);
-	}
+	if (!get_hit_pos(data, ray, &t, &hit_pos))
+		return (0);
 	if (t <= 0)
 		return (0);
 	if (hit_pos >= ray->door->open)
@@ -175,10 +174,8 @@ void	ft_get_draw_data(t_ray *ray, int h)
 		ray->draw_end = h - 1;
 }
 
-void    ft_get_tex_coordinates(t_data *data, t_ray *ray, t_player player)
+static void	get_tex_number(t_data *data, t_ray *ray)
 {
-	double  wall_x;
-
 	if (ray->hit == 2)
 		ray->tex_num = DOOR_TEXT;
 	else
@@ -201,6 +198,13 @@ void    ft_get_tex_coordinates(t_data *data, t_ray *ray, t_player player)
 				ray->tex_num = 0;
 		}
 	}
+}
+
+void    ft_get_tex_coordinates(t_data *data, t_ray *ray, t_player player)
+{
+	double  wall_x;
+
+	get_tex_number(data, ray);
 	if (ray->side == 0)
 		wall_x = player.pos_y + ray->perp_wall_dist * ray->dir_y;
 	else

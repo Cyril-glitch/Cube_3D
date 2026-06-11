@@ -25,11 +25,7 @@ int	init_textures(t_data *data)
 		return (0);
 	i = 0;
 	while (i < (5 + SPRITE_TEXT_TOTAL))
-	{
-		data->textures[i].img = NULL;
-		data->textures[i].addr = NULL;
-		i++;
-	}
+		data->textures[i++].img = NULL;
 	i = 0;
 	while (i < 5)
 	{
@@ -120,6 +116,5 @@ int	ft_init_backgrd(t_data *data, t_backgrd *b)
 	b->ceiling.addr = mlx_get_data_addr( b->ceiling.img, &b->ceiling.bpp, &b->ceiling.line_length, &b->ceiling.endian);
 	if (!b->ceiling.addr)
 		return (0);
-
-	return 1;
+	return (1);
 }

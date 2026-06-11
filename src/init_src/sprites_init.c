@@ -85,28 +85,12 @@ void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)
 	}
 }
 
-int	*sort_sprites(t_data *data, int count)
+static void	ft_sort2(int *res, double *dist, int count)
 {
 	int	i;
 	int	j;
-	int	*res;
-	double	*dist;
-	int tmp;
+	int	tmp;
 
-	res = malloc(sizeof(int) * count);
-	if (!res)
-		return (NULL);
-	dist = malloc(sizeof(double) * count);
-	if (!dist)
-		return (free(res), NULL);
-	i = 0;
-	while (i < count)
-	{
-		res[i] = i;
-		dist[i] = (data->player.pos_x - data->sprites[i].x) * (data->player.pos_x - data->sprites[i].x) +
-					(data->player.pos_y - data->sprites[i].y) * (data->player.pos_y - data->sprites[i].y);
-		i++;
-	}
 	i = 0;
 	while (i < count - 1)
 	{
@@ -123,6 +107,29 @@ int	*sort_sprites(t_data *data, int count)
 		}
 		i++;
 	}
+}
+
+int	*sort_sprites(t_data *data, int count)
+{
+	int	i;
+	int	*res;
+	double	*dist;
+
+	res = malloc(sizeof(int) * count);
+	if (!res)
+		return (NULL);
+	dist = malloc(sizeof(double) * count);
+	if (!dist)
+		return (free(res), NULL);
+	i = 0;
+	while (i < count)
+	{
+		res[i] = i;
+		dist[i] = (data->player.pos_x - data->sprites[i].x) * (data->player.pos_x - data->sprites[i].x) +
+					(data->player.pos_y - data->sprites[i].y) * (data->player.pos_y - data->sprites[i].y);
+		i++;
+	}
+	ft_sort2(res, dist, count);
 	free(dist);
 	return (res);
 }

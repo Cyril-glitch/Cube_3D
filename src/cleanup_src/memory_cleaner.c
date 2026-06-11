@@ -6,10 +6,6 @@ static void	ft_free_mlx(t_data *data)
 		return ;
 	if (data->screen.img)
 		mlx_destroy_image(data->mlx, data->screen.img);
-	if (data->mini_map.image.img)
-		mlx_destroy_image(data->mlx, data->mini_map.image.img);
-	if (data->mini_map.arrow.img)
-		mlx_destroy_image(data->mlx, data->mini_map.arrow.img);
 	if (data->bgrd.floor.img)
 		mlx_destroy_image(data->mlx, data->bgrd.floor.img);
 	if (data->bgrd.ceiling.img)
@@ -42,13 +38,6 @@ static void ft_free_texture(t_data *data)
 		free(data->textures);
 		data->textures = NULL;
 	}
-	i = 0;
-	while (i < 64)
-	{
-		if (data->mini_map.rotation[i].img)
-			mlx_destroy_image(data->mlx, data->mini_map.rotation[i].img);
-		i++;
-	}
 }
 
 static void ft_free_maps_settings(t_data *data)
@@ -69,6 +58,23 @@ static void ft_free_maps_settings(t_data *data)
         ft_freedtab(data->map.grid);
 }
 
+static void	ft_free_mini_map(t_data *data, t_mini_map *mini_map)
+{
+	int	i;
+
+	if (mini_map->image.img)
+		mlx_destroy_image(data->mlx, mini_map->image.img);
+	if (mini_map->arrow.img)
+		mlx_destroy_image(data->mlx, mini_map->arrow.img);
+	i = 0;
+	while (i < 64)
+	{
+		if (mini_map->rotation[i].img)
+			mlx_destroy_image(data->mlx, mini_map->rotation[i].img);
+		i++;
+	}
+}
+
 void	ft_free_data(t_data *data)
 {
 	if (!data)
@@ -78,5 +84,6 @@ void	ft_free_data(t_data *data)
 	free(data->doors);
 	ft_free_texture(data);
     ft_free_maps_settings(data);
+	ft_free_mini_map(data, &data->mini_map);
 	ft_free_mlx(data);
 }
