@@ -42,7 +42,6 @@ int	ft_assign_sprites_textures(t_data *data, int type)
 	if (!init_sprite_textures(data))
 		return (0);
 	data->nb_sprites = count_sprites(&data->map, type);
-	printf("nb sprites : %d\n", data->nb_sprites);
 	data->sprites = malloc(sizeof(t_sprite) * data->nb_sprites);
 	if (!data->sprites)
 		return (0);
@@ -125,8 +124,10 @@ int	*sort_sprites(t_data *data, int count)
 	while (i < count)
 	{
 		res[i] = i;
-		dist[i] = (data->player.pos_x - data->sprites[i].x) * (data->player.pos_x - data->sprites[i].x) +
-					(data->player.pos_y - data->sprites[i].y) * (data->player.pos_y - data->sprites[i].y);
+		dist[i] = (data->player.pos_x - data->sprites[i].x) * 
+					(data->player.pos_x - data->sprites[i].x) +
+					(data->player.pos_y - data->sprites[i].y) *
+					(data->player.pos_y - data->sprites[i].y);
 		i++;
 	}
 	ft_sort2(res, dist, count);
