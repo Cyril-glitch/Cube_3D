@@ -33,9 +33,8 @@ static void	render_bot_pixels(t_data *data, t_sprite_type *sprite)
 				if (tex_x < data->monster.sprite.texture->w && tex_x >= 0
 					&& tex_y < data->monster.sprite.texture->h && tex_y >= 0)
 				{
-					// On lit les pixels depuis ton instance !
 					sprite->color = get_pixel(data->monster.sprite.texture, tex_x, tex_y);
-					if (sprite->color != 0) // Gestion de la transparence
+					if (sprite->color != 0x00FF00)
 						my_mlx_pixel_put(&data->screen, x, y, sprite->color);
 				}
 				y++;
@@ -50,22 +49,13 @@ void	ft_draw_bot(t_data *data, t_player *player)
 {
 	t_sprite_type	bot_render;
 
-	// Synchronisation du mouvement géométrique vers ton instance visuelle
 	data->monster.sprite.x = data->monster.pos_x;
 	data->monster.sprite.y = data->monster.pos_y;
-
-	// Calcul mathématique avec la fonction locale
 	compute_bot_transformation(data, player, &bot_render);
 
-	// Si le monstre est derrière la caméra, on coupe
 	if (bot_render.transform_y <= 0)
 		return ;
 
-	// === RÉUTILISATION DU CODE DU BINÔME ===
-	// On appelle sa fonction d'origine car elle n'a pas besoin du tableau global
 	compute_sprite_bounds(data, &bot_render); //
-	// =======================================
-
-	// Affichage des pixels avec la fonction locale
 	render_bot_pixels(data, &bot_render);
 }

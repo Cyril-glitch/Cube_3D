@@ -22,7 +22,8 @@ INIT_SRC = src/init_src/data_init.c \
 		   src/init_src/mini_map_init.c \
 		   src/init_src/texture_init.c \
 		   src/init_src/mlx_init.c \
-		   src/init_src/bfs_init.c 
+		   src/init_src/init.c \
+		   src/init_src/bfs_init.c  
 
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \

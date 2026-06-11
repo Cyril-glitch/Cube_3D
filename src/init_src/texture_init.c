@@ -78,13 +78,16 @@ int	ft_init_backgrd(t_data *data, t_backgrd *b)
 	return 1;
 }
 
-void   ft_init_bot_tex(t_data *data, t_img *texture)
+void   ft_init_bot_tex(t_data *data)
 {
-    texture->img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/boo.xpm", &texture->w, &texture->h);
-    if (!texture->img)
-        ft_game_exit(data, "cannot load texture (boo)");
-    texture->addr = mlx_get_data_addr(texture->img, &texture->bpp, &texture->line_length, &texture->endian);
-    if (!texture->addr)
-        ft_game_exit(data, "cannot load texture (boo)");
+	t_img	*image;
 
+	image = malloc(sizeof(t_img));
+	image->img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/boo.xpm", &image->w, &image->h);
+	if (!image->img)
+		ft_game_exit(data, "cannot load image (bot)");
+	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->line_length, &image->endian);
+	if (!image->addr)
+		ft_game_exit(data, "cannot load image (bot)");
+	data->monster.sprite.texture = image;
 }

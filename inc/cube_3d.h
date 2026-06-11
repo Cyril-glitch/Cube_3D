@@ -247,7 +247,9 @@ int						init_screen(t_data *data);
 int						init_textures(t_data *data);
 int						ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 void    				ft_init_bfs(t_data *data);
-void   					ft_init_bot_tex(t_data *data, t_img *texture);
+void   					ft_init_bot_tex(t_data *data);
+void					ft_init(t_data *data);
+
 
 
 // --- PARSING ---
