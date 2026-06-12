@@ -22,5 +22,6 @@ int	ft_game_loop(t_data *data)
     ft_game_update(data);
     ft_game_engine(data);
     ft_game_draw(data);
+	ft_display_fps(data);
 		return (0);
 }

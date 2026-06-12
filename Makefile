@@ -1,7 +1,7 @@
 NAME = bin/cube3d
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -Wno-incompatible-pointer-types
+CFLAGS = -Wall -Wextra -Werror -O3 -g3 
 OBJ_DIR = obj
 BIN_DIR = bin
 
@@ -48,8 +48,10 @@ RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/pixel_management_2.c \
 			 src/render_src/raycasting.c \
 			 src/render_src/render_draw.c \
+			 src/render_src/render_utils.c \
 			 src/render_src/trgb.c \
 			 src/render_src/render_fc.c \
+			 src/render_src/render_ath.c \
 			 src/render_src/render_bot.c 
 
 PARSER_SRC = src/parser_src/gnl_no_nl.c \

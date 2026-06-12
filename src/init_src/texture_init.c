@@ -62,13 +62,13 @@ int	init_screen(t_data *data)
 
 int	ft_init_backgrd(t_data *data, t_backgrd *b)
 {
-	b->floor.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/floor.xpm", &b->floor.w, &b->floor.h);
+	b->floor.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/sol.xpm", &b->floor.w, &b->floor.h);
 	if (!b->floor.img)
 		return 0;
 	b->floor.addr = mlx_get_data_addr( b->floor.img, &b->floor.bpp, &b->floor.line_length, &b->floor.endian);
 	if (!b->floor.addr)
 		return 0;
-	b->cieling.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/ciel.xpm", &b->cieling.w, &b->cieling.h);
+	b->cieling.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/plafond.xpm", &b->cieling.w, &b->cieling.h);
 	if (!b->cieling.img)
 		return 0;
 	b->cieling.addr = mlx_get_data_addr( b->cieling.img, &b->cieling.bpp, &b->cieling.line_length, &b->cieling.endian);

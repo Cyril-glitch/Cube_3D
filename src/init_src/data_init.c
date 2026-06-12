@@ -62,4 +62,9 @@ void	init_keys(t_data *data)
 	data->keys.left = 0;
 }
 
+void	ft_init_stats(t_data *data)
+{
+	data->player.health = 100;
+}
+
 

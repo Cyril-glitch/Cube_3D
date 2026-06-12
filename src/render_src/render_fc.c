@@ -28,12 +28,10 @@ static void	ft_get_tex_pos(t_backgrd *flr, t_img tex, int x,int w)
 	cur_y = (1.0 - weight) * flr->pos_y_left + weight * flr->pos_y_right;
 	flr->tex_x = (int)((cur_x - floor(cur_x)) * tex.w) % tex.w;
 	flr->tex_y = (int)((cur_y - floor(cur_y)) * tex.h) % tex.h;	
-	/*
 	if (flr->tex_x < 0)
 		flr->tex_x = 0;
 	if (flr->tex_y < 0)
 		flr->tex_y = 0;
-	*/
 }
 
 void	ft_render_fc(t_data *data, t_backgrd *flr, t_img *floor_tex, t_img *cieling_tex)

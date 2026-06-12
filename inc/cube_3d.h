@@ -25,7 +25,7 @@
 # define TEX_H 64
 # define WALL_PADDING 0.3
 # define PI 3.14159265358979323846
-# define SENS 0.000007
+# define SENS 0.00001
 
 /* --- TOUCHES (MAC/LINUX) --- */
 # ifdef __APPLE__
@@ -130,6 +130,7 @@ typedef struct s_player
 	int					move_right;
 	int					rotate_left;
 	int					rotate_right;
+	int					health;
 	double				move_speed;
 	double				rot_speed;
 	t_point				next_step;
@@ -249,6 +250,7 @@ int						ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 void    				ft_init_bfs(t_data *data);
 void   					ft_init_bot_tex(t_data *data);
 void					ft_init(t_data *data);
+void					ft_init_stats(t_data *data);
 
 
 
@@ -317,6 +319,8 @@ void					ft_rot_right(t_data *data);
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
 unsigned int			get_pixel(t_img *img, int x, int y);
 int						is_close_color(int ref_color, int color);
+int						choose_color(int n);
+int    					ft_set_color(t_ray ray, char **map);
 int						is_transparent_color(int color);
 void					put_img(t_img *dst, t_img *src, int pos_x, int pos_y);
 void					put_tr(t_img *dst, t_img *src, int pos_x, int pos_y);
@@ -331,6 +335,8 @@ void					ft_raycaster(t_data *data, t_ray *ray);
 void					ft_render_draw(t_ray *ray, t_data *data);
 void    				ft_render_fc(t_data *data, t_backgrd *flr,t_img *floor, t_img *cieling);
 void					ft_draw_bot(t_data *data, t_player *player);
+void					ft_draw_health(t_data *data, int health);
+void					ft_display_fps(t_data *data);
 
 
 // --- MINIMAP ---
