@@ -51,6 +51,8 @@ void ft_map_display(char **grid)
                 printf(B_BLUE "1" RESET);
             else if (ft_is_player(grid[y][x]))
                 printf(GOLD "%c" RESET, grid[y][x]);
+            else if (grid[y][x] == 'M')
+                printf(PURPLE "%c" RESET, grid[y][x]);
             else 
                 printf("%c", grid[y][x]);
             x++;

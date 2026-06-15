@@ -1,30 +1,5 @@
 #include "../../inc/cube_3d.h"
 
-int	choose_color(int n)
-{
-	if (n == 1)
-		return (0xf54242);
-	if (n == 2)
-		return (0x5df542);
-	if (n == 3)
-		return (0x4542f5);
-	if (n == 4)
-		return (0xf542d7);
-	if (n == 5)
-		return (0xf5d142);
-	return (0x0d0d0d);
-}
-
-int    ft_set_color(t_ray ray, char **map)
-{
-	int color;
-
-	color = choose_color(map[ray.map_y][ray.map_x] - 48);
-	if (ray.side)
-		color /= 2;
-	return color;
-}
-
 void    ft_wall_draw(t_ray *ray, t_data *data)
 {
 	int x;
@@ -97,6 +72,8 @@ void    ft_render_draw(t_ray *ray, t_data *data)
 	ft_wall_draw(ray, data);
 	if (!draw_sprites(data, &data->player))
 		return ;
+	ft_draw_bot(data, &data->player);
+	ft_draw_health(data, data->player.health);
 	if (data->mini_map.exist)
 	{
 		ft_memset(data->mini_map.image.addr, 0, data->mini_map.size * data->mini_map.size * 4);

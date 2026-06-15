@@ -1,7 +1,7 @@
 NAME = bin/cube3d
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -Wno-incompatible-pointer-types
+CFLAGS = -Wall -Wextra -Werror -O3 -g3 -Wno-incompatible-pointer-types
 OBJ_DIR = obj
 BIN_DIR = bin
 
@@ -12,6 +12,7 @@ LIB = $(LIBDIR)lib/libft.a
 MLX_DIR = ./minilibx-linux
 
 # MiniLibX 
+MLX_LIB_FILE = $(MLX_DIR)/lib/libmlx.a
 MLX_LIB_FILE = $(MLX_DIR)/lib/libmlx.a
 MLX_INC = -I$(MLX_DIR)
 MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
@@ -24,7 +25,9 @@ INIT_SRC = src/init_src/data_init.c \
 		   src/init_src/mlx_init.c \
 		   src/init_src/doors_init.c \
 		   src/init_src/sprites_init.c \
-		   src/init_src/init.c
+		   src/init_src/init.c\
+		   src/init_src/init.c \
+		   src/init_src/bfs_init.c  
 
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
@@ -34,7 +37,15 @@ CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 UPDATE_SRC = src/update/hooks.c \
 			 src/update/move.c \
 			 src/update/rotate.c \
-			 src/update/update.c
+			 src/update/update.c \
+			 src/update/bfs.c \
+			 src/update/bfs_utils.c \
+			 src/update/set_bfs.c \
+			 src/update/get_target_path.c \
+			 src/update/get_next_step.c \
+			 src/update/bot_move.c
+
+
 
 RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/draw_sprites.c \
@@ -42,8 +53,11 @@ RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/pixel_management_2.c \
 			 src/render_src/raycasting.c \
 			 src/render_src/render.c \
+			 src/render_src/render_utils.c \
 			 src/render_src/trgb.c \
-			 src/render_src/render_fc.c
+			 src/render_src/render_fc.c \
+			 src/render_src/render_ath.c \
+			 src/render_src/render_bot.c 
 
 PARSER_SRC = src/parser_src/gnl_no_nl.c \
 			 src/parser_src/gnl.c \

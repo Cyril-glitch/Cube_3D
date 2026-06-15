@@ -5,9 +5,7 @@ void	update_time(t_data *data)
 	data->old_time = data->time;
 	data->time = get_time(data->start);
 	data->frame_time = (data->time - data->old_time) / 1000.0;
-	/*if (data->frame_time > 0)
-		printf("FPS : %f\n", 1 / data->frame_time);*/
-	data->player.rot_speed = data->frame_time * 5.0;
+	data->player.rot_speed = data->frame_time * 2.5;
 	data->player.move_speed = data->frame_time * 3.0;
 }
 
@@ -68,4 +66,5 @@ void	update(t_data *data)
 	handle_movements(data);
 	update_doors(data);
 	handle_camera(data);
+	ft_bot_move(data);
 }

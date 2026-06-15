@@ -43,6 +43,16 @@ static void	ft_check_player(t_data *data, char **grid, int y, int x)
 	}
 }
 
+static void	ft_check_monster(t_data *data, char **grid , int y , int x)
+{
+	if (grid[y][x] == 'M')
+	{
+		data->monster.pos_y = y;
+		data->monster.pos_x = x;
+    	data->map.grid[y][x] = '0';
+	}
+}
+
 void	ft_map_checker(t_data *data, t_player *player, char **grid)
 {
 	int y;
@@ -57,6 +67,7 @@ void	ft_map_checker(t_data *data, t_player *player, char **grid)
 		{
 			ft_check_map_content(data, grid, y, x);
 			ft_check_player(data, grid, y, x);
+			ft_check_monster(data, grid, y, x);
 			x++;
 		}
 		y++;

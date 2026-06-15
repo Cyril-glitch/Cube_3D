@@ -104,7 +104,7 @@ int	init_screen(t_data *data)
 
 int	ft_init_backgrd(t_data *data, t_backgrd *b)
 {
-	b->floor.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/floor.xpm", &b->floor.w, &b->floor.h);
+	b->floor.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/sol.xpm", &b->floor.w, &b->floor.h);
 	if (!b->floor.img)
 		return (0);
 	b->floor.addr = mlx_get_data_addr( b->floor.img, &b->floor.bpp, &b->floor.line_length, &b->floor.endian);
@@ -117,4 +117,18 @@ int	ft_init_backgrd(t_data *data, t_backgrd *b)
 	if (!b->ceiling.addr)
 		return (0);
 	return (1);
+}
+
+void   ft_init_bot_tex(t_data *data)
+{
+	t_img	*image;
+
+	image = malloc(sizeof(t_img));
+	image->img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/boo.xpm", &image->w, &image->h);
+	if (!image->img)
+		ft_game_exit(data, "cannot load image (bot)");
+	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->line_length, &image->endian);
+	if (!image->addr)
+		ft_game_exit(data, "cannot load image (bot)");
+	data->monster.sprite.texture = image;
 }

@@ -27,7 +27,7 @@
 # define WALL_PADDING 0.3
 # define INTERACT_DIST 1
 # define PI 3.14159265358979323846
-# define SENS 0.0004
+# define SENS 0.0005
 
 # define DOOR_TEXT 4
 # define SPRITE_1_TEXT_NB 63
@@ -71,6 +71,20 @@ typedef struct s_point
 	int					y;
 }						t_point;
 
+typedef	struct s_bfs
+{
+	int		max_h;
+	int		max_w;
+	int		count;
+	int		waiters;
+	t_point start;
+	t_point target;
+	t_point *queue;
+	t_point *came_from;
+}	t_bfs;
+
+
+
 typedef struct s_keys
 {
 	int					w;
@@ -110,6 +124,22 @@ typedef struct s_door
 	bool	opening;
 	bool	closing;
 }	t_door;
+typedef struct s_sprite_type
+{
+	int		color;
+	double	x;
+	double	y;
+	double	inv_det;
+	double	transform_x;
+	double	transform_y;
+	int		screen_x;
+	int		h;
+	int		w;
+	int		draw_start_y;
+	int		draw_start_x;
+	int		draw_end_y;
+	int		draw_end_x;
+}	t_sprite_type;
 
 typedef struct s_player
 {
@@ -126,8 +156,11 @@ typedef struct s_player
 	int					move_right;
 	int					rotate_left;
 	int					rotate_right;
+	int					health;
 	double				move_speed;
 	double				rot_speed;
+	t_point				next_step;
+	t_sprite			sprite;
 }						t_player;
 
 typedef struct s_ray
@@ -225,6 +258,8 @@ typedef struct s_data
 	t_backgrd			bgrd;
 
 	t_player			player;
+	t_player			monster;
+	t_bfs				bfs;
 	t_ray				*ray;
 	t_keys				keys;
 
@@ -244,8 +279,14 @@ int						init_mlx_and_ray(t_data *data);
 int						init_screen(t_data *data);
 int						init_textures(t_data *data);
 int						init_sprite_textures(t_data *data);
-int						ft_init_backgrd(t_data *data, t_backgrd *bgrd);
+int							ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 int 					init_global(t_data *data, char **av);
+void    				ft_init_bfs(t_data *data);
+void   					ft_init_bot_tex(t_data *data);
+void					ft_init(t_data *data);
+void					ft_init_stats(t_data *data);
+
+
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -287,6 +328,17 @@ int						ft_game_loop(t_data *data);
 void					safe_cleanup(t_data *data);
 void					init_hooks(t_data *data);
 int						ft_mouse_rot(int mouse_x, int mouse_y,t_data *data);
+
+void    				ft_bfs(t_data *data, t_bfs *bfs);
+void 					ft_init_camefrom(t_bfs *bfs);
+void 					ft_init_start(t_player monster,t_bfs *bfs);
+void 					ft_init_target(t_player player, t_bfs *bfs);
+void 					ft_init_research(t_player monster, t_player player, t_bfs *bfs);
+void 					ft_get_target_path(t_data *data, t_bfs *bfs, t_point *cur);
+void 					ft_get_next_step(t_player *monster, t_bfs *bfs, t_point start, t_point target);
+void    				ft_bot_move(t_data *data);
+
+int 					ft_get_index(t_point p, t_bfs bfs);
 void					update(t_data *data);
 
 // --- MOUVEMENTS ---
@@ -302,6 +354,8 @@ void					ft_rot_right(t_data *data);
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
 unsigned int			get_pixel(t_img *img, int x, int y);
 int						is_close_color(int ref_color, int color);
+int						choose_color(int n);
+int    					ft_set_color(t_ray ray, char **map);
 int						is_transparent_color(int color);
 void					put_img(t_img *dst, t_img *src, int pos_x, int pos_y);
 void					put_tr(t_img *dst, t_img *src, int pos_x, int pos_y);
@@ -315,6 +369,9 @@ unsigned int			getb1(int trgb);
 void					ft_raycaster(t_data *data, t_ray *ray);
 void					ft_render_draw(t_ray *ray, t_data *data);
 void    				ft_render_fc(t_data *data, t_backgrd *flr,t_img *floor, t_img *cieling);
+void					ft_draw_bot(t_data *data, t_player *player);
+void					ft_draw_health(t_data *data, int health);
+void					ft_display_fps(t_data *data);
 
 
 // --- MINIMAP ---
@@ -334,6 +391,9 @@ int						draw_sprites(t_data *data, t_player *player);
 t_door					*get_door(char **grid, t_door *door, int x, int y);
 int						ft_count_doors(char **grid);
 int						init_doors(t_data *data, char **grid);
+void					compute_sprite_transformation(t_data *data, t_player *player, int sprite_id, t_sprite_type *sprite);
+void					compute_sprite_bounds(t_data *data, t_sprite_type *sprite);
+void					render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite);
 
 // --- UTILITAIRES ---
 void					ft_display_logo(void);
