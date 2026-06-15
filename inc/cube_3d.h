@@ -3,7 +3,7 @@
 # define CUBE_3D_H
 
 # include "../libft/inc/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/include/mlx.h"
 # include "color.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -25,7 +25,7 @@
 # define TEX_H 64
 # define WALL_PADDING 0.3
 # define PI 3.14159265358979323846
-# define SENS 0.00001
+# define SENS 0.0005
 
 /* --- TOUCHES (MAC/LINUX) --- */
 # ifdef __APPLE__

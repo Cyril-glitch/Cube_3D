@@ -44,7 +44,7 @@ static void ft_move_up(t_data *data, double target_y, double speed)
 
 void    ft_bot_move(t_data *data)
 {
-    double  speed = 0.15;
+    double  speed = 0.03;
     double  target_x;
     double  target_y;
 

@@ -1,7 +1,7 @@
 NAME = bin/cube3d
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O3 -g3 
+CFLAGS = -Wall -Wextra -Werror -O3 -g3 -Wno-incompatible-pointer-types
 OBJ_DIR = obj
 BIN_DIR = bin
 
@@ -12,7 +12,7 @@ LIB = $(LIBDIR)lib/libft.a
 MLX_DIR = ./minilibx-linux
 
 # MiniLibX 
-MLX_LIB_FILE = $(MLX_DIR)/libmlx.a
+MLX_LIB_FILE = $(MLX_DIR)/lib/libmlx.a
 MLX_INC = -I$(MLX_DIR)
 MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
