@@ -12,6 +12,25 @@
 
 #include "../../inc/cube_3d.h"
 
+typedef struct s_sprite_type
+{
+	int		color;
+	double	x;
+	double	y;
+	double	inv_det;
+	double	transform_x;
+	double	transform_y;
+	int		screen_x;
+	int		h;
+	int		w;
+	int		draw_start_y;
+	int		draw_start_x;
+	int		draw_end_y;
+	int		draw_end_x;
+	int		current_frame;
+	int		tex_x;
+	int		tex_y;
+}	t_sprite_type;
 
 void	compute_sprite_transformation(t_data *data, t_player *player, int sprite_id, t_sprite_type *sprite)
 {
@@ -41,33 +60,46 @@ void	compute_sprite_bounds(t_data *data, t_sprite_type *sprite)
 		sprite->draw_end_x = data->screen.w - 1;
 }
 
+void	put_pixel_sprite(t_data *data, t_sprite_type *sprite, int sprite_id, t_point p)
+{
+	int	d;
+	int	current_frame;
+
+	current_frame = sprite->current_frame;
+	d = p.y * 256 - data->screen.h * 128 + sprite->h * 128;
+	sprite->tex_y = (d * data->sprites[sprite_id].texture[current_frame]->h / sprite->h) / 256;
+	if (sprite->tex_x < data->sprites[sprite_id].texture[current_frame]->w && sprite->tex_x >= 0
+		&& sprite->tex_y < data->sprites[sprite_id].texture[current_frame]->h && sprite->tex_y >= 0)
+	{
+		sprite->color = get_pixel(data->sprites[sprite_id].texture[current_frame], sprite->tex_x, sprite->tex_y);
+		if (!is_close_color(sprite->color, 0))
+			my_mlx_pixel_put(&data->screen, p.x, p.y, sprite->color);
+	}
+}
+
 void	render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite)
 {
-	int	x;
-	int	y;
+	t_point	p;
+	int		current_frame;
+	double	time;
 
-	x = sprite->draw_start_x;
-	while (x < sprite->draw_end_x)
+	p.x = sprite->draw_start_x;
+	while (p.x < sprite->draw_end_x)
 	{
-		int	tex_x = (int)(256 * (x - (- sprite->w / 2 + sprite->screen_x)) * data->sprites[sprite_id].texture->w / sprite->w) / 256;
-		if (sprite->transform_y > 0 && x > 0 && x < data->screen.w && sprite->transform_y < data->ray[x].perp_wall_dist)
+		time = get_time(data->start);
+		sprite->current_frame = (int)(time / 150.0) % SPRITE_1_TEXT_NB;
+		current_frame = sprite->current_frame;
+		sprite->tex_x = (int)(256 * (p.x - (- sprite->w / 2 + sprite->screen_x)) * data->sprites[sprite_id].texture[current_frame]->w / sprite->w) / 256;
+		if (sprite->transform_y > 0 && p.x > 0 && p.x < data->screen.w && sprite->transform_y < data->ray[p.x].perp_wall_dist)
 		{
-			y = sprite->draw_start_y;
-			while (y < sprite->draw_end_y)
+			p.y = sprite->draw_start_y;
+			while (p.y < sprite->draw_end_y)
 			{
-				int d = y * 256 - data->screen.h * 128 + sprite->h * 128;
-				int	tex_y = (d * data->sprites[sprite_id].texture->h / sprite->h) / 256;
-				if (tex_x < data->sprites[sprite_id].texture->w && tex_x >= 0
-					&& tex_y < data->sprites[sprite_id].texture->h && tex_y >= 0)
-				{
-					sprite->color = get_pixel(data->sprites[sprite_id].texture, tex_x, tex_y);
-					if (sprite->color != 0)
-						my_mlx_pixel_put(&data->screen, x, y, sprite->color);
-				}
-				y++;
+				put_pixel_sprite(data, sprite, sprite_id, p);
+				p.y++;
 			}
 		}
-		x++;
+		p.x++;
 	}
 }
 

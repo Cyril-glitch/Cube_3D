@@ -24,10 +24,27 @@ int	init_arrow(t_data *data, t_mini_map *map)
 	return (1);
 }
 
+static void	rotate_sprite_pixel(t_rotation rotation, t_img *dest, t_img arrow)
+{
+	int	color;
+
+	rotation.d.x = rotation.dst.x - rotation.center;
+	rotation.d.y = rotation.dst.y - rotation.center;
+	rotation.src.x = rotation.d.x * rotation.cos_a + rotation.d.y * rotation.sin_a;
+	rotation.src.y = -rotation.d.x * rotation.sin_a + rotation.d.y * rotation.cos_a;
+	rotation.src.x += rotation.center;
+	rotation.src.y += rotation.center;
+	if (rotation.src.x >= 0 && rotation.src.x < arrow.w
+		&& rotation.src.y >= 0 && rotation.src.y < arrow.h)
+	{
+		color = get_pixel(&arrow, rotation.src.x, rotation.src.y);
+		my_mlx_pixel_put(dest, rotation.dst.x, rotation.dst.y, color);
+	}
+}
+
 void	fill_rotated_sprite(t_img *dest, t_img arrow, double angle)
 {
 	t_rotation	rotation;
-	int			color;
 
 	rotation.center = arrow.w / 2;
 	rotation.cos_a = cos(angle);
@@ -38,18 +55,7 @@ void	fill_rotated_sprite(t_img *dest, t_img arrow, double angle)
 		rotation.dst.x = 0;
 		while (rotation.dst.x < dest->w)
 		{
-			rotation.d.x = rotation.dst.x - rotation.center;
-			rotation.d.y = rotation.dst.y - rotation.center;
-			rotation.src.x = rotation.d.x * rotation.cos_a + rotation.d.y * rotation.sin_a;
-			rotation.src.y = -rotation.d.x * rotation.sin_a + rotation.d.y * rotation.cos_a;
-			rotation.src.x += rotation.center;
-			rotation.src.y += rotation.center;
-			if (rotation.src.x >= 0 && rotation.src.x < arrow.w
-				&& rotation.src.y >= 0 && rotation.src.y < arrow.h)
-			{
-				color = get_pixel(&arrow, rotation.src.x, rotation.src.y);
-				my_mlx_pixel_put(dest, rotation.dst.x, rotation.dst.y, color);
-			}
+			rotate_sprite_pixel(rotation, dest, arrow);
 			rotation.dst.x++;
 		}
 		rotation.dst.y++;
@@ -93,8 +99,6 @@ int	generate_rotated_arrows(t_data *data, t_mini_map *map)
 
 int	init_mini_map(t_data *data, t_mini_map *map)
 {
-	map->image.img = NULL;
-	map->image.addr = NULL;
 	map->exist = 1;
 	map->size = data->win_size.x / 5;
 	map->image.w = map->size;

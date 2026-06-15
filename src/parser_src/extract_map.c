@@ -28,10 +28,16 @@ static void	ft_is_cuted_map(t_data *data, char **line, char *ret)
 
 static void	ft_load_map(t_data *data, t_map *map, char *ret)
 {
+	int	i;
+
 	map->grid = ft_split(ret, '\n');
 	free(ret);
 	if (!map->grid)
 		ft_game_exit(data, "cannot extract map.");
+	i = 0;
+	while (map->grid[i])
+        i++;
+    map->height = i;
 }
 
 void	ft_extract_map(t_data *data, t_map *map, char **line)

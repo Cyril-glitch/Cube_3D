@@ -38,7 +38,6 @@ void	ft_render_fc(t_data *data, t_backgrd *flr, t_img *floor_tex, t_img *cieling
 {
 	int x;
 	int y;
-
 	int color_floor;
 	int color_ceil;
 

@@ -14,7 +14,7 @@ int	get_map_tile(t_data *data, int x, int y)
 	int	res;
 	int	len;
 
-	if (y < 0 || y > 13)
+	if (y < 0 || y > data->map.height)
 		return (-1);
 	len = ft_strlen(data->map.grid[y]);
 	if (x < 0 || x >= len)
@@ -30,7 +30,7 @@ int	get_tile_color(int a)
 	else if (a == 1)
 		return (0x00555555);
 	else if (a == 2)
-		return (0x00D4D4D4);
+		return (0x00336699);
 	else if (a == 3)
 		return (0x00336699);
 	else if (a == 4)
