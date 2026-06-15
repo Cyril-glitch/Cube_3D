@@ -12,30 +12,13 @@
 
 #include "../../inc/cube_3d.h"
 
-typedef struct s_sprite_type
-{
-	int		color;
-	double	x;
-	double	y;
-	double	inv_det;
-	double	transform_x;
-	double	transform_y;
-	int		screen_x;
-	int		h;
-	int		w;
-	int		draw_start_y;
-	int		draw_start_x;
-	int		draw_end_y;
-	int		draw_end_x;
-	int		current_frame;
-	int		tex_x;
-	int		tex_y;
-}	t_sprite_type;
-
 void	compute_sprite_transformation(t_data *data, t_player *player, int sprite_id, t_sprite_type *sprite)
 {
-	sprite->x = data->sprites[sprite_id].x - player->pos_x;
-	sprite->y = data->sprites[sprite_id].y - player->pos_y;
+	t_sprite	*sprites;
+
+	sprites = data->sprites;
+	sprite->x = sprites[sprite_id].x - player->pos_x;
+	sprite->y = sprites[sprite_id].y - player->pos_y;
 	sprite->inv_det = 1.0 / (player->plane_x * player->dir_y - player->dir_x * player->plane_y);
 	sprite->transform_x = sprite->inv_det * (player->dir_y * sprite->x - player->dir_x * sprite->y);
 	sprite->transform_y = sprite->inv_det * (-player->plane_y * sprite->x + player->plane_x * sprite->y);
@@ -64,14 +47,16 @@ void	put_pixel_sprite(t_data *data, t_sprite_type *sprite, int sprite_id, t_poin
 {
 	int	d;
 	int	current_frame;
+	t_sprite	*sprites;
 
+	sprites = data->sprites;
 	current_frame = sprite->current_frame;
 	d = p.y * 256 - data->screen.h * 128 + sprite->h * 128;
-	sprite->tex_y = (d * data->sprites[sprite_id].texture[current_frame]->h / sprite->h) / 256;
-	if (sprite->tex_x < data->sprites[sprite_id].texture[current_frame]->w && sprite->tex_x >= 0
-		&& sprite->tex_y < data->sprites[sprite_id].texture[current_frame]->h && sprite->tex_y >= 0)
+	sprite->tex_y = (d * sprites[sprite_id].textures[current_frame].h / sprite->h) / 256;
+	if (sprite->tex_x < sprites[sprite_id].textures[current_frame].w && sprite->tex_x >= 0
+		&& sprite->tex_y < sprites[sprite_id].textures[current_frame].h && sprite->tex_y >= 0)
 	{
-		sprite->color = get_pixel(data->sprites[sprite_id].texture[current_frame], sprite->tex_x, sprite->tex_y);
+		sprite->color = get_pixel(&sprites[sprite_id].textures[current_frame], sprite->tex_x, sprite->tex_y);
 		if (!is_close_color(sprite->color, 0))
 			my_mlx_pixel_put(&data->screen, p.x, p.y, sprite->color);
 	}
@@ -80,16 +65,23 @@ void	put_pixel_sprite(t_data *data, t_sprite_type *sprite, int sprite_id, t_poin
 void	render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite)
 {
 	t_point	p;
+	t_sprite	*sprites;
 	int		current_frame;
+	int		nb_frames;
 	double	time;
 
+	sprites = data->sprites;
+	if (sprite->type == SPRITE_M)
+		nb_frames = SPRITE_M_TEXT_NB;
+	else
+		nb_frames = SPRITE_T_TEXT_NB;
 	p.x = sprite->draw_start_x;
 	while (p.x < sprite->draw_end_x)
 	{
 		time = get_time(data->start);
-		sprite->current_frame = (int)(time / 150.0) % SPRITE_1_TEXT_NB;
+		sprite->current_frame = (int)(time / 150.0) % nb_frames;
 		current_frame = sprite->current_frame;
-		sprite->tex_x = (int)(256 * (p.x - (- sprite->w / 2 + sprite->screen_x)) * data->sprites[sprite_id].texture[current_frame]->w / sprite->w) / 256;
+		sprite->tex_x = (int)(256 * (p.x - (- sprite->w / 2 + sprite->screen_x)) * sprites[sprite_id].textures[current_frame].w / sprite->w) / 256;
 		if (sprite->transform_y > 0 && p.x > 0 && p.x < data->screen.w && sprite->transform_y < data->ray[p.x].perp_wall_dist)
 		{
 			p.y = sprite->draw_start_y;
@@ -103,10 +95,11 @@ void	render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite)
 	}
 }
 
-void	draw_single_sprite(t_data *data, t_player *player, int sprite_id)
+void	draw_single_sprite(t_data *data, t_player *player, int sprite_id, int type)
 {
 	t_sprite_type	sprite;
 
+	sprite.type = type;
 	compute_sprite_transformation(data, player, sprite_id, &sprite);
 	if (sprite.transform_y <= 0)
 		return ;
@@ -116,16 +109,18 @@ void	draw_single_sprite(t_data *data, t_player *player, int sprite_id)
 
 int	draw_sprites(t_data *data, t_player *player)
 {
-	int		*order;
+	t_point		*order;
 	int		i;
-
-	order = sort_sprites(data, data->nb_sprites);
+	int		count;
+	
+	count = data->t_sprites->number + data->m_sprites->number;
+	order = sort_sprites(data, count);
 	if (!order)
 		return (0);
 	i = 0;
-	while (i < data->nb_sprites)
+	while (i < count)
 	{
-		draw_single_sprite(data, player, order[i]);
+		draw_single_sprite(data, player, order[i].x, order[i].y);
 		i++;
 	}
 	free(order);

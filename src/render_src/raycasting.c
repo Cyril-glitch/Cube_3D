@@ -97,6 +97,7 @@ int	ray_hits_visible_part_of_door(t_data *data, t_ray *ray)
 	double	t;
 	double	hit_pos;
 
+	t = 0;
 	ray->door = get_door(data->map.grid, data->doors, ray->map_x, ray->map_y);
 	if (!ray->door)
 		return (0);

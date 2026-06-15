@@ -76,3 +76,16 @@ void	put_tr2(t_img *dst, t_img *src, int pos_x, int pos_y)
 		y++;
 	}
 }
+
+int ft_anti_aliasing(int color)
+{
+	int r;
+	int g;
+	int b;
+
+	r = (color >> 16) & 0xFF;
+	g = (color >> 8) & 0xFF;
+	b = color & 0xFF;
+
+	return ((g > 30 && g > r * 1.4 && g > b * 1.4));
+}

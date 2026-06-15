@@ -36,5 +36,5 @@ void ft_init_research(t_player monster, t_player player, t_bfs *bfs)
     
     bfs->queue[bfs->waiters] = bfs->start;
     bfs->waiters++;
-    bfs->came_from[ft_get_index(bfs->start, *bfs)] = bfs->start; 
+    bfs->came_from[ft_get_index(bfs->start, *bfs)] = bfs->start;
 }

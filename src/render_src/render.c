@@ -72,7 +72,7 @@ void    ft_render_draw(t_ray *ray, t_data *data)
 	ft_wall_draw(ray, data);
 	if (!draw_sprites(data, &data->player))
 		return ;
-	ft_draw_bot(data, &data->player);
+	//ft_draw_bot(data, &data->player);
 	ft_draw_health(data, data->player.health);
 	if (data->mini_map.exist)
 	{

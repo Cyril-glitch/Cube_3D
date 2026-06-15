@@ -39,7 +39,11 @@ void	init_null(t_data *data)
 	init_null_mini_map(&data->mini_map);
 	data->screen.img = NULL;
 	data->textures = NULL;
-	data->sprites = NULL;
+	data->t_textures = NULL;
+	data->m_textures = NULL;
+	data->t_sprites = NULL;
+	data->m_sprites = NULL;
+	data->monsters = NULL;
 	data->doors = NULL;
 	data->bgrd.floor.img = NULL;
 	data->bgrd.ceiling.img = NULL;
@@ -87,5 +91,3 @@ void	ft_init_stats(t_data *data)
 {
 	data->player.health = 100;
 }
-
-

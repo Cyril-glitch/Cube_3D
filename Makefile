@@ -25,8 +25,8 @@ INIT_SRC = src/init_src/data_init.c \
 		   src/init_src/mlx_init.c \
 		   src/init_src/doors_init.c \
 		   src/init_src/sprites_init.c \
+		   src/init_src/init_monsters.c \
 		   src/init_src/init.c\
-		   src/init_src/init.c \
 		   src/init_src/bfs_init.c  
 
 
@@ -57,7 +57,6 @@ RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/trgb.c \
 			 src/render_src/render_fc.c \
 			 src/render_src/render_ath.c \
-			 src/render_src/render_bot.c 
 
 PARSER_SRC = src/parser_src/gnl_no_nl.c \
 			 src/parser_src/gnl.c \

@@ -2,8 +2,8 @@
 
 static void	compute_bot_transformation(t_data *data, t_player *player, t_sprite_type *sprite)
 {
-	sprite->x = data->monster.sprite.x - player->pos_x;
-	sprite->y = data->monster.sprite.y - player->pos_y;
+	sprite->x = data->monster.sprite->x - player->pos_x;
+	sprite->y = data->monster.sprite->y - player->pos_y;
 	sprite->inv_det = 1.0 / (player->plane_x * player->dir_y - player->dir_x * player->plane_y);
 	sprite->transform_x = sprite->inv_det * (player->dir_y * sprite->x - player->dir_x * sprite->y);
 	sprite->transform_y = sprite->inv_det * (-player->plane_y * sprite->x + player->plane_x * sprite->y);
@@ -58,8 +58,8 @@ void	ft_draw_bot(t_data *data, t_player *player)
 {
 	t_sprite_type	bot_render;
 
-	data->monster.sprite.x = data->monster.pos_x;
-	data->monster.sprite.y = data->monster.pos_y;
+	data->monster.sprite->x = data->monster.pos_x;
+	data->monster.sprite->y = data->monster.pos_y;
 	compute_bot_transformation(data, player, &bot_render);
 
 	if (bot_render.transform_y <= 0)

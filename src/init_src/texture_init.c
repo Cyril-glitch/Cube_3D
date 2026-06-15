@@ -15,16 +15,16 @@ static char *ft_get_dir_str(t_map *map, int i)
 	return (map->no_path);
 }
 
-int	init_textures(t_data *data)
+void	init_textures(t_data *data)
 {
 	int		i;
 	char	*s;
 
-	data->textures = malloc(sizeof(t_img) * (5 + SPRITE_TEXT_TOTAL));
+	data->textures = malloc(sizeof(t_img) * 5);
 	if (!data->textures)
-		return (0);
+		ft_game_exit(data, "textures init");
 	i = 0;
-	while (i < (5 + SPRITE_TEXT_TOTAL))
+	while (i < 5)
 		data->textures[i++].img = NULL;
 	i = 0;
 	while (i < 5)
@@ -33,14 +33,13 @@ int	init_textures(t_data *data)
 		data->textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
 			&data->textures[i].w, &data->textures[i].h);
 		if (!data->textures[i].img)
-			return (0);
+			ft_game_exit(data, "textures init");
 		data->textures[i].addr = mlx_get_data_addr(data->textures[i].img, &data->textures[i].bpp,
 				&data->textures[i].line_length, &data->textures[i].endian);
 		if (!data->textures[i].addr)
-			return (0);
+			ft_game_exit(data, "textures init");
 		i++;
 	}
-	return (1);
 }
 
 static char	*get_asset_path(int i, char *path, char *asset_name)
@@ -63,72 +62,101 @@ static char	*get_asset_path(int i, char *path, char *asset_name)
 	return (res);
 }
 
-int	init_sprite_textures(t_data *data)
+void	init_monster_textures(t_data *data)
 {
 	int		i;
+	int		nb_frames;
 	char	*s;
 
-	i = 5;
-	while (i < (5 + SPRITE_1_TEXT_NB))
+	nb_frames = SPRITE_M_TEXT_NB;
+	data->m_textures = malloc(sizeof(t_img) * nb_frames);
+	if (!data->t_textures)
+		ft_game_exit(data, "monster textures init");
+	i = 0;
+	while (i < nb_frames)
+		data->m_textures[i++].img = NULL;
+	i = 0;
+	while (i < nb_frames)
 	{
-		s = get_asset_path(i + 1 - 5, "assets/carboard/", "_carboard.xpm");
+		s = get_asset_path(i + 1, "assets/carboard/", "_carboard.xpm");
 		if (!s)
-			return (0);
-		data->textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
-			&data->textures[i].w, &data->textures[i].h);
-		if (!data->textures[i].img)
-			return (0);
-		data->textures[i].addr = mlx_get_data_addr(data->textures[i].img, &data->textures[i].bpp,
-				&data->textures[i].line_length, &data->textures[i].endian);
-		if (!data->textures[i].addr)
-			return (0);
+			ft_game_exit(data, "monster textures init");
+		data->m_textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
+			&data->m_textures[i].w, &data->m_textures[i].h);
 		free(s);
+		if (!data->m_textures[i].img)
+			ft_game_exit(data, "monster textures init");
+		data->m_textures[i].addr = mlx_get_data_addr(data->m_textures[i].img, &data->m_textures[i].bpp,
+				&data->m_textures[i].line_length, &data->m_textures[i].endian);
+		if (!data->m_textures[i].addr)
+			ft_game_exit(data, "monster textures init");
 		i++;
 	}
-	return (1);
 }
 
-int	init_screen(t_data *data)
+void	init_treasure_textures(t_data *data)
+{
+	int		i;
+	int		nb_frames;
+	char	*s;
+
+	nb_frames = SPRITE_T_TEXT_NB;
+	data->t_textures = malloc(sizeof(t_img) * nb_frames);
+	if (!data->t_textures)
+		ft_game_exit(data, "treasure textures init");
+	i = 0;
+	while (i < nb_frames)
+		data->t_textures[i++].img = NULL;
+	i = 0;
+	while (i < nb_frames)
+	{
+		s = get_asset_path(i + 1, "assets/carboard/", "_carboard.xpm");
+		if (!s)
+			ft_game_exit(data, "sprites init");
+		data->t_textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
+			&data->t_textures[i].w, &data->t_textures[i].h);
+		free(s);
+		if (!data->t_textures[i].img)
+			ft_game_exit(data, "treasure textures init");
+		data->t_textures[i].addr = mlx_get_data_addr(data->t_textures[i].img, &data->t_textures[i].bpp,
+				&data->t_textures[i].line_length, &data->t_textures[i].endian);
+		if (!data->t_textures[i].addr)
+			ft_game_exit(data, "treasure textures init");
+		i++;
+	}
+}
+
+void	init_sprites_textures(t_data *data)
+{
+	init_treasure_textures(data);
+	init_monster_textures(data);
+}
+
+void	init_screen(t_data *data)
 {
 	data->screen.img = mlx_new_image(data->mlx, data->win_size.x, data->win_size.y);
 	if (!data->screen.img)
-		return (0);
+		ft_game_exit(data, "screen init");;
 	data->screen.addr = mlx_get_data_addr(data->screen.img, &data->screen.bpp,
 			&data->screen.line_length, &data->screen.endian);
 	if (!data->screen.addr)
-		return (0);
+		ft_game_exit(data, "screen init");
 	data->screen.w = data->win_size.x;
 	data->screen.h = data->win_size.y;
-	return (1);
 }
 
-int	ft_init_backgrd(t_data *data, t_backgrd *b)
+void	ft_init_backgrd(t_data *data, t_backgrd *b)
 {
 	b->floor.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/sol.xpm", &b->floor.w, &b->floor.h);
 	if (!b->floor.img)
-		return (0);
+		ft_game_exit(data, "background init");
 	b->floor.addr = mlx_get_data_addr( b->floor.img, &b->floor.bpp, &b->floor.line_length, &b->floor.endian);
 	if (!b->floor.addr)
-		return (0);
+		ft_game_exit(data, "background init");
 	b->ceiling.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/ciel.xpm", &b->ceiling.w, &b->ceiling.h);
 	if (!b->ceiling.img)
-		return (0);
+		ft_game_exit(data, "background init");
 	b->ceiling.addr = mlx_get_data_addr( b->ceiling.img, &b->ceiling.bpp, &b->ceiling.line_length, &b->ceiling.endian);
 	if (!b->ceiling.addr)
-		return (0);
-	return (1);
-}
-
-void   ft_init_bot_tex(t_data *data)
-{
-	t_img	*image;
-
-	image = malloc(sizeof(t_img));
-	image->img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/boo.xpm", &image->w, &image->h);
-	if (!image->img)
-		ft_game_exit(data, "cannot load image (bot)");
-	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->line_length, &image->endian);
-	if (!image->addr)
-		ft_game_exit(data, "cannot load image (bot)");
-	data->monster.sprite.texture = image;
+		ft_game_exit(data, "background init");
 }

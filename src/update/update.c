@@ -62,9 +62,16 @@ void	update_doors(t_data *data)
 
 void	update(t_data *data)
 {
+	int	i;
+
 	update_time(data);
 	handle_movements(data);
 	update_doors(data);
 	handle_camera(data);
-	ft_bot_move(data);
+	i = 0;
+	while (i < data->m_sprites->number)
+	{
+		ft_bot_move(data, i);
+		i++;
+	}
 }

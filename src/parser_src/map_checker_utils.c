@@ -2,12 +2,7 @@
 
 int	ft_is_map_content(char c)
 {
-<<<<<<< HEAD
-	return (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == 'M' ||c== '2' || c == '1' || c == '0'
-=======
-	return (c == 'N' || c == 'S' || c == 'W' || c == 'E' 
-			|| c == VER_DOOR || c == HOR_DOOR || c == SPRITE_1 || c == '1' || c == '0'
->>>>>>> main
+	return (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == VER_DOOR || c == HOR_DOOR || c == SPRITE_T || c== SPRITE_M || c == '1' || c == '0'
 		|| c == ' ');
 }
 

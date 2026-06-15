@@ -30,16 +30,13 @@
 # define SENS 0.0005
 
 # define DOOR_TEXT 4
-# define SPRITE_1_TEXT_NB 63
-# define SPRITE_2_TEXT_NB 8
-# define SPRITE_3_TEXT_NB 8
-# define SPRITE_TEXT_TOTAL (SPRITE_1_TEXT_NB + SPRITE_2_TEXT_NB + SPRITE_3_TEXT_NB)
+# define SPRITE_M_TEXT_NB 63
+# define SPRITE_T_TEXT_NB 63
 
 # define HOR_DOOR '2'
 # define VER_DOOR '3'
-# define SPRITE_1 '4'
-# define SPRITE_2 '5'
-# define SPRITE_3 '6'
+# define SPRITE_M 'M'
+# define SPRITE_T 'T'
 
 /* --- TOUCHES (MAC/LINUX) --- */
 # ifdef __APPLE__
@@ -111,8 +108,10 @@ typedef struct s_sprite
 {
 	double	x;
 	double	y;
-	t_img	*texture[SPRITE_1_TEXT_NB];
+	t_img	*textures;
 	int		current_frame;
+	int		number;
+	int		type;
 }	t_sprite;
 
 typedef struct s_door
@@ -124,8 +123,10 @@ typedef struct s_door
 	bool	opening;
 	bool	closing;
 }	t_door;
+
 typedef struct s_sprite_type
 {
+	int		type;
 	int		color;
 	double	x;
 	double	y;
@@ -139,6 +140,9 @@ typedef struct s_sprite_type
 	int		draw_start_x;
 	int		draw_end_y;
 	int		draw_end_x;
+	int		current_frame;
+	int		tex_x;
+	int		tex_y;
 }	t_sprite_type;
 
 typedef struct s_player
@@ -160,7 +164,8 @@ typedef struct s_player
 	double				move_speed;
 	double				rot_speed;
 	t_point				next_step;
-	t_sprite			sprite;
+	t_sprite			*sprite;
+	t_bfs				bfs;
 }						t_player;
 
 typedef struct s_ray
@@ -251,14 +256,17 @@ typedef struct s_data
 	t_point				win_size;
 	t_img				screen;
 	t_img				*textures;
+	t_img				*m_textures;
+	t_img				*t_textures;
+	t_sprite			*m_sprites;
+	t_sprite			*t_sprites;
 	t_sprite			*sprites;
-	int					nb_sprites;
 	t_door				*doors;
 	int					nb_doors;
 	t_backgrd			bgrd;
 
 	t_player			player;
-	t_player			monster;
+	t_player			*monsters;
 	t_bfs				bfs;
 	t_ray				*ray;
 	t_keys				keys;
@@ -275,15 +283,16 @@ void					ft_init_data(t_data *data);
 void					init_null(t_data *data);
 void					init_player_dir(t_data *data);
 void					init_keys(t_data *data);
-int						init_mlx_and_ray(t_data *data);
-int						init_screen(t_data *data);
-int						init_textures(t_data *data);
-int						init_sprite_textures(t_data *data);
-int							ft_init_backgrd(t_data *data, t_backgrd *bgrd);
-int 					init_global(t_data *data, char **av);
+void					init_mlx_and_ray(t_data *data);
+void					init_screen(t_data *data);
+void					init_textures(t_data *data);
+void					init_sprites_textures(t_data *data);
+void					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
+void					ft_init_sprites(t_data *data);
+void					ft_init_global_sprites_tab(t_data *data);
+void					init_monsters(t_data *data);
+void 					init_global(t_data *data, char **av);
 void    				ft_init_bfs(t_data *data);
-void   					ft_init_bot_tex(t_data *data);
-void					ft_init(t_data *data);
 void					ft_init_stats(t_data *data);
 
 
@@ -329,14 +338,14 @@ void					safe_cleanup(t_data *data);
 void					init_hooks(t_data *data);
 int						ft_mouse_rot(int mouse_x, int mouse_y,t_data *data);
 
-void    				ft_bfs(t_data *data, t_bfs *bfs);
+void    				ft_bfs(t_data *data, t_player *monster, t_bfs *bfs);
 void 					ft_init_camefrom(t_bfs *bfs);
 void 					ft_init_start(t_player monster,t_bfs *bfs);
 void 					ft_init_target(t_player player, t_bfs *bfs);
 void 					ft_init_research(t_player monster, t_player player, t_bfs *bfs);
 void 					ft_get_target_path(t_data *data, t_bfs *bfs, t_point *cur);
 void 					ft_get_next_step(t_player *monster, t_bfs *bfs, t_point start, t_point target);
-void    				ft_bot_move(t_data *data);
+void    				ft_bot_move(t_data *data, int i);
 
 int 					ft_get_index(t_point p, t_bfs bfs);
 void					update(t_data *data);
@@ -364,6 +373,7 @@ unsigned int			gett1(int trgb);
 unsigned int			getr1(int trgb);
 unsigned int			getg1(int trgb);
 unsigned int			getb1(int trgb);
+int						ft_anti_aliasing(int color);
 
 // --- RAYCASTING & RENDER ---
 void					ft_raycaster(t_data *data, t_ray *ray);
@@ -376,21 +386,21 @@ void					ft_display_fps(t_data *data);
 
 // --- MINIMAP ---
 int						get_map_tile(t_data *data, int x, int y);
-int						init_mini_map(t_data *data, t_mini_map *map);
+void					init_mini_map(t_data *data, t_mini_map *map);
 void					draw_map_img(t_data *data, t_mini_map *map,
 							t_player player);
 
 // --- SPRITES ---
 int						count_sprites(t_map *map, int type);
-int						ft_assign_sprites_textures(t_data *data, int type);
+void					ft_assign_sprites_textures(t_data *data, int type);
 void					init_sprites_pos(t_sprite *sprites, t_map *map, int type);
-int						*sort_sprites(t_data *data, int count);
+t_point					*sort_sprites(t_data *data, int count);
 int						draw_sprites(t_data *data, t_player *player);
 
 // --- DOORS ---
 t_door					*get_door(char **grid, t_door *door, int x, int y);
 int						ft_count_doors(char **grid);
-int						init_doors(t_data *data, char **grid);
+void					init_doors(t_data *data, char **grid);
 void					compute_sprite_transformation(t_data *data, t_player *player, int sprite_id, t_sprite_type *sprite);
 void					compute_sprite_bounds(t_data *data, t_sprite_type *sprite);
 void					render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite);

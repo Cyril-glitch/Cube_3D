@@ -97,7 +97,7 @@ int	generate_rotated_arrows(t_data *data, t_mini_map *map)
 	return (1);
 }
 
-int	init_mini_map(t_data *data, t_mini_map *map)
+void	init_mini_map(t_data *data, t_mini_map *map)
 {
 	map->exist = 1;
 	map->size = data->win_size.x / 5;
@@ -106,20 +106,19 @@ int	init_mini_map(t_data *data, t_mini_map *map)
 	if (map->size < 32 || map->size > data->win_size.y / 2)
 	{
 		map->exist = 0;
-		return (1);
+		return ;
 	}
 	map->image.img = mlx_new_image(data->mlx, map->size, map->size);
 	if (!map->image.img)
-		return (0);
+		ft_game_exit(data, "mini map init");
 	map->image.addr = mlx_get_data_addr(map->image.img, &map->image.bpp,
 			&map->image.line_length, &map->image.endian);
 	if (!map->image.addr)
-		return (0);
+		ft_game_exit(data, "mini map init");
 	map->tile_size = map->size / 13;
 	map->radius = 7;
 	if (!init_arrow(data, map))
-		return (0);
+		ft_game_exit(data, "mini map init");
 	if (!generate_rotated_arrows(data, map))
-		return (0);
-	return (1);
+		ft_game_exit(data, "mini map init");
 }

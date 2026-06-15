@@ -47,7 +47,7 @@ void	ft_parse_door(t_door *door, int x, int y, int orientation)
 	door->open = 0.0;
 }
 
-int	init_doors(t_data *data, char **grid)
+void	init_doors(t_data *data, char **grid)
 {
 	int	x;
 	int	y;
@@ -56,7 +56,7 @@ int	init_doors(t_data *data, char **grid)
 	data->nb_doors = ft_count_doors(grid);
 	data->doors = malloc(data->nb_doors * sizeof(t_door));
 	if (!data->doors)
-		return (0);
+		ft_game_exit(data, "doors init");
 	i = 0;
 	y = 0;
 	while (grid[y])
@@ -73,7 +73,6 @@ int	init_doors(t_data *data, char **grid)
 		}
 		y++;
 	}
-	return (1);
 }
 
 t_door	*get_door(char **grid, t_door *door, int x, int y)
