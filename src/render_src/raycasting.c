@@ -41,7 +41,6 @@ void	ft_get_sidedist(t_ray *ray , t_player player)
 		ray->step_x = 1;
 		ray->side_dist_x = (ray->map_x + 1.0 - player.pos_x) * ray->delta_dist_x; 
 	}
-
 	if (ray->dir_y < 0)
 	{
 		ray->step_y = -1;
@@ -67,15 +66,58 @@ void	ft_init_dda(t_ray *ray, t_player player)
 	ft_get_sidedist(ray, player);
 }
 
+static int	get_hit_pos(t_data *data, t_ray *ray, double *t, double *hit_pos)
+{
+	if ((fabs(ray->dir_x) < 1e-8 && ray->door->vertical)
+		|| (fabs(ray->dir_y) < 1e-8 && !ray->door->vertical))
+	{
+		ray->door_dist = 1e30;
+		return (1);
+	}
+	if (ray->door->vertical)
+	{
+		*t = ((double)ray->map_x + 0.5 - data->player.pos_x) / ray->dir_x;
+		*hit_pos = data->player.pos_y + *t * ray->dir_y;
+		if (*hit_pos < ray->map_y || *hit_pos > ray->map_y + 1.0)
+			return (0);
+	}
+	else
+	{
+		*t = ((double)ray->map_y + 0.5 - data->player.pos_y) / ray->dir_y;
+		*hit_pos = data->player.pos_x + *t * ray->dir_x;
+		if (*hit_pos < ray->map_x || *hit_pos > ray->map_x + 1.0)
+			return (0);
+	}
+	*hit_pos -= floor(*hit_pos);
+	return (1);
+}
+
+int	ray_hits_visible_part_of_door(t_data *data, t_ray *ray)
+{
+	double	t;
+	double	hit_pos;
+
+	ray->door = get_door(data->map.grid, data->doors, ray->map_x, ray->map_y);
+	if (!ray->door)
+		return (0);
+	if (!get_hit_pos(data, ray, &t, &hit_pos))
+		return (0);
+	if (t <= 0)
+		return (0);
+	if (hit_pos >= ray->door->open)
+	{
+		ray->door_dist = t;
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_perform_dda(t_data *data, t_ray *ray, char **map)
 {
-	int hit;
-
-	(void)data;
-	hit = 0;
-	while (hit == 0)
+	ray->hit = 0;
+	while (ray->hit == 0)
 	{
-		//si l'axe le plus proche est horizontal
+		//si l'axe le plus proche est vertical
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
 			ray->side_dist_x += ray->delta_dist_x;	//avance jusqu'au prochaine axe
@@ -91,7 +133,12 @@ void	ft_perform_dda(t_data *data, t_ray *ray, char **map)
 		/*if (get_map_tile(data, ray->map_x, ray->map_y) == -1)
 			hit = 1;*/
 		if (map[ray->map_y][ray->map_x] == '1')
-			hit = 1;
+			ray->hit = 1;
+		else if (map[ray->map_y][ray->map_x] == VER_DOOR || map[ray->map_y][ray->map_x] == HOR_DOOR)
+		{
+			if (ray_hits_visible_part_of_door(data, ray))
+				ray->hit = 2;
+		}
 	}
 }
 
@@ -104,6 +151,12 @@ void	ft_get_draw_data(t_ray *ray, int h)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 	else
 		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
+
+	if (ray->hit == 2)
+	{
+		ray->side = !ray->door->vertical;
+		ray->perp_wall_dist = ray->door_dist;
+	}
 
 	//on set la hauteur du mur
 	ray->line_height =  (int)(h / ray->perp_wall_dist);
@@ -121,27 +174,37 @@ void	ft_get_draw_data(t_ray *ray, int h)
 		ray->draw_end = h - 1;
 }
 
+static void	get_tex_number(t_data *data, t_ray *ray)
+{
+	if (ray->hit == 2)
+		ray->tex_num = DOOR_TEXT;
+	else
+	{
+		ray->tex_num = get_map_tile(data, ray->map_x, ray->map_y) - 1;
+		if (ray->tex_num < 0 || ray->tex_num > 1)
+			return ;
+		if (ray->side == 0)
+		{
+			if (ray->step_x == 1)
+				ray->tex_num = 3;
+			else
+				ray->tex_num = 2;
+		}
+		else if (ray->side == 1)
+		{
+			if (ray->step_y == 1)
+				ray->tex_num = 1;
+			else
+				ray->tex_num = 0;
+		}
+	}
+}
+
 void    ft_get_tex_coordinates(t_data *data, t_ray *ray, t_player player)
 {
 	double  wall_x;
 
-	ray->tex_num = get_map_tile(data, ray->map_x, ray->map_y) - 1;
-	if (ray->tex_num < 0 || ray->tex_num > 1)
-		return ;
-	if (ray->side == 0)
-	{
-		if (ray->step_x == 1)
-			ray->tex_num = 3;
-		else
-			ray->tex_num = 2;
-	}
-	else if (ray->side == 1)
-	{
-		if (ray->step_y == 1)
-			ray->tex_num = 1;
-		else
-			ray->tex_num = 0;
-	}
+	get_tex_number(data, ray);
 	if (ray->side == 0)
 		wall_x = player.pos_y + ray->perp_wall_dist * ray->dir_y;
 	else
@@ -150,6 +213,11 @@ void    ft_get_tex_coordinates(t_data *data, t_ray *ray, t_player player)
 	ray->tex_x = (int)(wall_x * (double)data->textures[ray->tex_num].w);
 	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
 		ray->tex_x = data->textures[ray->tex_num].w - ray->tex_x - 1;
+	if (ray->hit == 2)
+	{
+		ray->tex_x = (int)((wall_x - ray->door->open) * (double)data->textures[ray->tex_num].w);
+		ray->tex_x = ray->tex_x % data->textures[ray->tex_num].w;
+	}
 	ray->step = 1.0 * data->textures[ray->tex_num].h / ray->line_height;
 	ray->tex_pos = (ray->draw_start - data->win_size.y / 2 + ray->line_height / 2) * ray->step;
 }

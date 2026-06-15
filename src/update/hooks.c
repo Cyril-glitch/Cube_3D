@@ -82,6 +82,8 @@ int	key_release(int keycode, void *param)
 		data->keys.s = 0;
 	if (keycode == XK_d)
 		data->keys.d = 0;
+	if (keycode == XK_e)
+		close_or_open_door(data);
 	if (keycode == K_LEFT)
 		data->keys.left = 0;
 	if (keycode == K_RIGHT)

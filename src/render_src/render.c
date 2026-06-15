@@ -93,7 +93,7 @@ void	ft_render_map(t_data *data, t_mini_map *map)
 void    ft_render_draw(t_ray *ray, t_data *data)
 {
 	(void)ray;
-	ft_render_fc(data, &data->bgrd, &data->bgrd.floor, &data->bgrd.cieling);
+	ft_render_fc(data, &data->bgrd, &data->bgrd.floor, &data->bgrd.ceiling);
 	ft_wall_draw(ray, data);
 	if (!draw_sprites(data, &data->player))
 		return ;

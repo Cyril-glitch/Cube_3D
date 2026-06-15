@@ -7,23 +7,43 @@ void    ft_init_data(t_data *data)
                 ft_game_exit(data, "memory allocation failed.\n");        
 }
 
-void	init_null(t_data *data)
+static void	init_null_map(t_map *map)
+{
+	map->grid = NULL;
+	map->no_path = NULL;
+	map->so_path = NULL;
+	map->ea_path = NULL;
+	map->we_path = NULL;
+	map->ceiling_color = 0;
+	map->floor_color = 0;
+}
+
+static void	init_null_mini_map(t_mini_map *mini_map)
 {
 	int	i;
 
-	data->mlx = NULL;
-	data->mlx_win = NULL;
-	data->map.grid = NULL;
-	data->mini_map.image.img = NULL;
-	data->mini_map.arrow.img = NULL;
+	mini_map->image.img = NULL;
+	mini_map->arrow.img = NULL;
 	i = 0;
 	while (i < 64)
-		data->mini_map.rotation[i++].img = NULL;
+		mini_map->rotation[i++].img = NULL;
+}
+
+void	init_null(t_data *data)
+{
+	ft_init_data(data);
+	data->line = NULL;
+	data->mlx = NULL;
+	data->mlx_win = NULL;
+	init_null_map(&data->map);
+	init_null_mini_map(&data->mini_map);
 	data->screen.img = NULL;
-	data->screen.addr = NULL;
 	data->textures = NULL;
-	data->ray = NULL;
 	data->sprites = NULL;
+	data->doors = NULL;
+	data->bgrd.floor.img = NULL;
+	data->bgrd.ceiling.img = NULL;
+	data->ray = NULL;
 }
 
 void	init_player_dir(t_data *data)
@@ -58,6 +78,7 @@ void	init_keys(t_data *data)
 	data->keys.a = 0;
 	data->keys.s = 0;
 	data->keys.d = 0;
+	data->keys.e = 0;
 	data->keys.right = 0;
 	data->keys.left = 0;
 }

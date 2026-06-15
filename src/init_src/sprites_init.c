@@ -25,7 +25,7 @@ int	count_sprites(t_map *map, int type)
 		x = 0;
 		while (map->grid[y][x])
 		{
-			if (map->grid[y][x] == type + '0')
+			if (map->grid[y][x] == type)
 				res++;
 			x++;
 		}
@@ -34,19 +34,26 @@ int	count_sprites(t_map *map, int type)
 	return (res);
 }
 
-int	init_sprites_texture(t_data *data, int type)
+int	ft_assign_sprites_textures(t_data *data, int type)
 {
 	int	i;
+	int	j;
 
+	if (!init_sprite_textures(data))
+		return (0);
 	data->nb_sprites = count_sprites(&data->map, type);
-	printf("nb sprites : %d\n", data->nb_sprites);
 	data->sprites = malloc(sizeof(t_sprite) * data->nb_sprites);
 	if (!data->sprites)
 		return (0);
 	i = 0;
 	while (i < data->nb_sprites)
 	{
-		data->sprites[i].texture = &data->textures[type + 2];
+		j = 0;
+		while (j < SPRITE_1_TEXT_NB)
+		{
+			data->sprites[i].texture[j] = &data->textures[j + 5];
+			j++;
+		}
 		i++;
 	}
 	return (1);
@@ -65,7 +72,7 @@ void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)
 		x = 0;
 		while (map->grid[y][x])
 		{
-			if (map->grid[y][x] == type + '0')
+			if (map->grid[y][x] == type)
 			{
 				sprites[i].x = (double)x + 0.5;
 				sprites[i].y = (double)y + 0.5;
@@ -77,28 +84,12 @@ void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)
 	}
 }
 
-int	*sort_sprites(t_data *data, int count)
+static void	ft_sort2(int *res, double *dist, int count)
 {
 	int	i;
 	int	j;
-	int	*res;
-	double	*dist;
-	int tmp;
+	int	tmp;
 
-	res = malloc(sizeof(int) * count);
-	if (!res)
-		return (NULL);
-	dist = malloc(sizeof(double) * count);
-	if (!dist)
-		return (free(res), NULL);
-	i = 0;
-	while (i < count)
-	{
-		res[i] = i;
-		dist[i] = (data->player.pos_x - data->sprites[i].x) * (data->player.pos_x - data->sprites[i].x) +
-					(data->player.pos_y - data->sprites[i].y) * (data->player.pos_y - data->sprites[i].y);
-		i++;
-	}
 	i = 0;
 	while (i < count - 1)
 	{
@@ -115,6 +106,31 @@ int	*sort_sprites(t_data *data, int count)
 		}
 		i++;
 	}
+}
+
+int	*sort_sprites(t_data *data, int count)
+{
+	int	i;
+	int	*res;
+	double	*dist;
+
+	res = malloc(sizeof(int) * count);
+	if (!res)
+		return (NULL);
+	dist = malloc(sizeof(double) * count);
+	if (!dist)
+		return (free(res), NULL);
+	i = 0;
+	while (i < count)
+	{
+		res[i] = i;
+		dist[i] = (data->player.pos_x - data->sprites[i].x) * 
+					(data->player.pos_x - data->sprites[i].x) +
+					(data->player.pos_y - data->sprites[i].y) *
+					(data->player.pos_y - data->sprites[i].y);
+		i++;
+	}
+	ft_sort2(res, dist, count);
 	free(dist);
 	return (res);
 }

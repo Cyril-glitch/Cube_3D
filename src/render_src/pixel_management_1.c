@@ -24,7 +24,7 @@ int	is_close_color(int ref_color, int color)
 {
 	unsigned int	tolerance;
 
-	tolerance = 190;
+	tolerance = 10;
 	if (ft_abs(getr1(color) - getr1(ref_color)) <= tolerance
 		&& ft_abs(getg1(color) - getg1(ref_color)) <= tolerance
 		&& ft_abs(getb1(color) - getb1(ref_color)) <= tolerance)
