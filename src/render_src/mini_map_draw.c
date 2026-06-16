@@ -9,17 +9,17 @@ typedef struct s_player_icon
 	t_point	start;
 }	t_player_icon;
 
-int	get_map_tile(t_data *data, int x, int y)
+int	get_map_tile(char **grid, int h, int x, int y)
 {
 	int	res;
 	int	len;
 
-	if (y < 0 || y > data->map.height)
+	if (y < 0 || y > h)
 		return (-1);
-	len = ft_strlen(data->map.grid[y]);
+	len = ft_strlen(grid[y]);
 	if (x < 0 || x >= len)
 		return (-1);
-	res = data->map.grid[y][x] - '0';
+	res = grid[y][x] - '0';
 	return (res);
 }
 
@@ -29,13 +29,11 @@ int	get_tile_color(int a)
 		return (0x00D4D4D4);
 	else if (a == 1)
 		return (0x00555555);
-	else if (a == 2)
+	else if (a == VER_DOOR - '0')
 		return (0x00336699);
-	else if (a == 3)
+	else if (a == HOR_DOOR - '0')
 		return (0x00336699);
-	else if (a == 4)
-		return (0x00777777);
-	return (0x00FF00FF);
+	return (0x00D4D4D4);
 }
 
 void	draw_big_pixel(t_img *img, int x, int y, int color)
@@ -58,13 +56,13 @@ void	draw_big_pixel(t_img *img, int x, int y, int color)
 
 int	is_edge_of_square(t_data *data, t_mini_map *map, int x, int y)
 {
-	if (x == map->screen.x && get_map_tile(data, map->map_tile.x - 1, map->map_tile.y) != 1)
+	if (x == map->screen.x && get_map_tile(data->map.grid, data->map.height, map->map_tile.x - 1, map->map_tile.y) != 1)
 		return (1);
-	if (x == map->screen.x + map->tile_size - 1 && get_map_tile(data, map->map_tile.x + 1, map->map_tile.y) != 1)
+	if (x == map->screen.x + map->tile_size - 1 && get_map_tile(data->map.grid, data->map.height, map->map_tile.x + 1, map->map_tile.y) != 1)
 		return (1);
-	if (y == map->screen.y && get_map_tile(data, map->map_tile.x, map->map_tile.y - 1) != 1)
+	if (y == map->screen.y && get_map_tile(data->map.grid, data->map.height, map->map_tile.x, map->map_tile.y - 1) != 1)
 		return (1);
-	if (y == map->screen.y + map->tile_size - 1 && get_map_tile(data, map->map_tile.x, map->map_tile.y + 1) != 1)
+	if (y == map->screen.y + map->tile_size - 1 && get_map_tile(data->map.grid, data->map.height, map->map_tile.x, map->map_tile.y + 1) != 1)
 		return (1);
 	return (0);
 }
@@ -138,7 +136,7 @@ void	draw_map_img(t_data *data, t_mini_map *map, t_player player)
 		map->map_tile.y = (int)player.pos_y - map->radius;
 		while (map->map_tile.y <= (int)player.pos_y + map->radius)
 		{
-			tile_value = get_map_tile(data, map->map_tile.x, map->map_tile.y);
+			tile_value = get_map_tile(data->map.grid, data->map.height, map->map_tile.x, map->map_tile.y);
 			if (tile_value >= 0)
 			{
 				map->screen.x = map->center + (map->map_tile.x - player.pos_x) * map->tile_size;

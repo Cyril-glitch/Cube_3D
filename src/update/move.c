@@ -1,17 +1,17 @@
 #include "../../inc/cube_3d.h"
 
-int	can_move(t_data *data, int x, int y)
+int	can_move(t_door *doors, t_map *map, int x, int y)
 {
 	t_door	*door;
 	char	tile_value;
 
 	//tile_value = data->map.grid[y][x];
-	tile_value = get_map_tile(data, x, y);
+	tile_value = get_map_tile(map->grid, map->height, x, y);
 	if (tile_value == 0)
 		return (1);
 	if (tile_value == VER_DOOR - '0' || tile_value == HOR_DOOR - '0')
 	{
-		door = get_door(data->map.grid, data->doors, x, y);
+		door = get_door(map->grid, doors, x, y);
 		if (door->open == 1.0)
 			return (1);
 	}
@@ -26,9 +26,9 @@ void	move_up(t_data *data)
 
 	new_pos_y = player->pos_y + player->dir_y * (player->move_speed + WALL_PADDING);
 	new_pos_x = player->pos_x + player->dir_x * (player->move_speed + WALL_PADDING);
-	if (can_move(data, (int)player->pos_x, (int)new_pos_y))
+	if (can_move(data->doors, &data->map, (int)player->pos_x, (int)new_pos_y))
 		player->pos_y += player->dir_y * player->move_speed;
-	if (can_move(data, (int)new_pos_x, (int)player->pos_y))
+	if (can_move(data->doors, &data->map, (int)new_pos_x, (int)player->pos_y))
 		player->pos_x += player->dir_x * player->move_speed;
 }
 
@@ -41,9 +41,9 @@ void	move_down(t_data *data)
 
 	new_pos_y = player->pos_y - player->dir_y * (player->move_speed + WALL_PADDING);
 	new_pos_x = player->pos_x - player->dir_x * (player->move_speed + WALL_PADDING);
-	if (can_move(data, (int)player->pos_x, (int)new_pos_y))
+	if (can_move(data->doors, &data->map, (int)player->pos_x, (int)new_pos_y))
 		player->pos_y -= player->dir_y * player->move_speed;
-	if (can_move(data, (int)new_pos_x, (int)player->pos_y))
+	if (can_move(data->doors, &data->map, (int)new_pos_x, (int)player->pos_y))
 		player->pos_x -= player->dir_x * player->move_speed;
 }
 
@@ -55,9 +55,9 @@ void	move_left(t_data *data)
 
 	new_pos_y = player->pos_y + -player->dir_x * (player->move_speed + WALL_PADDING);
 	new_pos_x = player->pos_x + player->dir_y  * (player->move_speed + WALL_PADDING);
-	if (can_move(data, (int)player->pos_x, (int)new_pos_y))
+	if (can_move(data->doors, &data->map, (int)player->pos_x, (int)new_pos_y))
 		player->pos_y += -player->dir_x * player->move_speed;
-	if (can_move(data, (int)new_pos_x, (int)player->pos_y))
+	if (can_move(data->doors, &data->map, (int)new_pos_x, (int)player->pos_y))
 		player->pos_x += player->dir_y * player->move_speed;
 }
 
@@ -69,9 +69,9 @@ void	move_right(t_data *data)
 
 	new_pos_y = player->pos_y +  player->dir_x * (player->move_speed + WALL_PADDING);
 	new_pos_x = player->pos_x + -player->dir_y * (player->move_speed + WALL_PADDING);
-	if (can_move(data, (int)player->pos_x, (int)new_pos_y))
+	if (can_move(data->doors, &data->map, (int)player->pos_x, (int)new_pos_y))
 		player->pos_y += player->dir_x * player->move_speed;
-	if (can_move(data, (int)new_pos_x, (int)player->pos_y))
+	if (can_move(data->doors, &data->map, (int)new_pos_x, (int)player->pos_y))
 		player->pos_x += -player->dir_y * player->move_speed;
 }
 

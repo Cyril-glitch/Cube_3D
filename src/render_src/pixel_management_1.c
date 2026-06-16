@@ -13,10 +13,12 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 unsigned int	get_pixel(t_img *img, int x, int y)
 {
 	char	*pixel;
-
+	int 	bpp;
+	
+	bpp = img->bpp >> 3;
 	if (x < 0 || y < 0 || x > img->w || y > img->h)
 		return (0);
-	pixel = img->addr + (y * img->line_length + x * (img->bpp / 8));
+	pixel = img->addr + (y * img->line_length + x * bpp);
 	return (*(unsigned int *)pixel);
 }
 

@@ -22,6 +22,6 @@ double	get_time(double start)
 
 	if (gettimeofday(&tv, NULL) == -1)
 		return (-1);
-	current = (double)(tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	current = (double)tv.tv_sec * 1000.0 + (double)tv.tv_usec / 1000.0;
 	return (current - start);
 }

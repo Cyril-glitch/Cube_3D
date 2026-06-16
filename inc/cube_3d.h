@@ -80,8 +80,6 @@ typedef	struct s_bfs
 	t_point *came_from;
 }	t_bfs;
 
-
-
 typedef struct s_keys
 {
 	int					w;
@@ -102,6 +100,8 @@ typedef struct s_img
 	int					endian;
 	int					w;
 	int					h;
+	int					half_w;
+	int					half_h;
 }						t_img;
 
 typedef struct s_sprite
@@ -133,6 +133,8 @@ typedef struct s_door
 
 typedef struct s_sprite_type
 {
+	t_sprite	*sprites;
+	int		sprite_id;
 	int		type;
 	int		color;
 	double	x;
@@ -140,9 +142,14 @@ typedef struct s_sprite_type
 	double	inv_det;
 	double	transform_x;
 	double	transform_y;
+	double	inv_transform_y;
 	int		screen_x;
-	int		h;
 	int		w;
+	int		h;
+	double	inv_w;
+	double	inv_h;
+	int		half_w;
+	int		half_h;
 	int		draw_start_y;
 	int		draw_start_x;
 	int		draw_end_y;
@@ -197,10 +204,10 @@ typedef struct s_ray
 	int					tex_x;
 	double				tex_pos;
 	double				step;
+	int					half_h;
 	int					hit;		// 0 si hit rien, 1 si hit mur, 2 si hit porte
 	t_door				*door;
 	double				door_dist;
-	int					debug;
 }						t_ray;
 
 typedef struct s_map
@@ -233,7 +240,7 @@ typedef struct s_mini_map
 
 typedef struct s_backgrd
 {
-    double dist;
+    double *dist;
     double dir_x_left;
     double dir_y_left;
     double dir_x_right;
@@ -242,9 +249,9 @@ typedef struct s_backgrd
     double pos_y_left;
     double pos_x_right;
     double pos_y_right;
-    double row_dist;
-	int	tex_x;
-	int	tex_y;
+    double	row_dist;
+	int		tex_x;
+	int		tex_y;
 	t_img  floor;
 	t_img  ceiling;
 }	t_backgrd;
@@ -345,7 +352,7 @@ void 					ft_init_camefrom(t_bfs *bfs);
 void 					ft_init_research(t_point start, t_point target, t_bfs *bfs);
 void 					ft_get_target_path(t_data *data, t_bfs *bfs, t_point *cur);
 t_point					ft_get_next_step(t_bfs *bfs, t_point start, t_point target);
-void					ft_update_monster_path(t_data *data, t_player *monster);
+void					ft_update_monster_path(t_data *data, t_player *monster, int i);
 int						ft_monster_arrived(t_player *monster);
 void    				ft_bot_move(t_data *data, int i);
 
@@ -385,9 +392,8 @@ void					ft_draw_bot(t_data *data, t_player *player);
 void					ft_draw_health(t_data *data, int health);
 void					ft_display_fps(t_data *data);
 
-
 // --- MINIMAP ---
-int						get_map_tile(t_data *data, int x, int y);
+int						get_map_tile(char **grid, int h, int x, int y);
 void					init_mini_map(t_data *data, t_mini_map *map);
 void					draw_map_img(t_data *data, t_mini_map *map,
 							t_player player);
@@ -403,9 +409,9 @@ int						draw_sprites(t_data *data, t_player *player);
 t_door					*get_door(char **grid, t_door *door, int x, int y);
 int						ft_count_doors(char **grid);
 void					init_doors(t_data *data, char **grid);
-void					compute_sprite_transformation(t_data *data, t_player *player, int sprite_id, t_sprite_type *sprite);
-void					compute_sprite_bounds(t_data *data, t_sprite_type *sprite);
-void					render_sprite(t_data *data, int sprite_id, t_sprite_type *sprite);
+void					compute_sprite_transformation(t_player *player, t_sprite_type *sprite);
+void					compute_sprite_bounds(t_img *screen, t_sprite_type *sprite);
+void					render_sprite(t_data *data, t_img *screen, double start, t_sprite_type *sprite);
 
 // --- UTILITAIRES ---
 void					ft_display_logo(void);

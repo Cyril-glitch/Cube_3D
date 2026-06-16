@@ -2,7 +2,7 @@
 
 static void ft_game_update(t_data *data)
 {
-    update(data);
+	update(data);
 }
 
 static void ft_game_engine(t_data *data)
@@ -13,15 +13,21 @@ static void ft_game_engine(t_data *data)
 
 static void ft_game_draw(t_data *data)
 {
-    ft_render_draw(data->ray, data);
+	ft_render_draw(data->ray, data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);
 }
 
 int	ft_game_loop(t_data *data)
 {
-    ft_game_update(data);
-    ft_game_engine(data);
-    ft_game_draw(data);
+	double t0 = get_time(data->start);
+	ft_game_update(data);
+	printf("\nupdate: %.3f ms\n", get_time(data->start) - t0);
+	t0 = get_time(data->start);
+	ft_game_engine(data);
+	printf("\nengine: %.3f ms\n\n", get_time(data->start) - t0);
+	t0 = get_time(data->start);
+	ft_game_draw(data);
+	printf("total draw: %.3f ms\n", get_time(data->start) - t0);
 	ft_display_fps(data);
 		return (0);
 }

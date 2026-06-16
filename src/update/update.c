@@ -19,8 +19,6 @@ void	handle_movements(t_data *data)
 		move_down(data);	
 	if (data->keys.d)
 		move_right(data);
-	/*if (data->keys.r)
-		close_or_open_door(data);*/
 }
 
 void	handle_camera(t_data *data)
@@ -68,7 +66,7 @@ void	update_monsters(t_data *data)
 	while (i < data->m_sprites->number)
 	{
 		if (ft_monster_arrived(&data->monsters[i]))
-			ft_update_monster_path(data, &data->monsters[i]);
+			ft_update_monster_path(data, &data->monsters[i], i);
 		ft_bot_move(data, i);
 		i++;
 	}

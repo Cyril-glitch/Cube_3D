@@ -2,6 +2,8 @@
 
 void	init_mlx_and_ray(t_data *data)
 {
+	int	i;
+
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		ft_game_exit(data, "mlx init");
@@ -13,4 +15,7 @@ void	init_mlx_and_ray(t_data *data)
 	data->ray = malloc(sizeof(t_ray) * data->win_size.x);
 	if (!data->ray)
 		ft_game_exit(data, "mlx ray init");
+	i = 0;
+	while (i < data->win_size.x)
+		data->ray[i++].half_h = data->win_size.y / 2;
 }

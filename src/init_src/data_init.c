@@ -47,6 +47,7 @@ void	init_null(t_data *data)
 	data->doors = NULL;
 	data->bgrd.floor.img = NULL;
 	data->bgrd.ceiling.img = NULL;
+	data->bgrd.dist = NULL;
 	data->ray = NULL;
 }
 

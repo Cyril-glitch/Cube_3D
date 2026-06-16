@@ -66,11 +66,16 @@ void  ft_get_target_path(t_data *data ,t_bfs *bfs, t_point *cur)
 	}
 }
 
-void	ft_update_monster_path(t_data *data, t_player *monster)
+void	ft_update_monster_path(t_data *data, t_player *monster, int i)
 {
+	int		offsets[4][2] = {{0, 0}, {1, 0}, {-1, 0}, {0, 1}};
+	t_point	target;
+
+	target.x = data->player.pos_x + offsets[i % 4][0];
+	target.y = data->player.pos_y + offsets[i % 4][1];
 	monster->next_step = ft_bfs(data, &monster->bfs,
 							(t_point){(int)monster->pos_x, (int)monster->pos_y},
-							(t_point){(int)data->player.pos_x, (int)data->player.pos_y});
+							(t_point){(int)target.x, (int)target.y});
 }
 
 int	ft_monster_arrived(t_player *monster)

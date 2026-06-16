@@ -143,10 +143,14 @@ void	init_screen(t_data *data)
 		ft_game_exit(data, "screen init");
 	data->screen.w = data->win_size.x;
 	data->screen.h = data->win_size.y;
+	data->screen.half_w = data->win_size.x / 2;
+	data->screen.half_h = data->win_size.y / 2;
 }
 
 void	ft_init_backgrd(t_data *data, t_backgrd *b)
 {
+	int	i;
+
 	b->floor.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/sol.xpm", &b->floor.w, &b->floor.h);
 	if (!b->floor.img)
 		ft_game_exit(data, "background init");
@@ -159,4 +163,13 @@ void	ft_init_backgrd(t_data *data, t_backgrd *b)
 	b->ceiling.addr = mlx_get_data_addr( b->ceiling.img, &b->ceiling.bpp, &b->ceiling.line_length, &b->ceiling.endian);
 	if (!b->ceiling.addr)
 		ft_game_exit(data, "background init");
+	b->dist = malloc(sizeof(double) * data->win_size.y);
+	if (!b->dist)
+		ft_game_exit(data, "background init");
+	i = 0;
+	while (i < data->win_size.y)
+	{
+		b->dist[i] = (data->win_size.y / 2.0) / (i - data->win_size.y / 2.0);
+		i++;
+	}
 }

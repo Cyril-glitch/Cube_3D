@@ -163,25 +163,25 @@ void	ft_get_draw_data(t_ray *ray, int h)
 	ray->line_height =  (int)(h / ray->perp_wall_dist);
 
 	//on set le depart du mur 
-	ray->draw_start = -ray->line_height / 2 + h / 2;
+	ray->draw_start = -ray->line_height / 2 + ray->half_h;
 	//on fait on sorte que le mur descende pas en dessous du cadre
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
 
 	//on set la fin du mur 
-	ray->draw_end = ray->line_height / 2 + h / 2;
+	ray->draw_end = ray->line_height / 2 + ray->half_h;
 	//on fait on sorte que le mur  ne depasse pas la hauteur du cadre
 	if (ray->draw_end >= h)
 		ray->draw_end = h - 1;
 }
 
-static void	get_tex_number(t_data *data, t_ray *ray)
+static void	get_tex_number(char **grid, int h, t_ray *ray)
 {
 	if (ray->hit == 2)
 		ray->tex_num = DOOR_TEXT;
 	else
 	{
-		ray->tex_num = get_map_tile(data, ray->map_x, ray->map_y) - 1;
+		ray->tex_num = get_map_tile(grid, h, ray->map_x, ray->map_y) - 1;
 		if (ray->tex_num < 0 || ray->tex_num > 1)
 			return ;
 		if (ray->side == 0)
@@ -201,26 +201,26 @@ static void	get_tex_number(t_data *data, t_ray *ray)
 	}
 }
 
-void    ft_get_tex_coordinates(t_data *data, t_ray *ray, t_player player)
+void    ft_get_tex_coordinates(t_img *textures, t_map *map, t_ray *ray, t_player player)
 {
 	double  wall_x;
 
-	get_tex_number(data, ray);
+	get_tex_number(map->grid, map->height, ray);
 	if (ray->side == 0)
 		wall_x = player.pos_y + ray->perp_wall_dist * ray->dir_y;
 	else
 		wall_x = player.pos_x + ray->perp_wall_dist * ray->dir_x;
 	wall_x -= floor(wall_x);
-	ray->tex_x = (int)(wall_x * (double)data->textures[ray->tex_num].w);
+	ray->tex_x = (int)(wall_x * (double)textures[ray->tex_num].w);
 	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
-		ray->tex_x = data->textures[ray->tex_num].w - ray->tex_x - 1;
+		ray->tex_x = textures[ray->tex_num].w - ray->tex_x - 1;
 	if (ray->hit == 2)
 	{
-		ray->tex_x = (int)((wall_x - ray->door->open) * (double)data->textures[ray->tex_num].w);
-		ray->tex_x = ray->tex_x % data->textures[ray->tex_num].w;
+		ray->tex_x = (int)((wall_x - ray->door->open) * (double)textures[ray->tex_num].w);
+		ray->tex_x = ray->tex_x % textures[ray->tex_num].w;
 	}
-	ray->step = 1.0 * data->textures[ray->tex_num].h / ray->line_height;
-	ray->tex_pos = (ray->draw_start - data->win_size.y / 2 + ray->line_height / 2) * ray->step;
+	ray->step = 1.0 * textures[ray->tex_num].h / ray->line_height;
+	ray->tex_pos = (ray->draw_start - ray->half_h + ray->line_height / 2) * ray->step;
 }
 
 void	ft_raycaster(t_data *data, t_ray *ray)
@@ -234,7 +234,7 @@ void	ft_raycaster(t_data *data, t_ray *ray)
 		ft_init_dda(&ray[x], data->player);
 		ft_perform_dda(data, &ray[x], data->map.grid);
 		ft_get_draw_data(&ray[x], data->win_size.y);
-		ft_get_tex_coordinates(data, &ray[x], data->player);
+		ft_get_tex_coordinates(data->textures, &data->map, &ray[x], data->player);
 		x++;
 	}
 	data->ray = ray;
