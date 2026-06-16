@@ -12,10 +12,9 @@ void	init_global(t_data *data, char **av)
 	init_sprites_textures(data);
 	ft_init_backgrd(data, &data->bgrd);
 	ft_init_global_sprites_tab(data);
-	init_monsters(data);
 	init_mini_map(data, &data->mini_map);
 	init_doors(data, data->map.grid);
-	ft_init_bfs(data);
+	ft_init_bfs(data, data->monsters);
 	init_player_dir(data);
 	init_keys(data);
 	init_hooks(data);

@@ -114,6 +114,13 @@ typedef struct s_sprite
 	int		type;
 }	t_sprite;
 
+typedef struct s_sprite_order
+{
+    int     index;
+    int     type;
+    double  dist;
+}	t_sprite_order;
+
 typedef struct s_door
 {
 	int		tile_x;
@@ -233,7 +240,7 @@ typedef struct s_backgrd
     double dir_y_right;
     double pos_x_left;
     double pos_y_left;
-    double pos_x_right; 
+    double pos_x_right;
     double pos_y_right;
     double row_dist;
 	int	tex_x;
@@ -241,8 +248,6 @@ typedef struct s_backgrd
 	t_img  floor;
 	t_img  ceiling;
 }	t_backgrd;
-
-
 
 typedef struct s_data
 {
@@ -267,7 +272,6 @@ typedef struct s_data
 
 	t_player			player;
 	t_player			*monsters;
-	t_bfs				bfs;
 	t_ray				*ray;
 	t_keys				keys;
 
@@ -292,10 +296,8 @@ void					ft_init_sprites(t_data *data);
 void					ft_init_global_sprites_tab(t_data *data);
 void					init_monsters(t_data *data);
 void 					init_global(t_data *data, char **av);
-void    				ft_init_bfs(t_data *data);
+void    				ft_init_bfs(t_data *data, t_player *monsters);
 void					ft_init_stats(t_data *data);
-
-
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -338,13 +340,13 @@ void					safe_cleanup(t_data *data);
 void					init_hooks(t_data *data);
 int						ft_mouse_rot(int mouse_x, int mouse_y,t_data *data);
 
-void    				ft_bfs(t_data *data, t_player *monster, t_bfs *bfs);
+t_point					ft_bfs(t_data *data, t_bfs *bfs, t_point start, t_point target);
 void 					ft_init_camefrom(t_bfs *bfs);
-void 					ft_init_start(t_player monster,t_bfs *bfs);
-void 					ft_init_target(t_player player, t_bfs *bfs);
-void 					ft_init_research(t_player monster, t_player player, t_bfs *bfs);
+void 					ft_init_research(t_point start, t_point target, t_bfs *bfs);
 void 					ft_get_target_path(t_data *data, t_bfs *bfs, t_point *cur);
-void 					ft_get_next_step(t_player *monster, t_bfs *bfs, t_point start, t_point target);
+t_point					ft_get_next_step(t_bfs *bfs, t_point start, t_point target);
+void					ft_update_monster_path(t_data *data, t_player *monster);
+int						ft_monster_arrived(t_player *monster);
 void    				ft_bot_move(t_data *data, int i);
 
 int 					ft_get_index(t_point p, t_bfs bfs);
@@ -394,7 +396,7 @@ void					draw_map_img(t_data *data, t_mini_map *map,
 int						count_sprites(t_map *map, int type);
 void					ft_assign_sprites_textures(t_data *data, int type);
 void					init_sprites_pos(t_sprite *sprites, t_map *map, int type);
-t_point					*sort_sprites(t_data *data, int count);
+t_sprite_order			*sort_sprites(t_data *data, int count);
 int						draw_sprites(t_data *data, t_player *player);
 
 // --- DOORS ---

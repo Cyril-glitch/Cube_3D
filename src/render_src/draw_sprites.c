@@ -109,7 +109,7 @@ void	draw_single_sprite(t_data *data, t_player *player, int sprite_id, int type)
 
 int	draw_sprites(t_data *data, t_player *player)
 {
-	t_point		*order;
+	t_sprite_order		*order;
 	int		i;
 	int		count;
 	
@@ -120,7 +120,7 @@ int	draw_sprites(t_data *data, t_player *player)
 	i = 0;
 	while (i < count)
 	{
-		draw_single_sprite(data, player, order[i].x, order[i].y);
+		draw_single_sprite(data, player, order[i].index, order[i].type);
 		i++;
 	}
 	free(order);

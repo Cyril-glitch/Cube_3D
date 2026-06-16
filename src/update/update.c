@@ -60,18 +60,25 @@ void	update_doors(t_data *data)
 	}
 }
 
-void	update(t_data *data)
+void	update_monsters(t_data *data)
 {
 	int	i;
 
+	i = 0;
+	while (i < data->m_sprites->number)
+	{
+		if (ft_monster_arrived(&data->monsters[i]))
+			ft_update_monster_path(data, &data->monsters[i]);
+		ft_bot_move(data, i);
+		i++;
+	}
+}
+
+void	update(t_data *data)
+{
 	update_time(data);
 	handle_movements(data);
 	update_doors(data);
 	handle_camera(data);
-	i = 0;
-	while (i < data->m_sprites->number)
-	{
-		ft_bot_move(data, i);
-		i++;
-	}
+	update_monsters(data);
 }

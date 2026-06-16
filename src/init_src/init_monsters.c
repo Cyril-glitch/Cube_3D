@@ -18,8 +18,8 @@ static void	ft_check_monster(t_data *data, int *i , int y , int x)
 	{
 		data->monsters[*i].pos_y = y;
 		data->monsters[*i].pos_x = x;
-		data->monsters[*i].next_step.x = 0;
-		data->monsters[*i].next_step.y = 0;
+		data->monsters[*i].next_step.y = y;
+		data->monsters[*i].next_step.x = x;
 		data->map.grid[y][x] = '0';
 		*i = *i + 1;
 	}
@@ -47,16 +47,8 @@ void	init_monsters_pos(t_data *data, char **grid)
 
 void	init_monsters(t_data *data)
 {
-	int	i;
-
 	data->monsters = malloc(sizeof(t_player) * data->m_sprites->number);
 	if (!data->monsters)
 		ft_game_exit(data, "allocation failed (monsters)");
-	i = 0;
 	init_monsters_pos(data, data->map.grid);
-	while (i < data->m_sprites->number)
-	{
-		data->monsters[i].sprite = &data->m_sprites[i];
-		i++;
-	}
 }

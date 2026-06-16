@@ -82,6 +82,7 @@ void	ft_init_sprites(t_data *data)
 	ft_assign_t_sprites_textures(data);
 	init_sprites_pos(data->m_sprites, &data->map, SPRITE_M);
 	init_sprites_pos(data->t_sprites, &data->map, SPRITE_T);
+	init_monsters(data);
 }
 
 void	ft_init_global_sprites_tab(t_data *data)
@@ -99,7 +100,12 @@ void	ft_init_global_sprites_tab(t_data *data)
 		data->sprites[i++] = data->t_sprites[j++];
 	j = 0;
 	while (j < data->m_sprites->number)
-		data->sprites[i++] = data->m_sprites[j++];
+	{
+		data->sprites[i] = data->m_sprites[j];
+		data->monsters[j].sprite = &data->sprites[i];
+		i++;
+		j++;
+	}
 }
 
 void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)
@@ -127,11 +133,11 @@ void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)
 	}
 }
 
-static void	ft_sort2(t_point *res, double *dist, int count)
+static void	ft_sort2(t_sprite_order *res, int count)
 {
 	int	i;
 	int	j;
-	t_point	tmp;
+	t_sprite_order	tmp;
 
 	i = 0;
 	while (i < count - 1)
@@ -139,7 +145,7 @@ static void	ft_sort2(t_point *res, double *dist, int count)
 		j = 0;
 		while (j < count - 1)
 		{
-			if (dist[res[j].x] < dist[res[j + 1].x])
+			if (res[j].dist < res[j + 1].dist)
 			{
 				tmp = res[j];
 				res[j] = res[j + 1];
@@ -151,30 +157,25 @@ static void	ft_sort2(t_point *res, double *dist, int count)
 	}
 }
 
-t_point	*sort_sprites(t_data *data, int count)
+t_sprite_order	*sort_sprites(t_data *data, int count)
 {
-	int			i;
-	t_point		*res;
-	double		*dist;
+	int					i;
+	t_sprite_order		*res;
 
-	res = malloc(sizeof(t_point) * count);
+	res = malloc(sizeof(t_sprite_order) * count);
 	if (!res)
 		return (NULL);
-	dist = malloc(sizeof(double) * count);
-	if (!dist)
-		return (free(res), NULL);
 	i = 0;
 	while (i < count)
 	{
-		res[i].x = i;
-		res[i].y = data->sprites[i].type;
-		dist[i] = (data->player.pos_x - data->sprites[i].x) * 
+		res[i].index = i;
+		res[i].type = data->sprites[i].type;
+		res[i].dist = (data->player.pos_x - data->sprites[i].x) * 
 					(data->player.pos_x - data->sprites[i].x) +
 					(data->player.pos_y - data->sprites[i].y) *
 					(data->player.pos_y - data->sprites[i].y);
 		i++;
 	}
-	ft_sort2(res, dist, count);
-	free(dist);
+	ft_sort2(res, count);
 	return (res);
 }

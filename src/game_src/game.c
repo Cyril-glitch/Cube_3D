@@ -8,10 +8,10 @@ static void ft_game_update(t_data *data)
 static void ft_game_engine(t_data *data)
 {
 	ft_memset(data->screen.addr, 0, data->win_size.y * data->win_size.x * 4);
-	ft_raycaster(data, data->ray);    
+	ft_raycaster(data, data->ray);
 }
 
-static void ft_game_draw(t_data *data) 
+static void ft_game_draw(t_data *data)
 {
     ft_render_draw(data->ray, data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->screen.img, 0, 0);

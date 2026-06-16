@@ -54,8 +54,6 @@ void    ft_bot_move(t_data *data, int i)
     ft_move_right(&data->monsters[i], target_x, speed);
     ft_move_up(&data->monsters[i], target_y, speed);
     ft_move_down(&data->monsters[i], target_y, speed);
-    if (data->monsters[i].pos_x == target_x && data->monsters[i].pos_y == target_y)
-    {
-        ft_bfs(data, &data->monsters[i], &data->monsters[i].bfs);
-    }
+    data->monsters[i].sprite->x = data->monsters[i].pos_x;
+    data->monsters[i].sprite->y = data->monsters[i].pos_y;
 }

@@ -95,6 +95,23 @@ static void	ft_free_mini_map(t_data *data, t_mini_map *mini_map)
 	}
 }
 
+void	ft_free_monsters(t_data *data)
+{
+	int	i;
+
+	if (data->monsters)
+	{
+		i = 0;
+		while (i < data->m_sprites->number)
+		{
+			free(data->monsters[i].bfs.queue);
+			free(data->monsters[i].bfs.came_from);
+			i++;
+		}
+	}
+	free(data->monsters);
+}
+
 void	ft_free_data(t_data *data)
 {
 	if (!data)
@@ -102,9 +119,9 @@ void	ft_free_data(t_data *data)
 	free(data->ray);
 	free(data->doors);
 	ft_free_texture(data);
+	ft_free_monsters(data);
 	free(data->t_sprites);
 	free(data->m_sprites);
-	free(data->monsters);
     ft_free_maps_settings(data);
 	ft_free_mini_map(data, &data->mini_map);
 	ft_free_mlx(data);
