@@ -112,6 +112,7 @@ void	ft_free_monsters(t_data *data)
 		}
 	}
 	free(data->monsters);
+	free(data->offsets);
 }
 
 void	ft_free_data(t_data *data)

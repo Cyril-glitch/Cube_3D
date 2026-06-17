@@ -21,8 +21,8 @@
 #  define BUFFER_SIZE 1
 # endif
 
-# define WIN_W 1024
-# define WIN_H 768
+# define WIN_W 1080
+# define WIN_H 600
 # define TEX_W 64
 # define TEX_H 64
 # define WALL_PADDING 0.3
@@ -34,7 +34,7 @@
 
 # define DOOR_TEXT 4
 # define SPRITE_M_TEXT_NB 63
-# define SPRITE_T_TEXT_NB 63
+# define SPRITE_T_TEXT_NB 8
 
 # define HOR_DOOR 'H'
 # define VER_DOOR 'V'
@@ -115,6 +115,7 @@ typedef struct s_sprite
 	int		current_frame;
 	int		number;
 	int		type;
+	bool	consumed;
 }	t_sprite;
 
 typedef struct s_sprite_order
@@ -282,6 +283,7 @@ typedef struct s_data
 
 	t_player			player;
 	t_player			*monsters;
+	int					(*offsets)[2];
 	t_ray				*ray;
 	t_keys				keys;
 
@@ -306,6 +308,7 @@ void					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 void					ft_init_sprites(t_data *data);
 void					ft_init_global_sprites_tab(t_data *data);
 void					init_monsters(t_data *data);
+void					init_offsets(t_data *data);
 void 					init_global(t_data *data, char **av);
 void    				ft_init_bfs(t_data *data, t_player *monsters);
 void					ft_init_stats(t_data *data);

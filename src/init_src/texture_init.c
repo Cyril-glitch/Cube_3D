@@ -135,7 +135,7 @@ void	init_treasure_textures(t_data *data)
 	i = 0;
 	while (i < nb_frames)
 	{
-		s = get_asset_path(i + 1, "assets/carboard/", "_carboard.xpm");
+		s = get_asset_path(i + 1, "assets/torches/", "_Torch Animated.xpm");
 		if (!s)
 			ft_game_exit(data, "sprites init");
 		data->t_textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
@@ -160,7 +160,6 @@ void	init_sprites_textures(t_data *data)
 
 void	init_screen(t_data *data)
 {
-	printf("win h : %d, win w: %d\n", data->win_size.y, data->win_size.x);
 	data->screen.img = mlx_new_image(data->mlx, data->win_size.x, data->win_size.y);
 	if (!data->screen.img)
 		ft_game_exit(data, "screen init");;

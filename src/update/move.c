@@ -7,7 +7,7 @@ int	can_move(t_door *doors, t_map *map, int x, int y)
 
 	//tile_value = data->map.grid[y][x];
 	tile_value = get_map_tile(map->grid, map->height, x, y);
-	if (tile_value == 0)
+	if (tile_value == 0 || tile_value == SPRITE_T - '0')
 		return (1);
 	if (tile_value == VER_DOOR - '0' || tile_value == HOR_DOOR - '0')
 	{

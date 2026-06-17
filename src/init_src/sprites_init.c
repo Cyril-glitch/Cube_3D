@@ -97,7 +97,11 @@ void	ft_init_global_sprites_tab(t_data *data)
 	i = 0;
 	j = 0;
 	while (i < data->t_sprites->number)
-		data->sprites[i++] = data->t_sprites[j++];
+	{
+		data->sprites[i] = data->t_sprites[j++];
+		data->sprites[i].consumed = false;
+		i++;
+	}
 	j = 0;
 	while (j < data->m_sprites->number)
 	{

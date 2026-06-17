@@ -88,7 +88,7 @@ void	render_sprite(t_data *data, t_img *screen, double time, t_sprite_type *spri
 	p.x = sprite->draw_start_x;
 	while (p.x < sprite->draw_end_x)
 	{
-		sprite->current_frame = (int)(time / 150.0) % nb_frames;
+		sprite->current_frame = ((int)(time) + sprite->sprite_id * 100) % nb_frames;
 		current_frame = sprite->current_frame;
 		sprite->tex_x = (int)(256 * (p.x - (- sprite->half_w + sprite->screen_x)) * sprites[sprite->sprite_id].textures[current_frame].w * sprite->inv_w) / 256;
 		if (sprite->transform_y <= 0 || sprite->transform_y >= data->ray[p.x].perp_wall_dist)
@@ -114,10 +114,12 @@ void	draw_single_sprite(t_data *data, t_player *player, int sprite_id, int type)
 	t_sprite_type	sprite;
 	double			time;
 
-	time = get_time(data->start);
+	time = get_time(data->start) / 150.0;
 	sprite.type = type;
 	sprite.sprites = data->sprites;
 	sprite.sprite_id = sprite_id;
+	if (type == SPRITE_T && data->sprites[sprite_id].consumed == true)
+		return ;
 	compute_sprite_transformation(player, &sprite);
 	if (sprite.transform_y <= 0)
 		return ;
