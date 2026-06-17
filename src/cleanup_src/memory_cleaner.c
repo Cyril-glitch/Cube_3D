@@ -44,9 +44,10 @@ static void ft_free_texture(t_data *data)
 		while (i < SPRITE_T_TEXT_NB)
 		{
 			if (data->t_textures[i].img)
-			mlx_destroy_image(data->mlx, data->t_textures[i].img);
+				mlx_destroy_image(data->mlx, data->t_textures[i].img);
 			i++;
 		}
+		free(data->t_textures);
 	}
 	if (data->m_textures)
 	{
@@ -54,9 +55,10 @@ static void ft_free_texture(t_data *data)
 		while (i < SPRITE_M_TEXT_NB)
 		{
 			if (data->m_textures[i].img)
-			mlx_destroy_image(data->mlx, data->m_textures[i].img);
+				mlx_destroy_image(data->mlx, data->m_textures[i].img);
 			i++;
 		}
+		free(data->m_textures);
 	}
 }
 
@@ -122,6 +124,8 @@ void	ft_free_data(t_data *data)
 	ft_free_monsters(data);
 	free(data->t_sprites);
 	free(data->m_sprites);
+	free(data->sprites);
+	free(data->bgrd.dist);
     ft_free_maps_settings(data);
 	ft_free_mini_map(data, &data->mini_map);
 	ft_free_mlx(data);

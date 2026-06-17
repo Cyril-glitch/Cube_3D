@@ -13,6 +13,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <float.h>
 
 /* --- CONFIGURATION --- */
 
@@ -29,12 +30,14 @@
 # define PI 3.14159265358979323846
 # define SENS 0.0005
 
+# define CAP 16.6666666666666666666
+
 # define DOOR_TEXT 4
 # define SPRITE_M_TEXT_NB 63
 # define SPRITE_T_TEXT_NB 63
 
-# define HOR_DOOR '2'
-# define VER_DOOR '3'
+# define HOR_DOOR 'H'
+# define VER_DOOR 'V'
 # define SPRITE_M 'M'
 # define SPRITE_T 'T'
 
@@ -286,6 +289,7 @@ typedef struct s_data
 	double				old_time;
 	double				time;
 	double				frame_time;
+	double				last_frame;
 }						t_data;
 
 // --- INITIALISATION ---

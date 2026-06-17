@@ -19,8 +19,13 @@ static void ft_game_draw(t_data *data)
 
 int	ft_game_loop(t_data *data)
 {
+	double	new_time;
+
+	new_time = get_time(data->start);
+	if (new_time - data->last_frame <= CAP)
+		return (0);
+	data->last_frame = get_time(data->start);
 	double t0 = get_time(data->start);
-	ft_game_update(data);
 	printf("\nupdate: %.3f ms\n", get_time(data->start) - t0);
 	t0 = get_time(data->start);
 	ft_game_engine(data);
@@ -29,5 +34,7 @@ int	ft_game_loop(t_data *data)
 	ft_game_draw(data);
 	printf("total draw: %.3f ms\n", get_time(data->start) - t0);
 	ft_display_fps(data);
-		return (0);
+	ft_game_update(data);
+	//gettimeofday(&data->last_frame, NULL);
+	return (0);
 }

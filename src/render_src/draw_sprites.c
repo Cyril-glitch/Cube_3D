@@ -35,7 +35,8 @@ void	compute_sprite_bounds(t_img *screen, t_sprite_type *sprite)
 	sprite->half_w = sprite->w / 2;
 	sprite->inv_h = 1.0 / sprite->h;
 	sprite->inv_w = 1.0 / sprite->w;
-	sprite->screen_x = (int)((screen->half_w) * (1 + sprite->transform_x * sprite->inv_transform_y));
+	sprite->screen_x = (int)((screen->half_w) *
+						(1 + sprite->transform_x * sprite->inv_transform_y));
 	sprite->draw_start_y = - sprite->half_h + screen->half_h;
 	if (sprite->draw_start_y < 0)
 		sprite->draw_start_y = 0;
@@ -43,7 +44,7 @@ void	compute_sprite_bounds(t_img *screen, t_sprite_type *sprite)
 	if (sprite->draw_end_y >= screen->h)
 		sprite->draw_end_y = screen->h - 1;
 	sprite->w = fabs(screen->h * sprite->inv_transform_y); // w au lieu de h ?
-	sprite->draw_start_x = - sprite->w / 2 + sprite->screen_x;
+	sprite->draw_start_x = - sprite->half_w + sprite->screen_x;
 	if (sprite->draw_start_x < 0)
 		sprite->draw_start_x = 0;
 	sprite->draw_end_x = sprite->half_w + sprite->screen_x;
@@ -53,8 +54,8 @@ void	compute_sprite_bounds(t_img *screen, t_sprite_type *sprite)
 
 void	put_pixel_sprite(t_img *screen, t_sprite_type *sprite, t_point p)
 {
-	int	d;
-	int	current_frame;
+	int			d;
+	int			current_frame;
 	t_sprite	*sprites;
 	int			sprite_id;
 
@@ -67,7 +68,7 @@ void	put_pixel_sprite(t_img *screen, t_sprite_type *sprite, t_point p)
 		&& sprite->tex_y < sprites[sprite_id].textures[current_frame].h && sprite->tex_y >= 0)
 	{
 		sprite->color = get_pixel(&sprites[sprite_id].textures[current_frame], sprite->tex_x, sprite->tex_y);
-		if (!is_close_color(sprite->color, 0))
+		if (sprite->color != 0)
 			my_mlx_pixel_put(screen, p.x, p.y, sprite->color);
 	}
 }
@@ -90,8 +91,11 @@ void	render_sprite(t_data *data, t_img *screen, double time, t_sprite_type *spri
 		sprite->current_frame = (int)(time / 150.0) % nb_frames;
 		current_frame = sprite->current_frame;
 		sprite->tex_x = (int)(256 * (p.x - (- sprite->half_w + sprite->screen_x)) * sprites[sprite->sprite_id].textures[current_frame].w * sprite->inv_w) / 256;
-		if (sprite->transform_y >= data->ray[p.x].perp_wall_dist)
-    		continue;
+		if (sprite->transform_y <= 0 || sprite->transform_y >= data->ray[p.x].perp_wall_dist)
+		{
+			p.x++;
+			continue;
+		}
 		if (sprite->transform_y > 0 && p.x > 0 && p.x < screen->w && sprite->transform_y < data->ray[p.x].perp_wall_dist)
 		{
 			p.y = sprite->draw_start_y;

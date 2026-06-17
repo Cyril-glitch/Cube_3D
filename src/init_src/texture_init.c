@@ -15,6 +15,30 @@ static char *ft_get_dir_str(t_map *map, int i)
 	return (map->no_path);
 }
 
+void	treat_transparency(t_img *image, int ref_color)
+{
+	int		x;
+	int		y;
+	int		*pixel;
+
+	y = 0;
+	while (y < image->h)
+	{
+		x = 0;
+		while (x < image->w)
+		{
+			pixel = (int *)(image->addr
+				+ x * image->line_length
+				+ y * (image->bpp / 8));
+
+			if (is_close_color(ref_color, *pixel))
+				*pixel = 0;
+			x++;
+		}
+		y++;
+	}
+}
+
 void	init_textures(t_data *data)
 {
 	int		i;
@@ -90,6 +114,7 @@ void	init_monster_textures(t_data *data)
 				&data->m_textures[i].line_length, &data->m_textures[i].endian);
 		if (!data->m_textures[i].addr)
 			ft_game_exit(data, "monster textures init");
+		treat_transparency(&data->m_textures[i].img, 0);
 		i++;
 	}
 }
@@ -122,6 +147,7 @@ void	init_treasure_textures(t_data *data)
 				&data->t_textures[i].line_length, &data->t_textures[i].endian);
 		if (!data->t_textures[i].addr)
 			ft_game_exit(data, "treasure textures init");
+		treat_transparency(&data->t_textures[i].img, 0);
 		i++;
 	}
 }
@@ -134,6 +160,7 @@ void	init_sprites_textures(t_data *data)
 
 void	init_screen(t_data *data)
 {
+	printf("win h : %d, win w: %d\n", data->win_size.y, data->win_size.x);
 	data->screen.img = mlx_new_image(data->mlx, data->win_size.x, data->win_size.y);
 	if (!data->screen.img)
 		ft_game_exit(data, "screen init");;
@@ -157,7 +184,7 @@ void	ft_init_backgrd(t_data *data, t_backgrd *b)
 	b->floor.addr = mlx_get_data_addr( b->floor.img, &b->floor.bpp, &b->floor.line_length, &b->floor.endian);
 	if (!b->floor.addr)
 		ft_game_exit(data, "background init");
-	b->ceiling.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/ciel.xpm", &b->ceiling.w, &b->ceiling.h);
+	b->ceiling.img = mlx_xpm_file_to_image(data->mlx, "./assets/bonus/plafond.xpm", &b->ceiling.w, &b->ceiling.h);
 	if (!b->ceiling.img)
 		ft_game_exit(data, "background init");
 	b->ceiling.addr = mlx_get_data_addr( b->ceiling.img, &b->ceiling.bpp, &b->ceiling.line_length, &b->ceiling.endian);

@@ -3,7 +3,7 @@
 void	ft_get_ray_dir(t_player player, t_ray *ray, int x, int w)
 {
 	//determine le bords de l'ecran sur une echelle -1 a 1;
-	ray->camera_x = 2 * x / (double)w - 1; 
+	ray->camera_x = 2 * x / (double)w - 1;
 
 	//determine la direction que doit prendre un rayon partant de du player pour atteindre camerax
 	ray->dir_x = player.dir_x + player.plane_x * ray->camera_x;
@@ -19,12 +19,12 @@ void	ft_get_map_pos(t_ray *ray, t_player player)
 void	ft_get_delta(t_ray *ray)
 {
 	if (ray->dir_x == 0)  //la direction du rayon suit une ligne horizontal delta x est infini
-		ray->delta_dist_x = 1e30;
+		ray->delta_dist_x = DBL_MAX;
 	else 
 		ray->delta_dist_x = ft_abs2(1 / ray->dir_x);
 
 	if (ray->dir_y == 0)  //la direction du rayon suit une ligne verticale delta x est infini
-		ray->delta_dist_y = 1e30;
+		ray->delta_dist_y = DBL_MAX;
 	else 
 		ray->delta_dist_y = ft_abs2(1 / ray->dir_y);
 }
@@ -39,17 +39,17 @@ void	ft_get_sidedist(t_ray *ray , t_player player)
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - player.pos_x) * ray->delta_dist_x; 
+		ray->side_dist_x = (ray->map_x + 1.0 - player.pos_x) * ray->delta_dist_x;
 	}
 	if (ray->dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (player.pos_y - ray->map_y) * ray->delta_dist_y; 
+		ray->side_dist_y = (player.pos_y - ray->map_y) * ray->delta_dist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - player.pos_y) * ray->delta_dist_y; 
+		ray->side_dist_y = (ray->map_y + 1.0 - player.pos_y) * ray->delta_dist_y;
 	}
 }
 
@@ -68,10 +68,10 @@ void	ft_init_dda(t_ray *ray, t_player player)
 
 static int	get_hit_pos(t_data *data, t_ray *ray, double *t, double *hit_pos)
 {
-	if ((fabs(ray->dir_x) < 1e-8 && ray->door->vertical)
-		|| (fabs(ray->dir_y) < 1e-8 && !ray->door->vertical))
+	if ((fabs(ray->dir_x) < 0.001 && ray->door->vertical)
+		|| (fabs(ray->dir_y) < 0.001 && !ray->door->vertical))
 	{
-		ray->door_dist = 1e30;
+		ray->door_dist = DBL_MAX;
 		return (1);
 	}
 	if (ray->door->vertical)

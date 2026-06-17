@@ -43,12 +43,14 @@ void	init_null(t_data *data)
 	data->m_textures = NULL;
 	data->t_sprites = NULL;
 	data->m_sprites = NULL;
+	data->sprites = NULL;
 	data->monsters = NULL;
 	data->doors = NULL;
 	data->bgrd.floor.img = NULL;
 	data->bgrd.ceiling.img = NULL;
 	data->bgrd.dist = NULL;
 	data->ray = NULL;
+	//data->frame_time = 2000 / 60;
 }
 
 void	init_player_dir(t_data *data)
