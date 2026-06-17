@@ -3,7 +3,7 @@
 # define CUBE_3D_H
 
 # include "../libft/inc/libft.h"
-# include "../minilibx-linux/include/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "color.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -159,6 +159,17 @@ typedef struct s_sprite_type
 	int		tex_y;
 }	t_sprite_type;
 
+typedef    struct s_hp
+{
+    int pos_y;
+    int pos_x;
+    int h;
+    int w;
+    int color;
+    int thickness;
+    int health;
+}   t_hp;
+
 typedef struct s_player
 {
 	char				dir;
@@ -174,12 +185,12 @@ typedef struct s_player
 	int					move_right;
 	int					rotate_left;
 	int					rotate_right;
-	int					health;
 	double				move_speed;
 	double				rot_speed;
 	t_point				next_step;
 	t_sprite			*sprite;
 	t_bfs				bfs;
+	t_hp				hp;
 }						t_player;
 
 typedef struct s_ray
@@ -304,7 +315,7 @@ void					ft_init_global_sprites_tab(t_data *data);
 void					init_monsters(t_data *data);
 void 					init_global(t_data *data, char **av);
 void    				ft_init_bfs(t_data *data, t_player *monsters);
-void					ft_init_stats(t_data *data);
+void					ft_init_stats(t_data *data, t_hp *hp);
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -389,7 +400,7 @@ void					ft_raycaster(t_data *data, t_ray *ray);
 void					ft_render_draw(t_ray *ray, t_data *data);
 void    				ft_render_fc(t_data *data, t_backgrd *flr,t_img *floor, t_img *cieling);
 void					ft_draw_bot(t_data *data, t_player *player);
-void					ft_draw_health(t_data *data, int health);
+void					ft_draw_health(t_data *data);
 void					ft_display_fps(t_data *data);
 
 // --- MINIMAP ---

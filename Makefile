@@ -12,8 +12,7 @@ LIB = $(LIBDIR)lib/libft.a
 MLX_DIR = ./minilibx-linux
 
 # MiniLibX 
-MLX_LIB_FILE = $(MLX_DIR)/lib/libmlx.a
-MLX_LIB_FILE = $(MLX_DIR)/lib/libmlx.a
+MLX_LIB_FILE = $(MLX_DIR)/libmlx.a
 MLX_INC = -I$(MLX_DIR)
 MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 

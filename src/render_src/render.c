@@ -78,7 +78,7 @@ void    ft_render_draw(t_ray *ray, t_data *data)
 	if (!draw_sprites(data, &data->player))
 		return ;
 	printf("sprites: %.3f ms\n", get_time(data->start) - t0);
-	ft_draw_health(data, data->player.health);
+	ft_draw_health(data);
 	if (data->mini_map.exist)
 	{
 		ft_memset(data->mini_map.image.addr, 0, data->mini_map.size * data->mini_map.size * 4);

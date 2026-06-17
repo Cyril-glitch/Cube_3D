@@ -88,7 +88,13 @@ void	init_keys(t_data *data)
 	data->keys.left = 0;
 }
 
-void	ft_init_stats(t_data *data)
+void	ft_init_stats(t_data *data, t_hp *hp)
 {
-	data->player.health = 100;
+    hp->pos_x = data->win_size.x / 150;
+    hp->pos_y = data->win_size.y - (data->win_size.y / 10); 
+    hp->w = data->win_size.x / 5;
+    hp->h = data->win_size.y / 50;
+	hp->thickness = hp->w / 100;
+    hp->color = 0x00FF00;
+	hp->health = 100;
 }
