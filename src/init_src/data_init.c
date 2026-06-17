@@ -48,6 +48,7 @@ void	init_null(t_data *data)
 	data->bgrd.floor.img = NULL;
 	data->bgrd.ceiling.img = NULL;
 	data->bgrd.dist = NULL;
+	data->over.img = NULL;
 	data->ray = NULL;
 }
 
@@ -96,5 +97,5 @@ void	ft_init_stats(t_data *data, t_hp *hp)
     hp->h = data->win_size.y / 50;
 	hp->thickness = hp->w / 100;
     hp->color = 0x00FF00;
-	hp->health = 100;
+	hp->health = 0;
 }

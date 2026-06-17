@@ -79,4 +79,5 @@ void	update(t_data *data)
 	update_doors(data);
 	handle_camera(data);
 	update_monsters(data);
+	ft_player_stats(data, &data->player, data->monsters);
 }

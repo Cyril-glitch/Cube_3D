@@ -173,3 +173,13 @@ void	ft_init_backgrd(t_data *data, t_backgrd *b)
 		i++;
 	}
 }
+
+void	ft_init_game_over(t_data *data, t_img *over)
+{	
+	over->img = mlx_xpm_file_to_image(data->mlx,"./assets/bonus/plafond.xpm", &over->w, &over->h);
+	if (!over->img)
+		ft_game_exit(data, "memory allocation failed (over)");
+	over->addr = mlx_get_data_addr(over->img, &over->bpp, &over->line_length, &over->endian);
+	if (!over->addr)
+		ft_game_exit(data, "memory allocation failed (over)");
+}
