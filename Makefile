@@ -25,6 +25,7 @@ INIT_SRC = src/init_src/data_init.c \
 		   src/init_src/doors_init.c \
 		   src/init_src/sprites_init.c \
 		   src/init_src/init_monsters.c \
+		   src/init_src/offsets_init.c \
 		   src/init_src/init.c\
 		   src/init_src/bfs_init.c  
 

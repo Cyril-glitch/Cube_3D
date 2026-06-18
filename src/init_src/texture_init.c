@@ -15,6 +15,30 @@ static char *ft_get_dir_str(t_map *map, int i)
 	return (map->no_path);
 }
 
+void	treat_transparency(t_img *image, int ref_color)
+{
+	int		x;
+	int		y;
+	int		*pixel;
+
+	y = 0;
+	while (y < image->h)
+	{
+		x = 0;
+		while (x < image->w)
+		{
+			pixel = (int *)(image->addr
+				+ x * image->line_length
+				+ y * (image->bpp / 8));
+
+			if (is_close_color(ref_color, *pixel))
+				*pixel = 0;
+			x++;
+		}
+		y++;
+	}
+}
+
 void	init_textures(t_data *data)
 {
 	int		i;
@@ -90,6 +114,7 @@ void	init_monster_textures(t_data *data)
 				&data->m_textures[i].line_length, &data->m_textures[i].endian);
 		if (!data->m_textures[i].addr)
 			ft_game_exit(data, "monster textures init");
+		treat_transparency(&data->m_textures[i].img, 0);
 		i++;
 	}
 }
@@ -110,7 +135,7 @@ void	init_treasure_textures(t_data *data)
 	i = 0;
 	while (i < nb_frames)
 	{
-		s = get_asset_path(i + 1, "assets/carboard/", "_carboard.xpm");
+		s = get_asset_path(i + 1, "assets/torches/", "_Torch Animated.xpm");
 		if (!s)
 			ft_game_exit(data, "sprites init");
 		data->t_textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
@@ -122,6 +147,7 @@ void	init_treasure_textures(t_data *data)
 				&data->t_textures[i].line_length, &data->t_textures[i].endian);
 		if (!data->t_textures[i].addr)
 			ft_game_exit(data, "treasure textures init");
+		treat_transparency(&data->t_textures[i].img, 0);
 		i++;
 	}
 }

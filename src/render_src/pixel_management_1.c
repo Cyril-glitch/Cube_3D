@@ -3,10 +3,12 @@
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
+	int		bpp;
 
+	bpp = img->bpp >> 3;
 	if (x < 0 || y < 0 || x > img->w || y > img->h)
 		return ;
-	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
+	dst = img->addr + (y * img->line_length + x * bpp);
 	*(unsigned int *)dst = color;
 }
 

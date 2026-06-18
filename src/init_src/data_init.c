@@ -43,7 +43,9 @@ void	init_null(t_data *data)
 	data->m_textures = NULL;
 	data->t_sprites = NULL;
 	data->m_sprites = NULL;
+	data->sprites = NULL;
 	data->monsters = NULL;
+	data->offsets = NULL;
 	data->doors = NULL;
 	data->bgrd.floor.img = NULL;
 	data->bgrd.ceiling.img = NULL;

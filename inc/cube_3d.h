@@ -13,6 +13,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <float.h>
 
 /* --- CONFIGURATION --- */
 
@@ -20,8 +21,8 @@
 #  define BUFFER_SIZE 1
 # endif
 
-# define WIN_W 1024
-# define WIN_H 768
+# define WIN_W 1080
+# define WIN_H 600
 # define TEX_W 64
 # define TEX_H 64
 # define WALL_PADDING 0.3
@@ -29,12 +30,14 @@
 # define PI 3.14159265358979323846
 # define SENS 0.0005
 
+# define CAP 16.6666666666666666666
+
 # define DOOR_TEXT 4
 # define SPRITE_M_TEXT_NB 63
-# define SPRITE_T_TEXT_NB 63
+# define SPRITE_T_TEXT_NB 8
 
-# define HOR_DOOR '2'
-# define VER_DOOR '3'
+# define HOR_DOOR 'H'
+# define VER_DOOR 'V'
 # define SPRITE_M 'M'
 # define SPRITE_T 'T'
 
@@ -112,6 +115,7 @@ typedef struct s_sprite
 	int		current_frame;
 	int		number;
 	int		type;
+	bool	consumed;
 }	t_sprite;
 
 typedef struct s_sprite_order
@@ -292,6 +296,7 @@ typedef struct s_data
 
 	t_player			player;
 	t_player			*monsters;
+	int					(*offsets)[2];
 	t_ray				*ray;
 	t_keys				keys;
 
@@ -299,6 +304,7 @@ typedef struct s_data
 	double				old_time;
 	double				time;
 	double				frame_time;
+	double				last_frame;
 }						t_data;
 
 // --- INITIALISATION ---
@@ -315,6 +321,7 @@ void					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 void					ft_init_sprites(t_data *data);
 void					ft_init_global_sprites_tab(t_data *data);
 void					init_monsters(t_data *data);
+void					init_offsets(t_data *data);
 void 					init_global(t_data *data, char **av);
 void    				ft_init_bfs(t_data *data, t_player *monsters);
 void					ft_init_stats(t_data *data, t_hp *hp);

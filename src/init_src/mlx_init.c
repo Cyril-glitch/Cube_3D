@@ -7,9 +7,10 @@ void	init_mlx_and_ray(t_data *data)
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		ft_game_exit(data, "mlx init");
-	mlx_get_screen_size(data->mlx, &data->win_size.x, &data->win_size.y);
-	data->mlx_win = mlx_new_window(data->mlx, data->win_size.x,
-			data->win_size.y, "Cube3d");
+	data->mlx_win = mlx_new_window(data->mlx, WIN_W,
+			WIN_H, "Cube3d");
+	data->win_size.x = WIN_W;
+	data->win_size.y = WIN_H;
 	if (!data->mlx_win)
 		ft_game_exit(data, "mlx win init");
 	data->ray = malloc(sizeof(t_ray) * data->win_size.x);
