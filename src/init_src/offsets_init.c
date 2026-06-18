@@ -15,32 +15,41 @@
 static void fill_offsets(int nb, int (*tab)[2])
 {
 	int i;
+	int	j;
 	
 	i = 0;
+	j = 0;
 	while (i < nb)
 	{
-		tab[i][0] = i;
-		tab[i][1] = -i;
+		if (i % 2 == 0)
+		{
+			if (j % 2 == 0)
+			{
+				tab[i][0] = i;
+				tab[i][1] = 0;
+			}
+			else
+			{
+				tab[i][0] = -i;
+				tab[i][1] = 0;
+			}
+		}
+		else
+		{
+			if (j % 2 == 0)
+			{
+				tab[i][0] = 0;
+				tab[i][1] = -i;
+			}
+			else
+			{
+				tab[i][0] = 0;
+				tab[i][1] = i;
+			}
+		}
+		j++;
 		i++;
 	}
-	/*while (i < nb * 2)
-	{
-		tab[i][0] = -i;
-		tab[i][1] = -i;
-		i++;
-	}
-	while (i < nb * 3)
-	{
-		tab[i][0] = i + 1;
-		tab[i][1] = i + 1;
-		i++;
-	}
-	while (i < nb * 4)
-	{
-		tab[i][0] = -i + 1;
-		tab[i][1] = -i + 1;
-		i++;
-	}*/
 }
 
 void init_offsets(t_data *data)

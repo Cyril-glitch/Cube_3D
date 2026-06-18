@@ -16,7 +16,7 @@ static void ft_dpersec(t_data *data, t_hp *hp)
     else if (hp->health)
     {
         hp->last_hit = get_time(data->start);
-        hp->health -= 10;
+        hp->health -= 1;
     }
 }
 

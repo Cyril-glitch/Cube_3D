@@ -109,7 +109,10 @@ void	init_monster_textures(t_data *data)
 			&data->m_textures[i].w, &data->m_textures[i].h);
 		free(s);
 		if (!data->m_textures[i].img)
+		{
+			printf("test\n");
 			ft_game_exit(data, "monster textures init");
+		}
 		data->m_textures[i].addr = mlx_get_data_addr(data->m_textures[i].img, &data->m_textures[i].bpp,
 				&data->m_textures[i].line_length, &data->m_textures[i].endian);
 		if (!data->m_textures[i].addr)
