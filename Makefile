@@ -43,6 +43,8 @@ UPDATE_SRC = src/update/hooks.c \
 			 src/update/set_bfs.c \
 			 src/update/get_target_path.c \
 			 src/update/get_next_step.c \
+			 src/update/damage.c \
+			 src/update/healing.c \
 			 src/update/bot_move.c \
 			 src/update/player_stats.c
 

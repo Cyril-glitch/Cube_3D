@@ -376,10 +376,12 @@ t_point					ft_get_next_step(t_bfs *bfs, t_point start, t_point target);
 void					ft_update_monster_path(t_data *data, t_player *monster, int i);
 int						ft_monster_arrived(t_player *monster);
 void    				ft_bot_move(t_data *data, int i);
-void    				ft_player_stats(t_data *data, t_player *player, t_player *monsters);
+void    				ft_player_stats(t_data *data);
 
 int 					ft_get_index(t_point p, t_bfs bfs);
 void					update(t_data *data);
+void    				ft_damage(t_data *data, t_player *player, t_player *monsters, int nb_monsters);
+void    				ft_healing(t_player *player, t_sprite *hpack, int nb_pack);
 
 // --- MOUVEMENTS ---
 void					move_up(t_data *data);
