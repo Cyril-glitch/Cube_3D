@@ -3,7 +3,7 @@
 # define CUBE_3D_H
 
 # include "../libft/inc/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/include/mlx.h"
 # include "color.h"
 # include <X11/keysym.h>
 # include <fcntl.h>

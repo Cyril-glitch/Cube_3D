@@ -20,10 +20,10 @@ static void fill_offsets(int nb, int (*tab)[2])
 	while (i < nb)
 	{
 		tab[i][0] = i;
-		tab[i][1] = i;
+		tab[i][1] = -i;
 		i++;
 	}
-	while (i < nb * 2)
+	/*while (i < nb * 2)
 	{
 		tab[i][0] = -i;
 		tab[i][1] = -i;
@@ -40,7 +40,7 @@ static void fill_offsets(int nb, int (*tab)[2])
 		tab[i][0] = -i + 1;
 		tab[i][1] = -i + 1;
 		i++;
-	}
+	}*/
 }
 
 void init_offsets(t_data *data)
@@ -52,6 +52,6 @@ void init_offsets(t_data *data)
 	offsets = malloc(nb_monsters * sizeof(*offsets));
 	if (!offsets)
 		ft_game_exit(data, "init offsets");
-	fill_offsets(nb_monsters / 4, offsets);
+	fill_offsets(nb_monsters, offsets);
 	data->offsets = offsets;
 }
