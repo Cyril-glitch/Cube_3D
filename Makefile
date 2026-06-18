@@ -12,8 +12,7 @@ LIB = $(LIBDIR)lib/libft.a
 MLX_DIR = ./minilibx-linux
 
 # MiniLibX 
-MLX_LIB_FILE = $(MLX_DIR)/lib/libmlx.a
-MLX_LIB_FILE = $(MLX_DIR)/lib/libmlx.a
+MLX_LIB_FILE = $(MLX_DIR)/libmlx.a
 MLX_INC = -I$(MLX_DIR)
 MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
@@ -44,7 +43,8 @@ UPDATE_SRC = src/update/hooks.c \
 			 src/update/set_bfs.c \
 			 src/update/get_target_path.c \
 			 src/update/get_next_step.c \
-			 src/update/bot_move.c
+			 src/update/bot_move.c \
+			 src/update/player_stats.c
 
 
 
@@ -58,6 +58,8 @@ RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/trgb.c \
 			 src/render_src/render_fc.c \
 			 src/render_src/render_ath.c \
+			 src/render_src/render_death.c \
+			 src/render_src/draw_health.c 
 
 PARSER_SRC = src/parser_src/gnl_no_nl.c \
 			 src/parser_src/gnl.c \

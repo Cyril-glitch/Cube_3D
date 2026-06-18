@@ -67,6 +67,12 @@ void	ft_render_map(t_data *data, t_mini_map *map)
 
 void    ft_render_draw(t_ray *ray, t_data *data)
 {
+	double t0 = get_time(data->start);
+	if (!data->player.hp.health)
+	{
+		ft_render_death(data, data->over);
+		return;
+	}
 	(void)ray;
 	//double t0 = get_time(data->start);
 	ft_render_fc(data, &data->bgrd, &data->bgrd.floor, &data->bgrd.ceiling);
@@ -77,6 +83,8 @@ void    ft_render_draw(t_ray *ray, t_data *data)
 	//t0 = get_time(data->start);
 	if (!draw_sprites(data, &data->player))
 		return ;
+	printf("sprites: %.3f ms\n", get_time(data->start) - t0);
+	ft_render_ath(data);
 	//printf("sprites: %.3f ms\n", get_time(data->start) - t0);
 	ft_draw_health(data, data->player.health);
 	if (data->mini_map.exist)
