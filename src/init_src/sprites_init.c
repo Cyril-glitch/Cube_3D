@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_sprites.c                                     :+:      :+:    :+:   */
+/*   sprites_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmichaud <nmichaud@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:22:36 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/04 14:22:37 by nmichaud         ###   ########.fr       */
+/*   Updated: 2026/06/19 12:58:36 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,35 @@ void	ft_assign_t_sprites_textures(t_data *data)
 	}
 }
 
+void	ft_assign_p_sprites_textures(t_data *data)
+{
+	int	i;
+	int	nb_sprites;
+
+	nb_sprites = count_sprites(&data->map, SPRITE_P);
+	if (nb_sprites == 0)
+		ft_game_exit(data, "no pack in map");
+	data->p_sprites = malloc(sizeof(t_sprite) * nb_sprites);
+	if (!data->p_sprites)
+		ft_game_exit(data, "pack allocation failed");
+	i = 0;
+	while (i < nb_sprites)
+	{
+		data->p_sprites[i].textures = data->p_textures;
+		data->p_sprites[i].number = nb_sprites;
+		data->p_sprites[i].type = SPRITE_P;
+		i++;
+	}
+}
+
 void	ft_init_sprites(t_data *data)
 {
 	ft_assign_m_sprites_textures(data);
 	ft_assign_t_sprites_textures(data);
+	ft_assign_p_sprites_textures(data);
 	init_sprites_pos(data->m_sprites, &data->map, SPRITE_M);
 	init_sprites_pos(data->t_sprites, &data->map, SPRITE_T);
+	init_sprites_pos(data->p_sprites, &data->map, SPRITE_P);
 	init_monsters(data);
 }
 
@@ -91,7 +114,7 @@ void	ft_init_global_sprites_tab(t_data *data)
 	int	j;
 
 	ft_init_sprites(data);
-	data->sprites = malloc(sizeof(t_sprite) * (data->t_sprites->number + data->m_sprites->number));
+	data->sprites = malloc(sizeof(t_sprite) * (data->t_sprites->number + data->m_sprites->number + data->p_sprites->number));
 	if (!data->sprites)
 		ft_game_exit(data, "sprites global init");
 	i = 0;
@@ -110,6 +133,14 @@ void	ft_init_global_sprites_tab(t_data *data)
 		i++;
 		j++;
 	}
+	j = 0;
+	while (j < data->p_sprites->number)
+	{
+		data->sprites[i] = data->p_sprites[j];
+		i++;
+		j++;
+	}
+
 }
 
 void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)

@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:22:53 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/19 11:47:50 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/19 12:41:24 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	render_sprite(t_data *data, t_img *screen, double time, t_sprite_type *spri
 	sprites = sprite->sprites;
 	if (sprite->type == SPRITE_M)
 		nb_frames = SPRITE_M_TEXT_NB;
+	else if (sprite->type == SPRITE_P)
+		nb_frames = SPRITE_P_TEXT_NB;
 	else
 		nb_frames = SPRITE_T_TEXT_NB;
 	p.x = sprite->draw_start_x;
@@ -133,7 +135,7 @@ int	draw_sprites(t_data *data, t_player *player)
 	int					i;
 	int					count;
 	
-	count = data->t_sprites->number + data->m_sprites->number;
+	count = data->t_sprites->number + data->m_sprites->number + data->p_sprites->number;
 	order = sort_sprites(data, count);
 	if (!order)
 		return (0);

@@ -34,11 +34,13 @@
 
 # define DOOR_TEXT 4
 # define SPRITE_M_TEXT_NB 63
-# define SPRITE_T_TEXT_NB 1
+# define SPRITE_P_TEXT_NB 1
+# define SPRITE_T_TEXT_NB 8
 
 # define HOR_DOOR 'H'
 # define VER_DOOR 'V'
 # define SPRITE_M 'M'
+# define SPRITE_P 'P'
 # define SPRITE_T 'T'
 
 /* --- TOUCHES (MAC/LINUX) --- */
@@ -290,8 +292,10 @@ typedef struct s_data
 	t_img				*textures;
 	t_img				*m_textures;
 	t_img				*t_textures;
+	t_img				*p_textures;
 	t_sprite			*m_sprites;
 	t_sprite			*t_sprites;
+	t_sprite			*p_sprites;
 	t_sprite			*sprites;
 	t_door				*doors;
 	int					nb_doors;
