@@ -12,46 +12,75 @@
 
 #include "../../inc/cube_3d.h"
 
+/*static void fill_offsets(int nb, int (*tab)[2])
+{
+    double angle;
+    double step;
+    int radius;
+    int i;
+
+    radius = 4;
+    step = 2.0 * PI / nb;
+
+    i = 0;
+    while (i < nb)
+    {
+		angle = i * step;
+        tab[i][0] = round(cos(angle) * radius);
+        tab[i][1] = round(sin(angle) * radius);
+        i++;
+    }
+}*/
+
 static void fill_offsets(int nb, int (*tab)[2])
 {
 	int i;
-	
+	int	j;
+
 	i = 0;
+	j = 0;
 	while (i < nb)
 	{
-		tab[i][0] = i;
-		tab[i][1] = -i;
+		if (i % 2 == 0)
+		{
+			if (j % 2 == 0)
+			{
+				tab[i][0] = i;
+				tab[i][1] = 0;
+			}
+			else
+			{
+				tab[i][0] = -i;
+				tab[i][1] = 0;
+			}
+		}
+		else
+		{
+			if (j % 2 == 0)
+			{
+				tab[i][0] = 0;
+				tab[i][1] = i;
+			}
+			else
+			{
+				tab[i][0] = 0;
+				tab[i][1] = -i;
+			}
+		}
+		j++;
 		i++;
 	}
-	/*while (i < nb * 2)
-	{
-		tab[i][0] = -i;
-		tab[i][1] = -i;
-		i++;
-	}
-	while (i < nb * 3)
-	{
-		tab[i][0] = i + 1;
-		tab[i][1] = i + 1;
-		i++;
-	}
-	while (i < nb * 4)
-	{
-		tab[i][0] = -i + 1;
-		tab[i][1] = -i + 1;
-		i++;
-	}*/
 }
 
 void init_offsets(t_data *data)
 {
 	int (*offsets)[2];
-	int nb_monsters;
+	//int nb_monsters;
 
-	nb_monsters = data->m_sprites->number;
-	offsets = malloc(nb_monsters * sizeof(*offsets));
+	//nb_monsters = data->m_sprites->number;
+	offsets = malloc(4 * sizeof(*offsets));
 	if (!offsets)
 		ft_game_exit(data, "init offsets");
-	fill_offsets(nb_monsters, offsets);
+	fill_offsets(4, offsets);
 	data->offsets = offsets;
 }

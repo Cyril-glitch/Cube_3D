@@ -68,12 +68,18 @@ void  ft_get_target_path(t_data *data ,t_bfs *bfs, t_point *cur)
 
 void ft_update_monster_path(t_data *data, t_player *monster, int i)
 {
-    int nb_monsters;
     t_point target;
 
-    nb_monsters = data->m_sprites->number;
-    target.x = data->player.pos_x + data->offsets[i % nb_monsters][0];
-    target.y = data->player.pos_y + data->offsets[i % nb_monsters][1];
+	if (i % 2 != 0)
+	{
+		target.x = data->player.pos_x + data->offsets[i % 4][0];
+		target.y = data->player.pos_y - data->offsets[i % 4][1];
+	}
+	else
+	{
+		target.x = data->player.pos_x + data->offsets[i % 4][0];
+		target.y = data->player.pos_y - data->offsets[i % 4][1];
+	}
 	target.x = fmax(0, fmin(target.x, data->map.width - 1));
 	target.y = fmax(0, fmin(target.y, data->map.height - 1));
 	monster->next_step = ft_bfs(data, &monster->bfs,

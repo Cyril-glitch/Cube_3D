@@ -30,6 +30,9 @@
 # define PI 3.14159265358979323846
 # define SENS 0.0005
 
+# define MAP_H
+# define MAP_W
+
 # define CAP 16.6666666666666666666
 
 # define DOOR_TEXT 4
