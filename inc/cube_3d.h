@@ -30,6 +30,9 @@
 # define PI 3.14159265358979323846
 # define SENS 0.0005
 
+# define MAP_H
+# define MAP_W
+
 # define CAP 16.6666666666666666666
 
 # define DOOR_TEXT 4
@@ -377,6 +380,7 @@ void					ft_update_monster_path(t_data *data, t_player *monster, int i);
 int						ft_monster_arrived(t_player *monster);
 void    				ft_bot_move(t_data *data, int i);
 void    				ft_player_stats(t_data *data, t_player *player, t_player *monsters);
+unsigned int			ft_rand(unsigned int *state);
 
 int 					ft_get_index(t_point p, t_bfs bfs);
 void					update(t_data *data);
