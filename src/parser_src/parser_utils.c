@@ -55,6 +55,8 @@ void ft_map_display(char **grid)
 				printf(B_PURPLE "%c" RESET, grid[y][x]);
 			else if (grid[y][x] == SPRITE_T)
 				printf(B_YELLOW "%c" RESET, grid[y][x]);
+			else if (grid[y][x] == SPRITE_P)
+				printf(MINT "%c" RESET, grid[y][x]);
 			else if (grid[y][x] == HOR_DOOR || grid[y][x] == VER_DOOR)
 				printf(RED "%c" RESET, grid[y][x]);
 			else 

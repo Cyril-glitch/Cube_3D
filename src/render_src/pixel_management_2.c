@@ -68,7 +68,7 @@ void	put_tr2(t_img *dst, t_img *src, int pos_x, int pos_y)
 			while (pos_x + x < 0)
 				x++;
 			color = get_pixel(src, x, y);
-			if (!is_close_color(0x000000, color)
+			if (!is_close_color(0x000000, color, 10)
 				&& pos_x + x < dst->w && pos_y + y < dst->h)
 				my_mlx_pixel_put(dst, pos_x + x, pos_y + y, color);
 			x++;

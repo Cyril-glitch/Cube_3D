@@ -11,6 +11,7 @@ void	init_mlx_and_ray(t_data *data)
 			WIN_H, "Cube3d");
 	data->win_size.x = WIN_W;
 	data->win_size.y = WIN_H;
+	data->total_pixel = data->win_size.x * data->win_size.y;
 	if (!data->mlx_win)
 		ft_game_exit(data, "mlx win init");
 	data->ray = malloc(sizeof(t_ray) * data->win_size.x);

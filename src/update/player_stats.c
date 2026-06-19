@@ -1,39 +1,13 @@
 #include "../../inc/cube_3d.h"
 
-static int     ft_eating(t_player *player, t_player *cur_monster)
+static void    ft_update_health(t_data *data)
 {
-    return (cur_monster->pos_x > (player->pos_x - 1) && cur_monster->pos_x < (player->pos_x + 1)&& 
-        cur_monster->pos_y > (player->pos_y - 1) && cur_monster->pos_y < (player->pos_y + 1));
+    ft_healing(&data->player, data->sprites, data->p_sprites->number);
+    ft_damage(data, &data->player, data->monsters, data->m_sprites->number);
+    ft_player_win(&data->player, data->sprites, data->p_sprites->number);
 }
 
-static void ft_dpersec(t_data *data, t_hp *hp)
+void    ft_player_stats(t_data *data)
 {
-    double hit;
-
-    hit = get_time(data->start); 
-    if(hit - hp->last_hit < 1000 )
-        return ;
-    else if (hp->health)
-    {
-        hp->last_hit = get_time(data->start);
-        hp->health -= 1;
-    }
-}
-
-static void    ft_update_health(t_data *data, t_player *player, t_player *monsters, int nb_monsters)
-{
-    int i;
-
-    i = 0;
-    while (i < nb_monsters)
-    { 
-        if (ft_eating(player, &monsters[i]))
-            ft_dpersec(data, &player->hp);
-        i++;
-    }
-}
-
-void    ft_player_stats(t_data *data, t_player *player, t_player *monsters)
-{
-    ft_update_health(data, player, monsters, data->m_sprites->number);
+    ft_update_health(data);
 }

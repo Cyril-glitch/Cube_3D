@@ -11,11 +11,11 @@ static char *ft_get_dir_str(t_map *map, int i)
 	else if (i == 3)
 		return (map->we_path);
 	else if (i == 4)
-		return ("assets/wolftex2/eagle.xpm");
+		return ("assets/bonus/doors.xpm");
 	return (map->no_path);
 }
 
-void	treat_transparency(t_img *image, int ref_color)
+void	treat_transparency(t_img *image, int ref_color, unsigned int tolerance)
 {
 	int		x;
 	int		y;
@@ -31,8 +31,8 @@ void	treat_transparency(t_img *image, int ref_color)
 				+ x * image->line_length
 				+ y * (image->bpp / 8));
 
-			if (is_close_color(ref_color, *pixel))
-				*pixel = 0;
+			if (is_close_color(ref_color, *pixel, tolerance))
+				*pixel = 0x00FF00;
 			x++;
 		}
 		y++;
@@ -117,7 +117,40 @@ void	init_monster_textures(t_data *data)
 				&data->m_textures[i].line_length, &data->m_textures[i].endian);
 		if (!data->m_textures[i].addr)
 			ft_game_exit(data, "monster textures init");
-		treat_transparency(&data->m_textures[i].img, 0);
+		treat_transparency(&data->m_textures[i].img, 0, 10);
+		i++;
+	}
+}
+
+void	init_pack_textures(t_data *data)
+{
+	int		i;
+	int		nb_frames;
+	char	*s;
+
+	nb_frames = SPRITE_P_TEXT_NB;
+	data->p_textures = malloc(sizeof(t_img) * nb_frames);
+	if (!data->p_textures)
+		ft_game_exit(data, "pack textures init");
+	i = 0;
+	while (i < nb_frames)
+		data->p_textures[i++].img = NULL;
+	i = 0;
+	while (i < nb_frames)
+	{
+		s = get_asset_path(i + 1, "assets/bonus/", "_medkit.xpm");
+		if (!s)
+			ft_game_exit(data, "sprites init");
+		data->p_textures[i].img = mlx_xpm_file_to_image(data->mlx, s,
+			&data->p_textures[i].w, &data->p_textures[i].h);
+		free(s);
+		if (!data->p_textures[i].img)
+			ft_game_exit(data, "treasure textures init");
+		data->p_textures[i].addr = mlx_get_data_addr(data->p_textures[i].img, &data->p_textures[i].bpp,
+				&data->p_textures[i].line_length, &data->p_textures[i].endian);
+		if (!data->p_textures[i].addr)
+			ft_game_exit(data, "pack textures init");
+		treat_transparency(&data->p_textures[i].img, 0x00FF00, 10);
 		i++;
 	}
 }
@@ -150,7 +183,7 @@ void	init_treasure_textures(t_data *data)
 				&data->t_textures[i].line_length, &data->t_textures[i].endian);
 		if (!data->t_textures[i].addr)
 			ft_game_exit(data, "treasure textures init");
-		treat_transparency(&data->t_textures[i].img, 0);
+		treat_transparency(&data->t_textures[i].img, 0, 10);
 		i++;
 	}
 }
@@ -159,6 +192,7 @@ void	init_sprites_textures(t_data *data)
 {
 	init_treasure_textures(data);
 	init_monster_textures(data);
+	init_pack_textures(data);
 }
 
 void	init_screen(t_data *data)
@@ -211,4 +245,15 @@ void	ft_init_game_over(t_data *data, t_img *over)
 	over->addr = mlx_get_data_addr(over->img, &over->bpp, &over->line_length, &over->endian);
 	if (!over->addr)
 		ft_game_exit(data, "memory allocation failed (over)");
+}
+
+
+void	ft_init_congrats(t_data *data, t_img *congrats)
+{	
+	congrats->img = mlx_xpm_file_to_image(data->mlx,"./assets/bonus/congrats.xpm", &congrats->w, &congrats->h);
+	if (!congrats->img)
+		ft_game_exit(data, "memory allocation failed (congrats)");
+	congrats->addr = mlx_get_data_addr(congrats->img, &congrats->bpp, &congrats->line_length, &congrats->endian);
+	if (!congrats->addr)
+		ft_game_exit(data, "memory allocation failed (congrats)");
 }

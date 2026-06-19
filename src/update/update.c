@@ -58,35 +58,6 @@ void	update_doors(t_data *data)
 	}
 }
 
-t_sprite	*get_treasure_sprite(t_sprite *sprites, int count, int x, int y)
-{
-	int	i;
-
-	i = 0;
-	while (i < count)
-	{
-		if ((int)sprites[i].x == x && (int)sprites[i].y == y)
-			return (&sprites[i]);
-		i++;
-	}
-	return (NULL);
-}
-
-void	update_treasures(t_data *data)
-{
-	t_sprite	*sprite;
-
-	sprite = NULL;
-	if (get_map_tile(data->map.grid, data->map.height, (int)data->player.pos_x, (int)data->player.pos_y) == SPRITE_T - '0')
-		sprite = get_treasure_sprite(data->sprites, data->t_sprites->number, (int)data->player.pos_x, (int)data->player.pos_y);
-	if (sprite)
-	{
-		/*if (sprite->consumed = false)
-			data->health += 10;*/
-		sprite->consumed = true;
-	}
-}
-
 void	update_monsters(t_data *data)
 {
 	int	i;
@@ -106,8 +77,7 @@ void	update(t_data *data)
 	update_time(data);
 	handle_movements(data);
 	update_doors(data);
-	update_treasures(data);
 	handle_camera(data);
 	update_monsters(data);
-	ft_player_stats(data, &data->player, data->monsters);
+	ft_player_stats(data);
 }

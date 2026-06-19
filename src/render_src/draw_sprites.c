@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmichaud <nmichaud@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:22:53 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/04 14:22:54 by nmichaud         ###   ########.fr       */
+/*   Updated: 2026/06/19 13:13:34 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	put_pixel_sprite(t_img *screen, t_sprite_type *sprite, t_point p)
 		&& sprite->tex_y < sprites[sprite_id].textures[current_frame].h && sprite->tex_y >= 0)
 	{
 		sprite->color = get_pixel(&sprites[sprite_id].textures[current_frame], sprite->tex_x, sprite->tex_y);
-		if (sprite->color != 0)
+		if (sprite->color != 0x00FF00)
 			my_mlx_pixel_put(screen, p.x, p.y, sprite->color);
 	}
 }
@@ -83,6 +83,8 @@ void	render_sprite(t_data *data, t_img *screen, double time, t_sprite_type *spri
 	sprites = sprite->sprites;
 	if (sprite->type == SPRITE_M)
 		nb_frames = SPRITE_M_TEXT_NB;
+	else if (sprite->type == SPRITE_P)
+		nb_frames = SPRITE_P_TEXT_NB;
 	else
 		nb_frames = SPRITE_T_TEXT_NB;
 	p.x = sprite->draw_start_x;
@@ -118,7 +120,7 @@ void	draw_single_sprite(t_data *data, t_player *player, int sprite_id, int type)
 	sprite.type = type;
 	sprite.sprites = data->sprites;
 	sprite.sprite_id = sprite_id;
-	if (type == SPRITE_T && data->sprites[sprite_id].consumed == true)
+	if (type == SPRITE_P && data->sprites[sprite_id].consumed == true)
 		return ;
 	compute_sprite_transformation(player, &sprite);
 	if (sprite.transform_y <= 0)
@@ -133,7 +135,7 @@ int	draw_sprites(t_data *data, t_player *player)
 	int					i;
 	int					count;
 	
-	count = data->t_sprites->number + data->m_sprites->number;
+	count = data->t_sprites->number + data->m_sprites->number + data->p_sprites->number;
 	order = sort_sprites(data, count);
 	if (!order)
 		return (0);
