@@ -117,7 +117,7 @@ void	draw_player(t_mini_map *map, t_player player)
 			icon.src.x = x * map->rotation[icon.index].w / icon.size;
 			icon.src.y = y * map->rotation[icon.index].h / icon.size;
 			color = get_pixel(&map->rotation[icon.index], icon.src.x, icon.src.y);
-			if (!is_close_color(0x0000FF, color) && !is_close_color(0x000000, color))
+			if (!is_close_color(0x0000FF, color, 10) && !is_close_color(0x000000, color, 10))
 				my_mlx_pixel_put(&map->image, icon.start.x + x, icon.start.y + y, color);
 			y++;
 		}

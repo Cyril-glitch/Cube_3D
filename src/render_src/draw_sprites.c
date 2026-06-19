@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmichaud <nmichaud@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:22:53 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/04 14:22:54 by nmichaud         ###   ########.fr       */
+/*   Updated: 2026/06/19 11:47:50 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	put_pixel_sprite(t_img *screen, t_sprite_type *sprite, t_point p)
 		&& sprite->tex_y < sprites[sprite_id].textures[current_frame].h && sprite->tex_y >= 0)
 	{
 		sprite->color = get_pixel(&sprites[sprite_id].textures[current_frame], sprite->tex_x, sprite->tex_y);
-		if (sprite->color != 0)
+		if (sprite->color != 0x00FF00)
 			my_mlx_pixel_put(screen, p.x, p.y, sprite->color);
 	}
 }

@@ -34,7 +34,7 @@
 
 # define DOOR_TEXT 4
 # define SPRITE_M_TEXT_NB 63
-# define SPRITE_T_TEXT_NB 8
+# define SPRITE_T_TEXT_NB 1
 
 # define HOR_DOOR 'H'
 # define VER_DOOR 'V'
@@ -399,7 +399,7 @@ void					ft_rot_right(t_data *data);
 // --- GESTION DES PIXELS ET COULEURS ---
 void					my_mlx_pixel_put(t_img *img, int x, int y, int color);
 unsigned int			get_pixel(t_img *img, int x, int y);
-int						is_close_color(int ref_color, int color);
+int						is_close_color(int ref_color, int color, unsigned int tolerance);
 int						choose_color(int n);
 int    					ft_set_color(t_ray ray, char **map);
 int						is_transparent_color(int color);
