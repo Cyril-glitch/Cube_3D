@@ -63,8 +63,8 @@ void	init_player_dir(t_data *data)
 	}
 	else if (data->player.dir == 'S')
 	{
-		data->player.dir_x = -1;
-		data->player.dir_y = 0;
+		data->player.dir_x = 0;
+		data->player.dir_y = 1;
 	}
 	else if (data->player.dir == 'W')
 	{

@@ -5,6 +5,7 @@ void	ft_init_player_pos(t_data *data, t_player *player, int y, int x)
 	player->pos_y = y;
 	player->pos_x = x;
     player->dir = data->map.grid[y][x];
+    init_player_dir(data);
     data->map.grid[y][x] = '0';
 }
 

@@ -45,7 +45,7 @@ void	init_global(t_data *data, char **av)
 	init_mini_map(data, &data->mini_map);
 	init_doors(data, data->map.grid);
 	ft_init_bfs(data, data->monsters);
-	init_player_dir(data);
+	//init_player_dir(data);
 	init_keys(data);
 	init_hooks(data);
 }

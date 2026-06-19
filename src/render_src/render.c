@@ -70,7 +70,7 @@ void    ft_render_draw(t_ray *ray, t_data *data)
 	//double t0 = get_time(data->start);
 	if (data->player.hp.health == 0 && !data->player.scored)
 		return ft_render_death(data, data->over);
-	else if (data->player.scored == 1) 
+	else if (data->player.scored == 1)
 		return ft_render_win(data, data->congrats);
 	(void)ray;
 	//double t0 = get_time(data->start);
