@@ -181,6 +181,11 @@ start:	all
 it:
 	./bin/cube3d config/map.cub
 
+itb:
+	./bin/cube3d_bonus config/map_bonus.cub
+
+
+
 gdb : all
 	gdb ./bin/cube3d
 
