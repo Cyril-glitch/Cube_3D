@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:22:53 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/19 12:41:24 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/19 13:13:34 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	draw_single_sprite(t_data *data, t_player *player, int sprite_id, int type)
 	sprite.type = type;
 	sprite.sprites = data->sprites;
 	sprite.sprite_id = sprite_id;
-	if (type == SPRITE_T && data->sprites[sprite_id].consumed == true)
+	if (type == SPRITE_P && data->sprites[sprite_id].consumed == true)
 		return ;
 	compute_sprite_transformation(player, &sprite);
 	if (sprite.transform_y <= 0)

@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:22:36 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/19 12:58:36 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/19 13:23:50 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,12 @@ void	ft_assign_p_sprites_textures(t_data *data)
 
 void	ft_init_sprites(t_data *data)
 {
+	ft_assign_p_sprites_textures(data);
 	ft_assign_m_sprites_textures(data);
 	ft_assign_t_sprites_textures(data);
-	ft_assign_p_sprites_textures(data);
+	init_sprites_pos(data->p_sprites, &data->map, SPRITE_P);
 	init_sprites_pos(data->m_sprites, &data->map, SPRITE_M);
 	init_sprites_pos(data->t_sprites, &data->map, SPRITE_T);
-	init_sprites_pos(data->p_sprites, &data->map, SPRITE_P);
 	init_monsters(data);
 }
 
@@ -119,10 +119,17 @@ void	ft_init_global_sprites_tab(t_data *data)
 		ft_game_exit(data, "sprites global init");
 	i = 0;
 	j = 0;
-	while (i < data->t_sprites->number)
+	while (j < data->p_sprites->number)
+	{
+		data->sprites[i] = data->p_sprites[j];
+		data->sprites[i].consumed = false;
+		i++;
+		j++;
+	}
+	j = 0;
+	while (j < data->t_sprites->number)
 	{
 		data->sprites[i] = data->t_sprites[j++];
-		data->sprites[i].consumed = false;
 		i++;
 	}
 	j = 0;
@@ -133,14 +140,6 @@ void	ft_init_global_sprites_tab(t_data *data)
 		i++;
 		j++;
 	}
-	j = 0;
-	while (j < data->p_sprites->number)
-	{
-		data->sprites[i] = data->p_sprites[j];
-		i++;
-		j++;
-	}
-
 }
 
 void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)
