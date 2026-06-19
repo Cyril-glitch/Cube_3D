@@ -11,7 +11,7 @@ static char *ft_get_dir_str(t_map *map, int i)
 	else if (i == 3)
 		return (map->we_path);
 	else if (i == 4)
-		return ("assets/wolftex2/eagle.xpm");
+		return ("assets/bonus/doors.xpm");
 	return (map->no_path);
 }
 
@@ -242,4 +242,15 @@ void	ft_init_game_over(t_data *data, t_img *over)
 	over->addr = mlx_get_data_addr(over->img, &over->bpp, &over->line_length, &over->endian);
 	if (!over->addr)
 		ft_game_exit(data, "memory allocation failed (over)");
+}
+
+
+void	ft_init_congrats(t_data *data, t_img *congrats)
+{	
+	congrats->img = mlx_xpm_file_to_image(data->mlx,"./assets/bonus/congrats.xpm", &congrats->w, &congrats->h);
+	if (!congrats->img)
+		ft_game_exit(data, "memory allocation failed (congrats)");
+	congrats->addr = mlx_get_data_addr(congrats->img, &congrats->bpp, &congrats->line_length, &congrats->endian);
+	if (!congrats->addr)
+		ft_game_exit(data, "memory allocation failed (congrats)");
 }

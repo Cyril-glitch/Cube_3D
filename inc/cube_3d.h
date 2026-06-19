@@ -196,6 +196,7 @@ typedef struct s_player
 	double				rot_speed;
 	int					eated;
 	int					healed;
+	int					scored;
 	t_point				next_step;
 	t_sprite			*sprite;
 	t_bfs				bfs;
@@ -289,6 +290,7 @@ typedef struct s_data
 	t_point				win_size;
 	t_img				screen;
 	t_img				over;
+	t_img				congrats;
 	t_img				*textures;
 	t_img				*m_textures;
 	t_img				*t_textures;
@@ -333,6 +335,7 @@ void 					init_global(t_data *data, char **av);
 void    				ft_init_bfs(t_data *data, t_player *monsters);
 void					ft_init_stats(t_data *data, t_hp *hp);
 void					ft_init_game_over(t_data *data, t_img *over);
+void					ft_init_congrats(t_data *data, t_img *congrats);
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -383,6 +386,7 @@ t_point					ft_get_next_step(t_bfs *bfs, t_point start, t_point target);
 void					ft_update_monster_path(t_data *data, t_player *monster, int i);
 int						ft_monster_arrived(t_player *monster);
 void    				ft_bot_move(t_data *data, int i);
+void    				ft_player_win(t_player *player, t_sprite *treasure, int trs_index);
 void    				ft_player_stats(t_data *data);
 
 int 					ft_get_index(t_point p, t_bfs bfs);
@@ -427,6 +431,7 @@ void					ft_draw_bot(t_data *data, t_player *player);
 void					ft_draw_health(t_data *data);
 void					ft_display_fps(t_data *data);
 void    				ft_render_death(t_data *data, t_img over);
+void    				ft_render_win(t_data *data, t_img over);
 
 // --- MINIMAP ---
 int						get_map_tile(char **grid, int h, int x, int y);

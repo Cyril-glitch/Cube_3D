@@ -68,11 +68,10 @@ void	ft_render_map(t_data *data, t_mini_map *map)
 void    ft_render_draw(t_ray *ray, t_data *data)
 {
 	//double t0 = get_time(data->start);
-	if (data->player.hp.health == 0)
-	{
-		ft_render_death(data, data->over);
-		return;
-	}
+	if (data->player.hp.health == 0 && !data->player.scored)
+		return ft_render_death(data, data->over);
+	else if (data->player.scored == 1) 
+		return ft_render_win(data, data->congrats);
 	(void)ray;
 	//double t0 = get_time(data->start);
 	ft_render_fc(data, &data->bgrd, &data->bgrd.floor, &data->bgrd.ceiling);
