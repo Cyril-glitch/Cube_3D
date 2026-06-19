@@ -192,6 +192,8 @@ typedef struct s_player
 	int					rotate_right;
 	double				move_speed;
 	double				rot_speed;
+	int					eated;
+	int					healed;
 	t_point				next_step;
 	t_sprite			*sprite;
 	t_bfs				bfs;
@@ -279,6 +281,7 @@ typedef struct s_data
 
 	void				*mlx;
 	void				*mlx_win;
+	int					total_pixel;
 	t_map				map;
 	t_mini_map			mini_map;
 	t_point				win_size;
@@ -383,6 +386,7 @@ void					update(t_data *data);
 void    				ft_damage(t_data *data, t_player *player, t_player *monsters, int nb_monsters);
 void    				ft_healing(t_player *player, t_sprite *hpack, int nb_pack);
 
+
 // --- MOUVEMENTS ---
 void					move_up(t_data *data);
 void					move_down(t_data *data);
@@ -407,6 +411,8 @@ unsigned int			getr1(int trgb);
 unsigned int			getg1(int trgb);
 unsigned int			getb1(int trgb);
 int						ft_anti_aliasing(int color);
+void					ft_green_filter(t_data *data, t_player *player, unsigned int *pixel);
+void					ft_red_filter(t_data *data, t_player *player, unsigned int *pixel);
 
 // --- RAYCASTING & RENDER ---
 void					ft_raycaster(t_data *data, t_ray *ray);

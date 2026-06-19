@@ -26,6 +26,7 @@ void	init_map_size(t_map *map)
 
 void	init_global(t_data *data, char **av)
 {
+	ft_init_data(data);
 	init_null(data);
 	ft_parser(data, &data->map, av[1]);
 	init_map_size(&data->map);

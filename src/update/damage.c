@@ -6,10 +6,11 @@ static int     ft_eating(t_player *player, t_player *cur_monster)
         cur_monster->pos_y > (player->pos_y - 1) && cur_monster->pos_y < (player->pos_y + 1));
 }
 
-static void ft_dpersec(t_data *data, t_hp *hp)
+static void ft_dpersec(t_data *data,t_hp *hp)
 {
     double hit;
 
+    data->player.eated = 1;
     hit = get_time(data->start); 
     if(hit - hp->last_hit < 1000 )
         return ;

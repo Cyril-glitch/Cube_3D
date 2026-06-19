@@ -68,7 +68,7 @@ void	ft_render_map(t_data *data, t_mini_map *map)
 void    ft_render_draw(t_ray *ray, t_data *data)
 {
 	//double t0 = get_time(data->start);
-	if (!data->player.hp.health)
+	if (data->player.hp.health == 0)
 	{
 		ft_render_death(data, data->over);
 		return;
@@ -92,4 +92,6 @@ void    ft_render_draw(t_ray *ray, t_data *data)
 		draw_map_img(data, &data->mini_map, data->player);
 		ft_render_map(data, &data->mini_map);
 	}
+	ft_red_filter(data, &data->player, (unsigned int *)data->screen.addr);
+	ft_green_filter(data, &data->player, (unsigned int *)data->screen.addr);
 }

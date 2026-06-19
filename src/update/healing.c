@@ -9,7 +9,8 @@ static void    ft_heal(t_player *player, t_sprite *cur_pack)
 {
     if (cur_pack->consumed)
         return ;
-    player->hp.health += 25;
+    player->healed = 1;
+    player->hp.health += 20;
     if (player->hp.health > 100)
         player->hp.health = 100;
     cur_pack->consumed = 1;
