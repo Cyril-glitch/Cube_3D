@@ -110,9 +110,10 @@ UPDATE_SRC_BONUS = src/update/hooks.c \
 			 src/update/get_target_path.c \
 			 src/update/get_next_step.c \
 			 src/update/bot_move.c \
+			 src/update/damage.c \
+			 src/update/winning.c \
+			 src/update/healing.c \
 			 src/update/player_stats.c
-
-
 
 RENDER_SRC_BONUS = src/render_src/mini_map_draw.c \
 			 src/render_src/draw_sprites.c \
@@ -124,6 +125,7 @@ RENDER_SRC_BONUS = src/render_src/mini_map_draw.c \
 			 src/render_src/trgb.c \
 			 src/render_src/render_fc.c \
 			 src/render_src/render_ath.c \
+			 src/render_src/render_win.c \
 			 src/render_src/render_death.c \
 			 src/render_src/draw_health.c 
 
@@ -191,3 +193,5 @@ fclean: clean
 	rm -rf $(BIN_DIR)
 
 re: fclean all
+
+re_bonus: fclean bonus
