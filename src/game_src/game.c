@@ -6,20 +6,21 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 13:51:14 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 14:00:47 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/22 14:05:23 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
 
-static void	ft_fps_limiter(t_data *data)
+static int	ft_fps_limiter(t_data *data)
 {
 	double	new_time;
 
 	new_time = get_time(data->start);
 	if (new_time - data->last_frame <= CAP)
-		return (0);
+		return (1);
 	data->last_frame = get_time(data->start);
+	return (0);
 }
 
 static void	ft_game_update(t_data *data)
@@ -41,7 +42,8 @@ static void	ft_game_draw(t_data *data)
 
 int	ft_game_loop(t_data *data)
 {
-	ft_fps_limiter(data);
+	if (ft_fps_limiter(data))
+		return (0);
 	ft_game_engine(data);
 	ft_game_draw(data);
 	ft_display_fps(data);
