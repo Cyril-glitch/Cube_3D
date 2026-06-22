@@ -1,0 +1,35 @@
+{
+   ignore_uninitialized_xcb
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   obj:/usr/lib/*/libxcb.so.*
+   obj:/usr/lib/*/libxcb.so.*
+   fun:xcb_writev
+   fun:_XSend
+}
+
+{
+   ignore_mlx_reachable_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/*/libX11.so.*
+}
+
+{
+   ignore_mlx_cursor_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/lib/*/libXcursor.so.*
+}
+
+{
+   ignore_linker_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_catch_exception
+   ...
+}

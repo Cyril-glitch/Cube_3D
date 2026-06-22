@@ -32,8 +32,8 @@ INIT_SRC = src/init_src/data_init.c \
 
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
-			   src/cleanup_src/memory_cleaner.c \
-			   src/cleanup_src/utils.c
+			   src/cleanup_src/free_texture.c \
+			   src/cleanup_src/memory_cleaner.c 
 
 UPDATE_SRC = src/update/hooks_mandatory.c \
 			 src/update/move.c \
@@ -97,8 +97,8 @@ INIT_SRC_BONUS = src/init_src/data_init.c \
 
 
 CLEAN_UP_SRC_BONUS = src/cleanup_src/game_exit.c \
-			   src/cleanup_src/memory_cleaner.c \
-			   src/cleanup_src/utils.c
+			   		 src/cleanup_src/memory_cleaner.c \
+			   		 src/cleanup_src/free_texture.c
 
 UPDATE_SRC_BONUS = src/update/hooks.c \
 			 src/update/move.c \
@@ -176,7 +176,10 @@ $(MLX_LIB_FILE):
 .PHONY: all clean fclean re
 
 start:	all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./bin/cube3d config/map.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./bin/cube3d config/map.cub
+
+startb: 
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./bin/cube3d_bonus config/map_bonus.cub
 
 it:
 	./bin/cube3d config/map.cub
@@ -199,4 +202,4 @@ fclean: clean
 
 re: fclean all
 
-re_bonus: fclean bonus
+reb: fclean bonus

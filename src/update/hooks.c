@@ -5,7 +5,7 @@ void	safe_cleanup(t_data *data)
 	int	i;
 
 	if (data->map.grid)
-		ft_free(&data->map.grid);
+		ft_freedtab(&data->map.grid);
 	if (data->ray)
 		free(data->ray);
 	if (data->screen.img)
