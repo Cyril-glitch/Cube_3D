@@ -10,6 +10,7 @@ double	get_time(double start)
 	current = (double)tv.tv_sec * 1000.0 + (double)tv.tv_usec / 1000.0;
 	return (current - start);
 }
+
 void	update_time(t_data *data)
 {
 	data->old_time = data->time;

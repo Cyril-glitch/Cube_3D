@@ -19,16 +19,19 @@ MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
 MAIN_SRC = src/main.c
 
-INIT_SRC = src/init_src/data_init.c \
-		   src/init_src/mini_map_init.c \
+init_src = src/init_src/init_data/data_init.c \
+		   src/init_src/init_data/mini_map_init.c \
 		   src/init_src/texture_init.c \
-		   src/init_src/mlx_init.c \
-		   src/init_src/doors_init.c \
-		   src/init_src/sprites_init.c \
-		   src/init_src/init_monsters.c \
-		   src/init_src/offsets_init.c \
-		   src/init_src/init_mandatory.c\
-		   src/init_src/bfs_init.c  
+		   src/init_src/init_data/mlx_init.c \
+		   src/init_src/init_data/init_player.c \
+		   src/init_src/init_data/init_mapsize.c \
+		   src/init_src/init_data/doors_init.c \
+		   src/init_src/init_data/sprites_init.c \
+		   src/init_src/init_data/init_monsters.c \
+		   src/init_src/init_data/offsets_init.c \
+		   src/init_src/init_wall_tex.c\
+		   src/init_src/init_data/init_mandatory.c\
+		   src/init_src/init_data/bfs_init.c  
 
 
 CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
@@ -84,16 +87,27 @@ GAME_SRC = 	 src/game_src/game.c
 
 MAIN_SRC_BONUS = src/main.c
 
-INIT_SRC_BONUS = src/init_src/data_init.c \
-		   src/init_src/mini_map_init.c \
+init_src_bonus = src/init_src/init_data//data_init.c \
+		   src/init_src/init_data//mini_map_init.c \
 		   src/init_src/texture_init.c \
-		   src/init_src/mlx_init.c \
-		   src/init_src/doors_init.c \
-		   src/init_src/sprites_init.c \
-		   src/init_src/init_monsters.c \
-		   src/init_src/offsets_init.c \
-		   src/init_src/init.c\
-		   src/init_src/bfs_init.c  
+		   src/init_src/init_data/mlx_init.c \
+		   src/init_src/init_data/init_player.c \
+		   src/init_src/init_data/doors_init.c \
+		   src/init_src/init_data/init_mapsize.c \
+		   src/init_src/init_data/sprites_init.c \
+		   src/init_src/init_data/init_monsters.c \
+		   src/init_src/init_data/offsets_init.c \
+		   src/init_src/init_data/init.c\
+		   src/init_src/init_sprite_tex.c \
+		   src/init_src/init_sprite_utils.c \
+		   src/init_src/init_treasure_tex.c \
+		   src/init_src/init_monsters_tex.c \
+		   src/init_src/init_background_tex.c \
+		   src/init_src/init_wall_tex.c \
+		   src/init_src/init_minimap_tex.c \
+		   src/init_src/init_event_tex.c \
+		   src/init_src/init_pack_tex.c \
+		   src/init_src/init_data/bfs_init.c  
 
 
 CLEAN_UP_SRC_BONUS = src/cleanup_src/game_exit.c \
@@ -187,8 +201,6 @@ it:
 itb:
 	./bin/cube3d_bonus config/map_bonus.cub
 
-
-
 gdb : all
 	gdb ./bin/cube3d
 
@@ -202,4 +214,4 @@ fclean: clean
 
 re: fclean all
 
-reb: fclean bonus
+reb: fclean bonus all

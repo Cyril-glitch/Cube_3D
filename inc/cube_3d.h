@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:35:37 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 12:50:51 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/22 16:23:27 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,18 @@ typedef struct s_ray
 	double				door_dist;
 }						t_ray;
 
+typedef struct s_rotation
+{
+	int		center;
+	double	cos_a;
+	double	sin_a;
+	t_point	dst;
+	t_point	src;
+	t_point	d;
+}			t_rotation;
+
+
+
 typedef struct s_map
 {
 	char				**grid;
@@ -338,7 +350,8 @@ void					init_player_dir(t_data *data);
 void					init_keys(t_data *data);
 void					init_mlx_and_ray(t_data *data);
 void					init_screen(t_data *data);
-void					init_textures(t_data *data);
+void					init_wall_tex(t_data *data);
+int						init_arrow(t_data *data, t_mini_map *map);
 void					init_sprites_textures(t_data *data);
 void					ft_init_backgrd(t_data *data, t_backgrd *bgrd);
 void					ft_init_sprites(t_data *data);
@@ -350,6 +363,15 @@ void					ft_init_bfs(t_data *data, t_player *monsters);
 void					ft_init_stats(t_data *data, t_hp *hp);
 void					ft_init_game_over(t_data *data, t_img *over);
 void					ft_init_congrats(t_data *data, t_img *congrats);
+void					init_map_size(t_data *data, char **grid);
+void					init_monster_textures(t_data *data);
+void					init_treasure_textures(t_data *data);
+void					init_monster_textures(t_data *data);
+void					init_pack_textures(t_data *data);
+char					*get_asset_path(int i, char *path, char *asset_name);
+void					fill_rotated_sprite(t_img *dest, t_img arrow, double angle);
+void					treat_transparency(t_img *image, int ref_color, unsigned int tolerance);
+
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -392,7 +414,6 @@ int						ft_game_loop(t_data *data);
 void					safe_cleanup(t_data *data);
 void					init_hooks(t_data *data);
 int						ft_mouse_rot(int mouse_x, int mouse_y, t_data *data);
-
 t_point					ft_bfs(t_data *data, t_bfs *bfs, t_point start,
 							t_point target);
 void					ft_init_camefrom(t_bfs *bfs);
@@ -409,13 +430,13 @@ void					ft_bot_move(t_data *data, int i);
 void					ft_player_win(t_player *player, t_sprite *treasure,
 							int trs_index);
 void					ft_player_stats(t_data *data);
-
 int						ft_get_index(t_point p, t_bfs bfs);
 void					update(t_data *data);
 void					ft_damage(t_data *data, t_player *player,
 							t_player *monsters, int nb_monsters);
 void					ft_healing(t_player *player, t_sprite *hpack,
 							int nb_pack);
+double					get_time(double start);
 
 // --- MOUVEMENTS ---
 void					move_up(t_data *data);
@@ -491,7 +512,6 @@ void 					ft_free_texture(t_data *data);
 void					ft_free_data(t_data *data);
 void					ft_error_file(char *file_path);
 void					ft_error_log(char *error);
-//void					ft_free(char ***s);
 double					get_time(double start);
 unsigned int			ft_abs(int n);
 double					ft_abs2(double n);

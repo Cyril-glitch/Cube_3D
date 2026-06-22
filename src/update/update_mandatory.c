@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   update_mandatory.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmichaud <nmichaud@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:45:04 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/19 16:45:05 by nmichaud         ###   ########.fr       */
+/*   Updated: 2026/06/22 14:38:02 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
+
+double	get_time(double start)
+{
+	t_timeval	tv;
+	double		current;
+
+	if (gettimeofday(&tv, NULL) == -1)
+		return (-1);
+	current = (double)tv.tv_sec * 1000.0 + (double)tv.tv_usec / 1000.0;
+	return (current - start);
+}
 
 void	update_time(t_data *data)
 {

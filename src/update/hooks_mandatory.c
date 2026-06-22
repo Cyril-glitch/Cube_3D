@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks_mandatory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmichaud <nmichaud@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:49:24 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/19 16:49:24 by nmichaud         ###   ########.fr       */
+/*   Updated: 2026/06/22 14:28:39 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	safe_cleanup(t_data *data)
 	int	i;
 
 	if (data->map.grid)
-		ft_free(&data->map.grid);
+		ft_freedtab(&data->map.grid);
 	if (data->ray)
 		free(data->ray);
 	if (data->screen.img)
