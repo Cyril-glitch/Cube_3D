@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:07:29 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 14:07:55 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 12:20:50 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 static void	ft_max_width(t_player *monster, char **grid)
 {

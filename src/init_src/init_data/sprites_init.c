@@ -3,99 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 14:22:36 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/19 13:23:50 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/23 15:23:09 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
-
-int	count_sprites(t_map *map, int type)
-{
-	int	x;
-	int	y;
-	int	res;
-
-	res = 0;
-	y = 0;
-	while (map->grid[y])
-	{
-		x = 0;
-		while (map->grid[y][x])
-		{
-			if (map->grid[y][x] == type)
-				res++;
-			x++;
-		}
-		y++;
-	}
-	return (res);
-}
-
-void	ft_assign_m_sprites_textures(t_data *data)
-{
-	int	i;
-	int	nb_sprites;
-
-	nb_sprites = count_sprites(&data->map, SPRITE_M);
-	if (nb_sprites == 0)
-		ft_game_exit(data, "no monster in map");
-	data->m_sprites = malloc(sizeof(t_sprite) * nb_sprites);
-	if (!data->m_sprites)
-		ft_game_exit(data, "monster allocation failed");
-	i = 0;
-	while (i < nb_sprites)
-	{
-		data->m_sprites[i].textures = data->m_textures;
-		data->m_sprites[i].number = nb_sprites;
-		data->m_sprites[i].type = SPRITE_M;
-		i++;
-	}
-}
-
-void	ft_assign_t_sprites_textures(t_data *data)
-{
-	int	i;
-	int	nb_sprites;
-
-	nb_sprites = count_sprites(&data->map, SPRITE_T);
-	if (nb_sprites == 0)
-		ft_game_exit(data, "no treasure in map");
-	data->t_sprites = malloc(sizeof(t_sprite) * nb_sprites);
-	if (!data->t_sprites)
-		ft_game_exit(data, "treasures allocation failed");
-	i = 0;
-	while (i < nb_sprites)
-	{
-		data->t_sprites[i].textures = data->t_textures;
-		data->t_sprites[i].number = nb_sprites;
-		data->t_sprites[i].type = SPRITE_T;
-		i++;
-	}
-}
-
-void	ft_assign_p_sprites_textures(t_data *data)
-{
-	int	i;
-	int	nb_sprites;
-
-	nb_sprites = count_sprites(&data->map, SPRITE_P);
-	if (nb_sprites == 0)
-		ft_game_exit(data, "no pack in map");
-	data->p_sprites = malloc(sizeof(t_sprite) * nb_sprites);
-	if (!data->p_sprites)
-		ft_game_exit(data, "pack allocation failed");
-	i = 0;
-	while (i < nb_sprites)
-	{
-		data->p_sprites[i].textures = data->p_textures;
-		data->p_sprites[i].number = nb_sprites;
-		data->p_sprites[i].type = SPRITE_P;
-		i++;
-	}
-}
+#include "../../../inc/cube_3d.h"
 
 void	ft_init_sprites(t_data *data)
 {
@@ -108,15 +23,11 @@ void	ft_init_sprites(t_data *data)
 	init_monsters(data);
 }
 
-void	ft_init_global_sprites_tab(t_data *data)
+static	void	ft_assign_sprite_tab(t_data *data)
 {
 	int	i;
 	int	j;
 
-	ft_init_sprites(data);
-	data->sprites = malloc(sizeof(t_sprite) * (data->t_sprites->number + data->m_sprites->number + data->p_sprites->number));
-	if (!data->sprites)
-		ft_game_exit(data, "sprites global init");
 	i = 0;
 	j = 0;
 	while (j < data->p_sprites->number)
@@ -128,88 +39,21 @@ void	ft_init_global_sprites_tab(t_data *data)
 	}
 	j = 0;
 	while (j < data->t_sprites->number)
-	{
-		data->sprites[i] = data->t_sprites[j++];
-		i++;
-	}
+		data->sprites[i++] = data->t_sprites[j++];
 	j = 0;
 	while (j < data->m_sprites->number)
 	{
 		data->sprites[i] = data->m_sprites[j];
-		data->monsters[j].sprite = &data->sprites[i];
-		i++;
-		j++;
+		data->monsters[j++].sprite = &data->sprites[i++];
 	}
 }
 
-void	init_sprites_pos(t_sprite *sprites, t_map *map, int type)
+void	ft_init_global_sprites_tab(t_data *data)
 {
-	int	x;
-	int	y;
-	int	i;
-
-	i = 0;
-	y = 0;
-	while (map->grid[y])
-	{
-		x = 0;
-		while (map->grid[y][x])
-		{
-			if (map->grid[y][x] == type)
-			{
-				sprites[i].x = (double)x + 0.5;
-				sprites[i].y = (double)y + 0.5;
-				i++;
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
-static void	ft_sort2(t_sprite_order *res, int count)
-{
-	int	i;
-	int	j;
-	t_sprite_order	tmp;
-
-	i = 0;
-	while (i < count - 1)
-	{
-		j = 0;
-		while (j < count - 1)
-		{
-			if (res[j].dist < res[j + 1].dist)
-			{
-				tmp = res[j];
-				res[j] = res[j + 1];
-				res[j + 1] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-t_sprite_order	*sort_sprites(t_data *data, int count)
-{
-	int					i;
-	t_sprite_order		*res;
-
-	res = malloc(sizeof(t_sprite_order) * count);
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (i < count)
-	{
-		res[i].index = i;
-		res[i].type = data->sprites[i].type;
-		res[i].dist = (data->player.pos_x - data->sprites[i].x) * 
-					(data->player.pos_x - data->sprites[i].x) +
-					(data->player.pos_y - data->sprites[i].y) *
-					(data->player.pos_y - data->sprites[i].y);
-		i++;
-	}
-	ft_sort2(res, count);
-	return (res);
+	ft_init_sprites(data);
+	data->sprites = malloc(sizeof(t_sprite) * (data->t_sprites->number
+				+ data->m_sprites->number + data->p_sprites->number));
+	if (!data->sprites)
+		ft_game_exit(data, "sprites global init");
+	ft_assign_sprite_tab(data);
 }

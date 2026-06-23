@@ -6,26 +6,49 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 15:27:40 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 15:31:24 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 16:03:04 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
-void	init_treasure_textures(t_data *data)
+void	ft_assign_t_sprites_textures(t_data *data)
 {
-	int		i;
-	int		nb_frames;
-	char	*s;
+	int	i;
+	int	nb_sprites;
 
-	nb_frames = SPRITE_T_TEXT_NB;
-	data->t_textures = malloc(sizeof(t_img) * nb_frames);
-	if (!data->t_textures)
-		ft_game_exit(data, "treasure textures init");
+	nb_sprites = count_sprites(&data->map, SPRITE_T);
+	if (nb_sprites == 0)
+		ft_game_exit(data, "no treasure in map");
+	data->t_sprites = malloc(sizeof(t_sprite) * nb_sprites);
+	if (!data->t_sprites)
+		ft_game_exit(data, "treasures allocation failed");
+	i = 0;
+	while (i < nb_sprites)
+	{
+		data->t_sprites[i].textures = data->t_textures;
+		data->t_sprites[i].number = nb_sprites;
+		data->t_sprites[i].type = SPRITE_T;
+		i++;
+	}
+}
+
+static void	ft_init_img_ptr(t_data *data, int nb_frames)
+{
+	int	i;
+
 	i = 0;
 	while (i < nb_frames)
 		data->t_textures[i++].img = NULL;
+}
+
+static void	ft_load_image(t_data *data, int nb_frames)
+{
+	int		i;
+	char	*s;
+
 	i = 0;
+	ft_init_img_ptr(data, nb_frames);
 	while (i < nb_frames)
 	{
 		s = get_asset_path(i + 1, "assets/torches/", "_Torch Animated.xpm");
@@ -44,4 +67,15 @@ void	init_treasure_textures(t_data *data)
 		treat_transparency(&data->t_textures[i].img, 0, 10);
 		i++;
 	}
+}
+
+void	init_treasure_textures(t_data *data)
+{
+	int	nb_frames;
+
+	nb_frames = SPRITE_T_TEXT_NB;
+	data->t_textures = malloc(sizeof(t_img) * nb_frames);
+	if (!data->t_textures)
+		ft_game_exit(data, "treasure textures init");
+	ft_load_image(data, nb_frames);
 }

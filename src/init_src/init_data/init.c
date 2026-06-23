@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:17:30 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 15:05:15 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 12:30:10 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 void	init_global(t_data *data, char **av)
 {

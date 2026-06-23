@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:35:37 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 16:23:27 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 14:43:33 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,6 +371,11 @@ void					init_pack_textures(t_data *data);
 char					*get_asset_path(int i, char *path, char *asset_name);
 void					fill_rotated_sprite(t_img *dest, t_img arrow, double angle);
 void					treat_transparency(t_img *image, int ref_color, unsigned int tolerance);
+void					init_sprites_pos(t_sprite *sprites, t_map *map, int type);
+int						count_sprites(t_map *map, int type);
+void					ft_assign_m_sprites_textures(t_data *data);
+void					ft_assign_p_sprites_textures(t_data *data);
+void					ft_assign_t_sprites_textures(t_data *data);
 
 
 // --- PARSING ---

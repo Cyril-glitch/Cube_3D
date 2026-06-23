@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 19:07:19 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/22 14:16:43 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 12:20:26 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 static void	ft_check_monster(t_data *data, int *i, int y, int x)
 {

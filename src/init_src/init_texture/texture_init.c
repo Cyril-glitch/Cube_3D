@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:59:16 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 16:05:00 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 16:00:40 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 void	init_screen(t_data *data)
 {
@@ -18,7 +18,6 @@ void	init_screen(t_data *data)
 			data->win_size.y);
 	if (!data->screen.img)
 		ft_game_exit(data, "screen init");
-	;
 	data->screen.addr = mlx_get_data_addr(data->screen.img, &data->screen.bpp,
 			&data->screen.line_length, &data->screen.endian);
 	if (!data->screen.addr)

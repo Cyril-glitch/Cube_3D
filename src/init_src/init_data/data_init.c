@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:09:01 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 14:12:28 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 12:12:01 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 void	ft_init_data(t_data *data)
 {

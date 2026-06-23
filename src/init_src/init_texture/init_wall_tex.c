@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 16:01:10 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 16:28:55 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 12:30:10 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 static char	*ft_get_dir_str(t_map *map, int i)
 {

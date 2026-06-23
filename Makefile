@@ -19,17 +19,17 @@ MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
 MAIN_SRC = src/main.c
 
-init_src = src/init_src/init_data/data_init.c \
+INIT_SRC = src/init_src/init_data/data_init.c \
 		   src/init_src/init_data/mini_map_init.c \
-		   src/init_src/texture_init.c \
+		   src/init_src/init_texture/texture_init.c \
 		   src/init_src/init_data/mlx_init.c \
 		   src/init_src/init_data/init_player.c \
 		   src/init_src/init_data/init_mapsize.c \
 		   src/init_src/init_data/doors_init.c \
-		   src/init_src/init_data/sprites_init.c \
+		   src/init_src/init_data/init_sprite_utils.c \
 		   src/init_src/init_data/init_monsters.c \
 		   src/init_src/init_data/offsets_init.c \
-		   src/init_src/init_wall_tex.c\
+		   src/init_src/init_texture/init_wall_tex.c\
 		   src/init_src/init_data/init_mandatory.c\
 		   src/init_src/init_data/bfs_init.c  
 
@@ -63,11 +63,6 @@ RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/render_mandatory.c \
 			 src/render_src/render_utils.c \
 			 src/render_src/trgb.c \
-			 src/render_src/render_fc.c \
-			 src/render_src/render_ath.c \
-			 src/render_src/render_death.c \
-			 src/render_src/render_win.c \
-			 src/render_src/draw_health.c 
 
 PARSER_SRC = src/parser_src/gnl_no_nl.c \
 			 src/parser_src/gnl.c \
@@ -87,27 +82,28 @@ GAME_SRC = 	 src/game_src/game.c
 
 MAIN_SRC_BONUS = src/main.c
 
-init_src_bonus = src/init_src/init_data//data_init.c \
-		   src/init_src/init_data//mini_map_init.c \
-		   src/init_src/texture_init.c \
-		   src/init_src/init_data/mlx_init.c \
-		   src/init_src/init_data/init_player.c \
-		   src/init_src/init_data/doors_init.c \
-		   src/init_src/init_data/init_mapsize.c \
-		   src/init_src/init_data/sprites_init.c \
-		   src/init_src/init_data/init_monsters.c \
-		   src/init_src/init_data/offsets_init.c \
-		   src/init_src/init_data/init.c\
-		   src/init_src/init_sprite_tex.c \
-		   src/init_src/init_sprite_utils.c \
-		   src/init_src/init_treasure_tex.c \
-		   src/init_src/init_monsters_tex.c \
-		   src/init_src/init_background_tex.c \
-		   src/init_src/init_wall_tex.c \
-		   src/init_src/init_minimap_tex.c \
-		   src/init_src/init_event_tex.c \
-		   src/init_src/init_pack_tex.c \
-		   src/init_src/init_data/bfs_init.c  
+INIT_SRC_BONUS = src/init_src/init_data//data_init.c \
+		   		 src/init_src/init_data//mini_map_init.c \
+		   		 src/init_src/init_texture/texture_init.c \
+		   		 src/init_src/init_data/mlx_init.c \
+		   		 src/init_src/init_data/init_player.c \
+		   		 src/init_src/init_data/doors_init.c \
+		   		 src/init_src/init_data/init_mapsize.c \
+		   		 src/init_src/init_data/sprites_init.c \
+		   		 src/init_src/init_data/init_sprite_utils.c \
+		   		 src/init_src/init_data/init_monsters.c \
+		   		 src/init_src/init_data/offsets_init.c \
+		   		 src/init_src/init_data/init.c\
+		   		 src/init_src/init_texture/init_sprite_tex.c \
+		   		 src/init_src/init_texture/init_sprite_tex_utils.c \
+		   		 src/init_src/init_texture/init_treasure_tex.c \
+		   		 src/init_src/init_texture/init_monsters_tex.c \
+		   		 src/init_src/init_texture/init_background_tex.c \
+		   		 src/init_src/init_texture/init_wall_tex.c \
+		   		 src/init_src/init_texture/init_minimap_tex.c \
+		   		 src/init_src/init_texture/init_event_tex.c \
+		   		 src/init_src/init_texture/init_pack_tex.c \
+		   		 src/init_src/init_data/bfs_init.c  
 
 
 CLEAN_UP_SRC_BONUS = src/cleanup_src/game_exit.c \
@@ -137,7 +133,7 @@ RENDER_SRC_BONUS = src/render_src/mini_map_draw.c \
 			 src/render_src/render.c \
 			 src/render_src/render_utils.c \
 			 src/render_src/trgb.c \
-			 src/render_src/render_fc.c \
+			 src/render_src/render_background.c \
 			 src/render_src/render_ath.c \
 			 src/render_src/render_win.c \
 			 src/render_src/render_death.c \

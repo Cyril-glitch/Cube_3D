@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 16:01:07 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 16:04:19 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 15:51:24 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 void	ft_init_backgrd(t_data *data, t_backgrd *b)
 {

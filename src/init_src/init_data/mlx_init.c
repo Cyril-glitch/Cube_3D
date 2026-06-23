@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:58:52 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 14:58:53 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 12:30:10 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 void	init_mlx_and_ray(t_data *data)
 {

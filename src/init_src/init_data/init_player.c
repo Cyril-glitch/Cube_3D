@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:17:06 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 14:17:13 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 12:21:23 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 void	init_player_dir(t_data *data)
 {

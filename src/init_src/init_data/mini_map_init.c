@@ -6,11 +6,11 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:49:10 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 16:21:14 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 12:30:10 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cube_3d.h"
+#include "../../../inc/cube_3d.h"
 
 static void	rotate_sprite_pixel(t_rotation rotation, t_img *dest, t_img arrow)
 {
