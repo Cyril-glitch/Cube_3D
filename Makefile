@@ -75,6 +75,7 @@ PARSER_SRC = src/parser_src/gnl_no_nl.c \
 		 	 src/parser_src/parser_utils.c \
 			 src/parser_src/map_checker.c \
 		 	 src/parser_src/map_checker_utils_2.c \
+		 	 src/parser_src/map_display.c \
              src/parser_src/map_checker_utils_mandatory.c \
 			 src/parser_src/extract_map.c
 
@@ -150,6 +151,7 @@ PARSER_SRC_BONUS = src/parser_src/gnl_no_nl.c \
 		 	 src/parser_src/parser_utils.c \
 			 src/parser_src/map_checker.c \
 		 	 src/parser_src/map_checker_utils_2.c \
+		 	 src/parser_src/map_display.c \
              src/parser_src/map_checker_utils.c \
 			 src/parser_src/extract_map.c
 

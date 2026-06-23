@@ -1,29 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/23 17:27:28 by cyril             #+#    #+#             */
+/*   Updated: 2026/06/23 17:38:14 by cyril            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
 
 char	*ft_gnl(int fd)
 {
 	static char	b[BUFFER_SIZE + 1] = "";
-	char		*ret = NULL;
-	char		*tmp = NULL;
-	int			r = 1;
+	char		*ret;
+	char		*tmp;
+	int			read_ret;
 
-	while (((tmp = ft_strchr(b, '\n')) == NULL) && r)
+	ret = NULL;
+	tmp = NULL;
+	read_ret = 1;
+	while (!tmp && read_ret)
 	{
 		if (!ft_str_append_str(&ret, b))
 			return (NULL);
-		r = read(fd, b, BUFFER_SIZE);
-		if (r == -1)
-			return (NULL);
-		b[r] = 0;
-	}
-	if (!tmp)
-	{
-		if (ret && !ret[0])
+		read_ret = read(fd, b, BUFFER_SIZE);
+		if (read_ret == -1)
 			return (free(ret), NULL);
-		return (ret);
+		b[read_ret] = 0;
+		tmp = ft_strchr(b, '\n');
 	}
-	if (!ft_str_append_mem(&ret, b, tmp - b + 1))
+	if ((!b[0] && (!ret || !ret[0])) || (tmp && !ft_str_append_mem(&ret, b, tmp
+				- b + 1)))
 		return (free(ret), NULL);
-	ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1);
-	return (ret);
-} 
+	if (!tmp)
+		return (ret);
+	return (ft_memmove(b, tmp + 1, ft_strlen(tmp + 1) + 1), ret);
+}

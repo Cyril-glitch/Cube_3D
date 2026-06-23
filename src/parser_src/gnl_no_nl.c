@@ -1,27 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl_no_nl.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/23 17:23:40 by cyril             #+#    #+#             */
+/*   Updated: 2026/06/23 17:38:55 by cyril            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
 
-char *ft_gnl_no_nl(int fd)
+char	*ft_gnl_no_nl(int fd)
 {
-  static char b[BUFFER_SIZE + 1] = "";
-  char *ret = NULL;
-  char *tmp = NULL;
-  int	read_ret = 1;
-  while(((tmp = ft_strchr(b, '\n')) == NULL) && read_ret)
-  {
-    if (!ft_str_append_str(&ret, b))
-      return (NULL);
-    read_ret = read(fd, b, BUFFER_SIZE);
-    if (read_ret == -1)
-      return (NULL);
-    b[read_ret] = 0;
-  }
-  if (!b[0])
-  	return (free(ret), NULL);
-  if (!ft_str_append_mem(&ret, b, tmp - b))
-  {
-    free(ret);
-    return NULL;
-  }
-  ft_memmove(b, tmp + 1, ft_strlen(b));
-  return ret;
+	static char	b[BUFFER_SIZE + 1] = "";
+	char		*ret;
+	char		*tmp;
+	int			read_ret;
+
+	ret = NULL;
+	tmp = NULL;
+	read_ret = 1;
+	while (!tmp && read_ret)
+	{
+		if (!ft_str_append_str(&ret, b))
+			return (NULL);
+		read_ret = read(fd, b, BUFFER_SIZE);
+		if (read_ret == -1)
+			return (free(ret), NULL);
+		b[read_ret] = 0;
+		tmp = ft_strchr(b, '\n');
+	}
+	if ((!b[0] && (!ret || !ret[0])) || (tmp && !ft_str_append_mem(&ret, b, tmp
+				- b)))
+		return (free(ret), NULL);
+	if (!tmp)
+		return (ret);
+	return (ft_memmove(b, tmp + 1, ft_strlen(b)), ret);
 }

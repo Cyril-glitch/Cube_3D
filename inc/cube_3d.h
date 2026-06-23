@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:35:37 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/23 14:43:33 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/23 16:38:04 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,15 +247,13 @@ typedef struct s_ray
 
 typedef struct s_rotation
 {
-	int		center;
-	double	cos_a;
-	double	sin_a;
-	t_point	dst;
-	t_point	src;
-	t_point	d;
-}			t_rotation;
-
-
+	int					center;
+	double				cos_a;
+	double				sin_a;
+	t_point				dst;
+	t_point				src;
+	t_point				d;
+}						t_rotation;
 
 typedef struct s_map
 {
@@ -331,7 +329,7 @@ typedef struct s_data
 
 	t_player			player;
 	t_player			*monsters;
-	int					(*offsets)[2];
+	int (*offsets)[2];
 	t_ray				*ray;
 	t_keys				keys;
 
@@ -369,14 +367,16 @@ void					init_treasure_textures(t_data *data);
 void					init_monster_textures(t_data *data);
 void					init_pack_textures(t_data *data);
 char					*get_asset_path(int i, char *path, char *asset_name);
-void					fill_rotated_sprite(t_img *dest, t_img arrow, double angle);
-void					treat_transparency(t_img *image, int ref_color, unsigned int tolerance);
-void					init_sprites_pos(t_sprite *sprites, t_map *map, int type);
+void					fill_rotated_sprite(t_img *dest, t_img arrow,
+							double angle);
+void					treat_transparency(t_img *image, int ref_color,
+							unsigned int tolerance);
+void					init_sprites_pos(t_sprite *sprites, t_map *map,
+							int type);
 int						count_sprites(t_map *map, int type);
 void					ft_assign_m_sprites_textures(t_data *data);
 void					ft_assign_p_sprites_textures(t_data *data);
 void					ft_assign_t_sprites_textures(t_data *data);
-
 
 // --- PARSING ---
 void					ft_parser(t_data *data, t_map *map, char *file_path);
@@ -513,7 +513,7 @@ void					render_sprite(t_data *data, t_img *screen, double start,
 // --- UTILITAIRES ---
 void					ft_display_logo(void);
 void					ft_game_exit(t_data *data, char *error);
-void 					ft_free_texture(t_data *data);
+void					ft_free_texture(t_data *data);
 void					ft_free_data(t_data *data);
 void					ft_error_file(char *file_path);
 void					ft_error_log(char *error);

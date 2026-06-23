@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker_utils_madandatory.c                    :+:      :+:    :+:   */
+/*   map_checker_utils_mandatory.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmichaud <nmichaud@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:39:06 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/19 16:39:07 by nmichaud         ###   ########.fr       */
+/*   Updated: 2026/06/23 16:26:07 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_is_map_content(char c)
 {
-	return (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c== SPRITE_M || c == '1' || c == '0'
-		|| c == ' ');
+	return (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == SPRITE_M
+		|| c == '1' || c == '0' || c == ' ');
 }
 
 int	ft_is_walkable(char c)
@@ -30,10 +30,11 @@ int	ft_pit_fall(char c)
 
 int	ft_is_offset(char **grid, int y, int x)
 {
-	return ((size_t)(x - 1) > ft_strlen(grid[y - 1]) || (size_t)(x - 1) > ft_strlen(grid[y + 1]));
+	return ((size_t)(x - 1) > ft_strlen(grid[y - 1]) || (size_t)(x
+			- 1) > ft_strlen(grid[y + 1]));
 }
 
-int  ft_is_limit_component(char **grid, int y, int x)
+int	ft_is_limit_component(char **grid, int y, int x)
 {
-    return (x == 0 || y == 0 || !grid[y + 1]);
+	return (x == 0 || y == 0 || !grid[y + 1]);
 }

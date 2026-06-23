@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_checker.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/23 16:04:53 by cyril             #+#    #+#             */
+/*   Updated: 2026/06/23 16:05:14 by cyril            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
 
 static int	ft_is_surrounded(char **grid, int y, int x)
@@ -26,7 +38,7 @@ static void	ft_check_map_content(t_data *data, char **grid, int y, int x)
 	else if (!ft_is_surrounded(grid, y, x))
 	{
 		ft_display_map_error(grid, y, x);
-		ft_game_exit(data,"Map is not properly closed.");
+		ft_game_exit(data, "Map is not properly closed.");
 	}
 }
 
@@ -45,8 +57,8 @@ static void	ft_check_player(t_data *data, char **grid, int y, int x)
 
 void	ft_map_checker(t_data *data, t_player *player, char **grid)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	x = 0;

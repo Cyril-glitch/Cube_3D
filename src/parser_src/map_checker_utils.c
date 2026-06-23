@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_checker_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/23 16:14:51 by cyril             #+#    #+#             */
+/*   Updated: 2026/06/23 16:15:02 by cyril            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
 
 int	ft_is_map_content(char c)
 {
-	return (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == VER_DOOR || c == HOR_DOOR || c == SPRITE_T || c== SPRITE_M || c== SPRITE_P || c == '1' || c == '0'
-		|| c == ' ');
+	return (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == VER_DOOR
+		|| c == HOR_DOOR || c == SPRITE_T || c == SPRITE_M || c == SPRITE_P
+		|| c == '1' || c == '0' || c == ' ');
 }
 
 int	ft_is_walkable(char c)
@@ -18,10 +31,11 @@ int	ft_pit_fall(char c)
 
 int	ft_is_offset(char **grid, int y, int x)
 {
-	return ((size_t)(x - 1) > ft_strlen(grid[y - 1]) || (size_t)(x - 1) > ft_strlen(grid[y + 1]));
+	return ((size_t)(x - 1) > ft_strlen(grid[y - 1]) || (size_t)(x
+			- 1) > ft_strlen(grid[y + 1]));
 }
 
-int  ft_is_limit_component(char **grid, int y, int x)
+int	ft_is_limit_component(char **grid, int y, int x)
 {
-    return (x == 0 || y == 0 || !grid[y + 1]); 
+	return (x == 0 || y == 0 || !grid[y + 1]);
 }
