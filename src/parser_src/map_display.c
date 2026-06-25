@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_display.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 17:33:54 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/23 17:33:57 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/25 11:39:26 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static void	ft_display(char **grid, int y, int x)
 
 void	ft_map_display(char **grid)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	while (grid[y])

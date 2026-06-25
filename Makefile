@@ -59,10 +59,14 @@ RENDER_SRC = src/render_src/mini_map_draw.c \
 			 src/render_src/draw_sprites.c \
 			 src/render_src/pixel_management_1.c \
 			 src/render_src/pixel_management_2.c \
-			 src/render_src/raycasting.c \
 			 src/render_src/render_mandatory.c \
 			 src/render_src/render_utils.c \
 			 src/render_src/trgb.c \
+
+ENGINE_SRC = src/engine_src/raycasting.c \
+			 src/engine_src/init_dda.c	\
+			 src/engine_src/perform_dda.c \
+			 src/engine_src/get_tex_coordinates.c
 
 PARSER_SRC = src/parser_src/gnl_no_nl.c \
 			 src/parser_src/gnl.c \
@@ -126,11 +130,16 @@ UPDATE_SRC_BONUS = src/update/hooks.c \
 			 src/update/healing.c \
 			 src/update/player_stats.c
 
+
+ENGINE_SRC_BONUS = src/engine_src/raycasting.c \
+				   src/engine_src/init_dda.c \
+			 	   src/engine_src/perform_dda.c \
+			 	   src/engine_src/get_tex_coordinates.c
+
 RENDER_SRC_BONUS = src/render_src/mini_map_draw.c \
 			 src/render_src/draw_sprites.c \
 			 src/render_src/pixel_management_1.c \
 			 src/render_src/pixel_management_2.c \
-			 src/render_src/raycasting.c \
 			 src/render_src/render.c \
 			 src/render_src/render_utils.c \
 			 src/render_src/trgb.c \
@@ -157,10 +166,10 @@ PARSER_SRC_BONUS = src/parser_src/gnl_no_nl.c \
 
 GAME_SRC_BONUS = 	 src/game_src/game.c
 
-SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC) $(GAME_SRC)
+SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC) $(ENGINE_SRC) $(GAME_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
-SRC_BONUS = $(MAIN_SRC_BONUS) $(INIT_SRC_BONUS) $(CLEAN_UP_SRC_BONUS) $(PARSER_SRC_BONUS) $(UPDATE_SRC_BONUS) $(RENDER_SRC_BONUS) $(GAME_SRC_BONUS)
+SRC_BONUS = $(MAIN_SRC_BONUS) $(INIT_SRC_BONUS) $(CLEAN_UP_SRC_BONUS) $(PARSER_SRC_BONUS) $(UPDATE_SRC_BONUS) $(RENDER_SRC_BONUS) $(ENGINE_SRC_BONUS) $(GAME_SRC_BONUS)
 OBJ_BONUS = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC_BONUS))
 
 all: $(NAME)

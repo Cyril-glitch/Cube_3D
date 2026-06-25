@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_3d.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:35:37 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/23 16:38:04 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/25 12:21:41 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -474,6 +474,11 @@ void					ft_red_filter(t_data *data, t_player *player,
 							unsigned int *pixel);
 
 // --- RAYCASTING & RENDER ---
+
+void	ft_get_tex_coordinates(t_img *textures, t_map *map, t_ray *ray,
+		t_player player);
+void					ft_init_dda(t_ray *ray, t_player player);
+void					ft_perform_dda(t_data *data, t_ray *ray, char **map);
 void					ft_raycaster(t_data *data, t_ray *ray);
 void					ft_render_draw(t_ray *ray, t_data *data);
 void					ft_render_fc(t_data *data, t_backgrd *flr, t_img *floor,
