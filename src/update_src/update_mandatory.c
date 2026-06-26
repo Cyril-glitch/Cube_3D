@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   abs.c                                              :+:      :+:    :+:   */
+/*   update_mandatory.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/25 12:30:22 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/06/26 16:20:46 by cycolonn         ###   ########.fr       */
+/*   Created: 2026/06/19 16:45:04 by nmichaud          #+#    #+#             */
+/*   Updated: 2026/06/26 19:16:20 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
 
-unsigned int	ft_abs(int n)
+void	update(t_data *data)
 {
-	if (n < 0)
-		return ((unsigned int)(-n));
-	return ((unsigned int)n);
-}
-
-double	ft_abs2(double n)
-{
-	if (n < 0)
-		return ((-n));
-	return (n);
+	update_time(data);
+	handle_movements(data);
+	handle_camera(data);
 }

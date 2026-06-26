@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:35:37 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/26 15:05:54 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/26 19:11:50 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,12 +270,12 @@ typedef struct s_map
 
 typedef struct s_player_icon
 {
-	double	angle;
-	int		size;
-	int		index;
-	t_point	src;
-	t_point	start;
-}			t_player_icon;
+	double				angle;
+	int					size;
+	int					index;
+	t_point				src;
+	t_point				start;
+}						t_player_icon;
 
 typedef struct s_mini_map
 {
@@ -420,13 +420,32 @@ int						ft_player_is_set(t_player *player);
 int						ft_is_player(char c);
 void					ft_display_map_error(char **grid, int err_y, int err_x);
 
-// --- GAME_LOOP ---
+// --- GAME ---
 int						ft_game_loop(t_data *data);
 
-// --- HOOKS & UPDATES ---
-void					safe_cleanup(t_data *data);
+// --- UPDATES ---
+
+void					update_time(t_data *data);
+void					update_player(t_data *data);
+void					update_monsters(t_data *data);
+void					update_doors(t_data *data);
+void					update(t_data *data);
+
+// HOOKS
 void					init_hooks(t_data *data);
 int						ft_mouse_rot(int mouse_x, int mouse_y, t_data *data);
+
+// STATS
+void					ft_damage(t_data *data, t_player *player,
+							t_player *monsters, int nb_monsters);
+void					ft_healing(t_player *player, t_sprite *hpack,
+							int nb_pack);
+void					ft_player_stats(t_data *data);
+
+void					ft_player_win(t_player *player, t_sprite *treasure,
+							int trs_index);
+
+// BFS
 t_point					ft_bfs(t_data *data, t_bfs *bfs, t_point start,
 							t_point target);
 void					ft_init_camefrom(t_bfs *bfs);
@@ -440,22 +459,20 @@ void					ft_update_monster_path(t_data *data, t_player *monster,
 							int i);
 int						ft_monster_arrived(t_player *monster);
 void					ft_bot_move(t_data *data, int i);
-void					ft_player_win(t_player *player, t_sprite *treasure,
-							int trs_index);
-void					ft_player_stats(t_data *data);
+
+// UTILS
 int						ft_get_index(t_point p, t_bfs bfs);
-void					update(t_data *data);
-void					ft_damage(t_data *data, t_player *player,
-							t_player *monsters, int nb_monsters);
-void					ft_healing(t_player *player, t_sprite *hpack,
-							int nb_pack);
 double					get_time(double start);
+int						ft_is_target(t_point cur, t_point target);
+void					ft_neighbor_dir(int *dir_x, int *dir_y);
 
 // --- MOUVEMENTS ---
 void					move_up(t_data *data);
 void					move_down(t_data *data);
 void					move_left(t_data *data);
 void					move_right(t_data *data);
+void					handle_movements(t_data *data);
+void					handle_camera(t_data *data);
 void					close_or_open_door(t_data *data);
 void					ft_rot_left(t_data *data);
 void					ft_rot_right(t_data *data);
@@ -483,8 +500,11 @@ void					ft_red_filter(t_data *data, t_player *player,
 
 // --- RAYCASTING & RENDER ---
 
-void	ft_get_tex_coordinates(t_img *textures, t_map *map, t_ray *ray,
-		t_player player);
+void					ft_get_tex_coordinates(t_img *textures, t_map *map,
+							t_ray *ray, t_player player);
+int						ft_is_hidden(t_data *data, int cur_x, t_img *screen,
+							t_sprite_type *sprite);
+void					ft_nb_frames(t_sprite_type *sprite, int *nb_frames);
 void					ft_init_dda(t_ray *ray, t_player player);
 void					ft_perform_dda(t_data *data, t_ray *ray, char **map);
 void					ft_raycaster(t_data *data, t_ray *ray);
@@ -492,7 +512,6 @@ void					ft_render_draw(t_ray *ray, t_data *data);
 void					ft_render_fc(t_data *data, t_backgrd *flr, t_img *floor,
 							t_img *cieling);
 void					ft_render_ath(t_data *data);
-void					ft_draw_bot(t_data *data, t_player *player);
 void					ft_draw_health(t_data *data);
 void					ft_display_fps(t_data *data);
 void					ft_render_death(t_data *data, t_img over);
@@ -502,20 +521,20 @@ void					ft_render_win(t_data *data, t_img over);
 int						get_map_tile(char **grid, int h, int x, int y);
 int						get_tile_color(int a);
 void					draw_big_pixel(t_img *img, int x, int y, int color);
-int						is_edge_of_square(t_data *data, t_mini_map *map, int x, int y);
+int						is_edge_of_square(t_data *data, t_mini_map *map, int x,
+							int y);
 void					init_mini_map(t_data *data, t_mini_map *map);
 void					draw_map_img(t_data *data, t_mini_map *map,
 							t_player player);
 
 // --- SPRITES ---
 int						count_sprites(t_map *map, int type);
-void					ft_assign_sprites_textures(t_data *data, int type);
 void					init_sprites_pos(t_sprite *sprites, t_map *map,
 							int type);
 t_sprite_order			*sort_sprites(t_data *data, int count);
 int						draw_sprites(t_data *data, t_player *player);
-void	draw_single_sprite(t_data *data, t_player *player, int sprite_id,
-		int type);
+void					draw_single_sprite(t_data *data, t_player *player,
+							int sprite_id, int type);
 
 // --- DOORS ---
 t_door					*get_door(char **grid, t_door *door, int x, int y);
@@ -525,8 +544,8 @@ void					compute_sprite_transformation(t_player *player,
 							t_sprite_type *sprite);
 void					compute_sprite_bounds(t_img *screen,
 							t_sprite_type *sprite);
-void					render_sprite(t_data *data, t_img *screen, double start,
-							t_sprite_type *sprite);
+void					put_pixel_sprite(t_img *screen, t_sprite_type *sprite,
+							t_point p);
 
 // --- UTILITAIRES ---
 void					ft_display_logo(void);

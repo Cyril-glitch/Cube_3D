@@ -3,68 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   hooks_mandatory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:49:24 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/22 14:28:39 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/26 18:48:38 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
 
-void	safe_cleanup(t_data *data)
-{
-	int	i;
-
-	if (data->map.grid)
-		ft_freedtab(&data->map.grid);
-	if (data->ray)
-		free(data->ray);
-	if (data->screen.img)
-		mlx_destroy_image(data->mlx, data->screen.img);
-	if (data->mini_map.image.img)
-		mlx_destroy_image(data->mlx, data->mini_map.image.img);
-	if (data->mini_map.arrow.img)
-		mlx_destroy_image(data->mlx, data->mini_map.arrow.img);
-	i = 0;
-	while (i < 64)
-	{
-		if (data->mini_map.rotation[i].img)
-			mlx_destroy_image(data->mlx, data->mini_map.rotation[i].img);
-		i++;
-	}
-	if (data->textures)
-	{
-		i = 0;
-		while (i < 4)
-		{
-			if (data->textures[i].img)
-				mlx_destroy_image(data->mlx, data->textures[i].img);
-			i++;
-		}
-		free(data->textures);
-	}
-	if (data->mlx_win)
-		mlx_destroy_window(data->mlx, data->mlx_win);
-	if (data->mlx)
-	{
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-	}
-}
-
 int	close_handler(void *param)
 {
-	t_data *data = (t_data *)param;
+	t_data	*data;
 
+	data = (t_data *)param;
 	ft_game_exit(data, NULL);
 	return (0);
 }
 
 int	key_press(int keycode, void *param)
 {
-	t_data	*data = (t_data *)param;
+	t_data	*data;
 
+	data = (t_data *)param;
 	if (keycode == 65307)
 		close_handler(data);
 	if (keycode == XK_w)
@@ -84,8 +45,9 @@ int	key_press(int keycode, void *param)
 
 int	key_release(int keycode, void *param)
 {
-	t_data	*data = (t_data *)param;
+	t_data	*data;
 
+	data = (t_data *)param;
 	if (keycode == XK_w)
 		data->keys.w = 0;
 	if (keycode == XK_a)
@@ -94,15 +56,12 @@ int	key_release(int keycode, void *param)
 		data->keys.s = 0;
 	if (keycode == XK_d)
 		data->keys.d = 0;
-	if (keycode == XK_e)
-		close_or_open_door(data);
 	if (keycode == K_LEFT)
 		data->keys.left = 0;
 	if (keycode == K_RIGHT)
 		data->keys.right = 0;
 	return (0);
 }
-
 
 void	init_hooks(t_data *data)
 {

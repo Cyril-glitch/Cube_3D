@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   abs.c                                              :+:      :+:    :+:   */
+/*   update_monsters.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/25 12:30:22 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/06/26 16:20:46 by cycolonn         ###   ########.fr       */
+/*   Created: 2026/06/26 18:58:17 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 19:08:00 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
 
-unsigned int	ft_abs(int n)
+void	update_monsters(t_data *data)
 {
-	if (n < 0)
-		return ((unsigned int)(-n));
-	return ((unsigned int)n);
-}
+	int	i;
 
-double	ft_abs2(double n)
-{
-	if (n < 0)
-		return ((-n));
-	return (n);
+	i = 0;
+	while (i < data->m_sprites->number)
+	{
+		if (ft_monster_arrived(&data->monsters[i]))
+			ft_update_monster_path(data, &data->monsters[i], i);
+		ft_bot_move(data, i);
+		i++;
+	}
 }

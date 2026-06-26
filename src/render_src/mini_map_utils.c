@@ -6,13 +6,11 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 12:08:57 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/06/26 12:22:08 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/26 18:27:04 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
-
-
 
 int	get_tile_color(int a)
 {

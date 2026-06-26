@@ -38,25 +38,28 @@ CLEAN_UP_SRC = src/cleanup_src/game_exit.c \
 			   src/cleanup_src/free_texture.c \
 			   src/cleanup_src/memory_cleaner.c 
 
-UPDATE_SRC = src/update/hooks_mandatory.c \
-			 src/update/move.c \
-			 src/update/rotate.c \
-			 src/update/update_mandatory.c \
-			 src/update/bfs.c \
-			 src/update/bfs_utils.c \
-			 src/update/set_bfs.c \
-			 src/update/get_target_path.c \
-			 src/update/get_next_step.c \
-			 src/update/damage.c \
-			 src/update/healing.c \
-			 src/update/winning.c \
-			 src/update/bot_move.c \
-			 src/update/player_stats.c
+UPDATE_SRC = src/update_src/hooks_mandatory.c \
+			 src/update_src/move.c \
+			 src/update_src/rotate.c \
+			 src/update_src/update_mandatory.c \
+			 src/update_src/bfs.c \
+			 src/update_src/bfs_utils.c \
+			 src/update_src/set_bfs.c \
+			 src/update_src/get_target_path.c \
+			 src/update_src/get_next_step.c \
+			 src/update_src/damage.c \
+			 src/update_src/healing.c \
+			 src/update_src/winning.c \
+			 src/update_src/bot_move.c \
+			 src/update_src/update_time.c \
+			 src/update_src/update_player.c \
+			 src/update_src/player_stats.c
 
 
 
 RENDER_SRC = src/render_src/draw_single_sprite.c \
 			 src/render_src/draw_sprites.c \
+			 src/render_src/draw_sprites_utils.c \
 			 src/render_src/pixel_management_1.c \
 			 src/render_src/pixel_management_2.c \
 			 src/render_src/render_mandatory.c \
@@ -116,20 +119,25 @@ CLEAN_UP_SRC_BONUS = src/cleanup_src/game_exit.c \
 			   		 src/cleanup_src/memory_cleaner.c \
 			   		 src/cleanup_src/free_texture.c
 
-UPDATE_SRC_BONUS = src/update/hooks.c \
-			 src/update/move.c \
-			 src/update/rotate.c \
-			 src/update/update.c \
-			 src/update/bfs.c \
-			 src/update/bfs_utils.c \
-			 src/update/set_bfs.c \
-			 src/update/get_target_path.c \
-			 src/update/get_next_step.c \
-			 src/update/bot_move.c \
-			 src/update/damage.c \
-			 src/update/winning.c \
-			 src/update/healing.c \
-			 src/update/player_stats.c
+UPDATE_SRC_BONUS = src/update_src/hooks.c \
+			 src/update_src/move.c \
+			 src/update_src/rotate.c \
+			 src/update_src/update.c \
+			 src/update_src/bfs.c \
+			 src/update_src/bfs_utils.c \
+			 src/update_src/set_bfs.c \
+			 src/update_src/get_target_path.c \
+			 src/update_src/get_next_step.c \
+			 src/update_src/bot_move.c \
+			 src/update_src/doors.c \
+			 src/update_src/damage.c \
+			 src/update_src/winning.c \
+			 src/update_src/healing.c \
+			 src/update_src/update_time.c \
+			 src/update_src/update_player.c \
+			 src/update_src/update_monsters.c \
+			 src/update_src/update_doors.c \
+			 src/update_src/player_stats.c
 
 
 ENGINE_SRC_BONUS = src/engine_src/raycasting.c \
@@ -141,6 +149,7 @@ RENDER_SRC_BONUS = src/render_src/mini_map_draw.c \
 			 	   src/render_src/mini_map_utils.c \
 			 	   src/render_src/draw_single_sprite.c \
 			 	   src/render_src/draw_sprites.c \
+			 	   src/render_src/draw_sprites_utils.c \
 			       src/render_src/pixel_management_1.c \
 			       src/render_src/pixel_management_2.c \
 			       src/render_src/render.c \

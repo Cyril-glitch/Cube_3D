@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* render_background.c                                :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2026/06/26 13:09:50 by cycolonn          #+#    #+#             */
-/* Updated: 2026/06/26 13:09:58 by cycolonn         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_background.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/26 16:18:55 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 16:20:04 by cycolonn         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
@@ -20,7 +20,8 @@ static void	ft_get_fov_pos(t_data *data, t_backgrd *flr)
 	flr->fov_y_right = data->player.dir_y + data->player.plane_y;
 }
 
-static void	ft_get_cur_floor_edge(t_data *data, t_player *player, t_backgrd *flr, int y)
+static void	ft_get_cur_floor_edge(t_data *data, t_player *player,
+		t_backgrd *flr, int y)
 {
 	double	dist;
 
@@ -31,8 +32,8 @@ static void	ft_get_cur_floor_edge(t_data *data, t_player *player, t_backgrd *flr
 	flr->pos_y_right = player->pos_y + dist * flr->fov_y_right;
 }
 
-static void	ft_get_scanline_steps(t_data *data, t_backgrd *flr,
-		double *step, double *cur)
+static void	ft_get_scanline_steps(t_data *data, t_backgrd *flr, double *step,
+		double *cur)
 {
 	cur[0] = flr->pos_x_left;
 	cur[1] = flr->pos_y_left;
@@ -63,8 +64,8 @@ static void	ft_draw_scanline(t_data *data, t_backgrd *flr, t_img **t, int y)
 	}
 }
 
-void	ft_render_fc(t_data *data, t_backgrd *flr,
-		t_img *floor_t, t_img *ceil_t)
+void	ft_render_fc(t_data *data, t_backgrd *flr, t_img *floor_t,
+		t_img *ceil_t)
 {
 	int		y;
 	t_img	*tex[2];

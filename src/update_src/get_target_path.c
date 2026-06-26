@@ -1,21 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_target_path.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/26 18:29:20 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 18:30:50 by cycolonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
-
-static int ft_is_target(t_point cur, t_point target)
-{
-		return (cur.x == target.x && cur.y == target.y);
-}
-
-static void  ft_neighbor_dir(int *dir_x, int *dir_y)
-{
-	dir_x[0] = 0;
-	dir_x[1] = 0;
-	dir_x[2] = -1;
-	dir_x[3] = 1;
-	dir_y[0] = -1;
-	dir_y[1] = 1;
-	dir_y[2] = 0;
-	dir_y[3] = 0;
-}
 
 static int	ft_check_neighbor(t_data *data, t_bfs *bfs, t_point nb)
 {
@@ -30,12 +25,12 @@ static int	ft_check_neighbor(t_data *data, t_bfs *bfs, t_point nb)
 	return (1);
 }
 
-static void ft_flood(t_data *data, t_bfs *bfs ,t_point cur)
+static void	ft_flood(t_data *data, t_bfs *bfs, t_point cur)
 {
-	int     i;
+	int		i;
 	int		dir_x[4];
 	int		dir_y[4];
-	t_point neighbor;
+	t_point	neighbor;
 
 	i = 0;
 	ft_neighbor_dir(dir_x, dir_y);
@@ -43,7 +38,6 @@ static void ft_flood(t_data *data, t_bfs *bfs ,t_point cur)
 	{
 		neighbor.x = cur.x + dir_x[i];
 		neighbor.y = cur.y + dir_y[i];
-
 		if (ft_check_neighbor(data, bfs, neighbor))
 		{
 			bfs->queue[bfs->waiters] = neighbor;
@@ -54,7 +48,7 @@ static void ft_flood(t_data *data, t_bfs *bfs ,t_point cur)
 	}
 }
 
-void  ft_get_target_path(t_data *data ,t_bfs *bfs, t_point *cur)
+void	ft_get_target_path(t_data *data, t_bfs *bfs, t_point *cur)
 {
 	while (bfs->count < bfs->waiters)
 	{
@@ -66,9 +60,9 @@ void  ft_get_target_path(t_data *data ,t_bfs *bfs, t_point *cur)
 	}
 }
 
-void ft_update_monster_path(t_data *data, t_player *monster, int i)
+void	ft_update_monster_path(t_data *data, t_player *monster, int i)
 {
-    t_point target;
+	t_point	target;
 
 	if (i % 2 != 0)
 	{
@@ -83,8 +77,8 @@ void ft_update_monster_path(t_data *data, t_player *monster, int i)
 	target.x = fmax(0, fmin(target.x, data->map.width - 1));
 	target.y = fmax(0, fmin(target.y, data->map.height - 1));
 	monster->next_step = ft_bfs(data, &monster->bfs,
-							(t_point){(int)monster->pos_x, (int)monster->pos_y},
-							(t_point){(int)target.x, (int)target.y});
+			(t_point){(int)monster->pos_x, (int)monster->pos_y},
+			(t_point){(int)target.x, (int)target.y});
 }
 
 int	ft_monster_arrived(t_player *monster)
@@ -94,5 +88,6 @@ int	ft_monster_arrived(t_player *monster)
 
 	tx = monster->next_step.x + 0.5;
 	ty = monster->next_step.y + 0.5;
-	return (fabs(monster->pos_x - tx) < 0.01 && fabs(monster->pos_y - ty) < 0.01);
+	return (fabs(monster->pos_x - tx) < 0.01 && fabs(monster->pos_y
+			- ty) < 0.01);
 }

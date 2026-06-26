@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   abs.c                                              :+:      :+:    :+:   */
+/*   player_stats.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/25 12:30:22 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/06/26 16:20:46 by cycolonn         ###   ########.fr       */
+/*   Created: 2026/06/26 18:45:31 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 18:45:49 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
 
-unsigned int	ft_abs(int n)
+static void	ft_update_health(t_data *data)
 {
-	if (n < 0)
-		return ((unsigned int)(-n));
-	return ((unsigned int)n);
+	ft_healing(&data->player, data->sprites, data->p_sprites->number);
+	ft_damage(data, &data->player, data->monsters, data->m_sprites->number);
+	ft_player_win(&data->player, data->sprites, data->p_sprites->number);
 }
 
-double	ft_abs2(double n)
+void	ft_player_stats(t_data *data)
 {
-	if (n < 0)
-		return ((-n));
-	return (n);
+	ft_update_health(data);
 }

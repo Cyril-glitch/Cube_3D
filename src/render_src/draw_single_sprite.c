@@ -5,120 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/04 14:22:53 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/26 11:57:54 by cycolonn         ###   ########.fr       */
+/*   Created: 2026/06/26 18:26:08 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 18:26:50 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
 
-void	compute_sprite_transformation(t_player *player, t_sprite_type *sprite)
+static void	ft_get_sprite_tex_x(t_sprite_type *sprite, int x)
 {
 	t_sprite	*sprites;
-	int			sprite_id;
+	int			frame;
 
-	sprite_id = sprite->sprite_id;
 	sprites = sprite->sprites;
-	sprite->x = sprites[sprite_id].x - player->pos_x;
-	sprite->y = sprites[sprite_id].y - player->pos_y;
-	sprite->inv_det = 1.0 / (player->plane_x * player->dir_y - player->dir_x
-			* player->plane_y);
-	sprite->transform_x = sprite->inv_det * (player->dir_y * sprite->x
-			- player->dir_x * sprite->y);
-	sprite->transform_y = sprite->inv_det * (-player->plane_y * sprite->x
-			+ player->plane_x * sprite->y);
+	frame = sprite->current_frame;
+	sprite->tex_x = (int)(256 * (x - (-sprite->half_w + sprite->screen_x))
+			* sprites[sprite->sprite_id].textures[frame].w * sprite->inv_w)
+		/ 256;
 }
 
-void	compute_sprite_bounds(t_img *screen, t_sprite_type *sprite)
+static void	ft_draw_sprite_column(t_img *screen, t_sprite_type *sprite, int x)
 {
-	sprite->inv_transform_y = 1.0 / sprite->transform_y;
-	sprite->h = fabs(screen->h * sprite->inv_transform_y);
-	sprite->w = fabs(screen->h * sprite->inv_transform_y);
-	sprite->half_h = sprite->h / 2;
-	sprite->half_w = sprite->w / 2;
-	sprite->inv_h = 1.0 / sprite->h;
-	sprite->inv_w = 1.0 / sprite->w;
-	sprite->screen_x = (int)((screen->half_w) * (1 + sprite->transform_x
-				* sprite->inv_transform_y));
-	sprite->draw_start_y = -sprite->half_h + screen->half_h;
-	if (sprite->draw_start_y < 0)
-		sprite->draw_start_y = 0;
-	sprite->draw_end_y = sprite->half_h + screen->half_h;
-	if (sprite->draw_end_y >= screen->h)
-		sprite->draw_end_y = screen->h - 1;
-	sprite->w = fabs(screen->h * sprite->inv_transform_y);
-	sprite->draw_start_x = -sprite->half_w + sprite->screen_x;
-	if (sprite->draw_start_x < 0)
-		sprite->draw_start_x = 0;
-	sprite->draw_end_x = sprite->half_w + sprite->screen_x;
-	if (sprite->draw_end_x >= screen->w)
-		sprite->draw_end_x = screen->w - 1;
-}
+	t_point	p;
 
-void	put_pixel_sprite(t_img *screen, t_sprite_type *sprite, t_point p)
-{
-	int			d;
-	int			current_frame;
-	t_sprite	*sprites;
-	int			sprite_id;
-
-	sprite_id = sprite->sprite_id;
-	sprites = sprite->sprites;
-	current_frame = sprite->current_frame;
-	d = p.y * 256 - screen->h * 128 + sprite->h * 128;
-	sprite->tex_y = (d * sprites[sprite_id].textures[current_frame].h
-			* sprite->inv_h) / 256;
-	if (sprite->tex_x < sprites[sprite_id].textures[current_frame].w
-		&& sprite->tex_x >= 0
-		&& sprite->tex_y < sprites[sprite_id].textures[current_frame].h
-		&& sprite->tex_y >= 0)
+	p.x = x;
+	p.y = sprite->draw_start_y;
+	while (p.y < sprite->draw_end_y)
 	{
-		sprite->color = get_pixel(&sprites[sprite_id].textures[current_frame],
-				sprite->tex_x, sprite->tex_y);
-		if (sprite->color != 0x00FF00)
-			my_mlx_pixel_put(screen, p.x, p.y, sprite->color);
+		put_pixel_sprite(screen, sprite, p);
+		p.y++;
 	}
 }
 
-void	render_sprite(t_data *data, t_img *screen, double time,
+static void	render_sprite(t_data *data, t_img *screen, double time,
 		t_sprite_type *sprite)
 {
-	t_point		p;
-	t_sprite	*sprites;
-	int			current_frame;
-	int			nb_frames;
+	t_point	p;
+	int		nb_frames;
 
-	sprites = sprite->sprites;
-	if (sprite->type == SPRITE_M)
-		nb_frames = SPRITE_M_TEXT_NB;
-	else if (sprite->type == SPRITE_P)
-		nb_frames = SPRITE_P_TEXT_NB;
-	else
-		nb_frames = SPRITE_T_TEXT_NB;
+	ft_nb_frames(sprite, &nb_frames);
+	sprite->current_frame = ((int)time + sprite->sprite_id) % nb_frames;
 	p.x = sprite->draw_start_x;
 	while (p.x < sprite->draw_end_x)
 	{
-		sprite->current_frame = ((int)(time) + sprite->sprite_id * 100)
-			% nb_frames;
-		current_frame = sprite->current_frame;
-		sprite->tex_x = (int)(256 * (p.x - (-sprite->half_w + sprite->screen_x))
-				* sprites[sprite->sprite_id].textures[current_frame].w
-				* sprite->inv_w) / 256;
-		if (sprite->transform_y <= 0
-			|| sprite->transform_y >= data->ray[p.x].perp_wall_dist)
+		if (!ft_is_hidden(data, p.x, screen, sprite))
 		{
-			p.x++;
-			continue ;
-		}
-		if (sprite->transform_y > 0 && p.x > 0 && p.x < screen->w
-			&& sprite->transform_y < data->ray[p.x].perp_wall_dist)
-		{
-			p.y = sprite->draw_start_y;
-			while (p.y < sprite->draw_end_y)
-			{
-				put_pixel_sprite(screen, sprite, p);
-				p.y++;
-			}
+			ft_get_sprite_tex_x(sprite, p.x);
+			ft_draw_sprite_column(screen, sprite, p.x);
 		}
 		p.x++;
 	}

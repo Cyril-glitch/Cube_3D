@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 16:14:28 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/23 17:32:18 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/26 19:20:57 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	ft_skip_isspace(int start, char **line)
 	while (ft_isspace(**line))
 		(*line)++;
 }
-
-
 
 void	ft_assets_display(t_map *map)
 {
