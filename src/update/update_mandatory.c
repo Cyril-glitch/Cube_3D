@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   update_mandatory.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/19 16:45:04 by nmichaud          #+#    #+#             */
-/*   Updated: 2026/06/22 14:38:02 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/26 12:24:21 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cube_3d.h"
+
+int	get_map_tile(char **grid, int h, int x, int y)
+{
+	int	res;
+	int	len;
+
+	if (y < 0 || y > h)
+		return (-1);
+	len = ft_strlen(grid[y]);
+	if (x < 0 || x >= len)
+		return (-1);
+	res = grid[y][x] - '0';
+	return (res);
+}
 
 double	get_time(double start)
 {

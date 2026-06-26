@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pixel_management_1.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/26 12:34:44 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 12:34:48 by cycolonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
@@ -15,8 +27,8 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 unsigned int	get_pixel(t_img *img, int x, int y)
 {
 	char	*pixel;
-	int 	bpp;
-	
+	int		bpp;
+
 	bpp = img->bpp >> 3;
 	if (x < 0 || y < 0 || x > img->w || y > img->h)
 		return (0);

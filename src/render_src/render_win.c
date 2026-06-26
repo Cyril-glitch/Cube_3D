@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_win.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/26 12:50:01 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 12:51:05 by cycolonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
 
-static void ft_interpolate(t_data *data, t_point *tex, int x, int y)
+static void	ft_interpolate(t_data *data, t_point *tex, int x, int y)
 {
-	int tex_w;
-	int tex_h;
+	int	tex_w;
+	int	tex_h;
 
 	tex_w = data->congrats.w;
 	tex_h = data->congrats.h;
@@ -11,24 +23,24 @@ static void ft_interpolate(t_data *data, t_point *tex, int x, int y)
 	tex->y = (y * tex_h) / data->win_size.y;
 }
 
-void    ft_render_win(t_data *data, t_img congrats)
+void	ft_render_win(t_data *data, t_img congrats)
 {
-	int x;
-	int y;
-	t_point tex;
-	int color;
+	int		x;
+	int		y;
+	int		color;
+	t_point	tex;
 
 	y = 0;
-	while(y < data->win_size.y)
+	while (y < data->win_size.y)
 	{
 		x = 0;
-		while(x < data->win_size.x)
+		while (x < data->win_size.x)
 		{
 			ft_interpolate(data, &tex, x, y);
 			color = get_pixel(&congrats, tex.x, tex.y);
 			my_mlx_pixel_put(&data->screen, x, y, color);
 			x++;
 		}
-        y++;
+		y++;
 	}
 }

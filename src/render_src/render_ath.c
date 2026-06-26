@@ -1,5 +1,16 @@
-#include "../../inc/cube_3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_ath.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/26 12:35:00 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 12:35:12 by cycolonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../inc/cube_3d.h"
 
 void	ft_red_filter(t_data *data, t_player *player, unsigned int *pixel)
 {
@@ -18,7 +29,7 @@ void	ft_red_filter(t_data *data, t_player *player, unsigned int *pixel)
 		r = getr1(color);
 		g = getg1(color);
 		b = getb1(color);
-		g = (g * 3) / 4 ;
+		g = (g * 3) / 4;
 		b = (b * 3) / 4;
 		r += 20;
 		if (r > 255)
@@ -46,7 +57,7 @@ void	ft_green_filter(t_data *data, t_player *player, unsigned int *pixel)
 		r = getr1(color);
 		g = getg1(color);
 		b = getb1(color);
-		r = (g * 3) / 4 ;
+		r = (g * 3) / 4;
 		b = (b * 3) / 4;
 		g += 20;
 		if (g > 255)

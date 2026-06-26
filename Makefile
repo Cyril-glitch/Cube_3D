@@ -55,13 +55,14 @@ UPDATE_SRC = src/update/hooks_mandatory.c \
 
 
 
-RENDER_SRC = src/render_src/mini_map_draw.c \
+RENDER_SRC = src/render_src/draw_single_sprite.c \
 			 src/render_src/draw_sprites.c \
 			 src/render_src/pixel_management_1.c \
 			 src/render_src/pixel_management_2.c \
 			 src/render_src/render_mandatory.c \
 			 src/render_src/render_utils.c \
 			 src/render_src/trgb.c \
+			 src/render_src/abs.c 
 
 ENGINE_SRC = src/engine_src/raycasting.c \
 			 src/engine_src/init_dda.c	\
@@ -137,34 +138,37 @@ ENGINE_SRC_BONUS = src/engine_src/raycasting.c \
 			 	   src/engine_src/get_tex_coordinates.c
 
 RENDER_SRC_BONUS = src/render_src/mini_map_draw.c \
-			 src/render_src/draw_sprites.c \
-			 src/render_src/pixel_management_1.c \
-			 src/render_src/pixel_management_2.c \
-			 src/render_src/render.c \
-			 src/render_src/render_utils.c \
-			 src/render_src/trgb.c \
-			 src/render_src/render_background.c \
-			 src/render_src/render_ath.c \
-			 src/render_src/render_win.c \
-			 src/render_src/render_death.c \
-			 src/render_src/draw_health.c 
+			 	   src/render_src/mini_map_utils.c \
+			 	   src/render_src/draw_single_sprite.c \
+			 	   src/render_src/draw_sprites.c \
+			       src/render_src/pixel_management_1.c \
+			       src/render_src/pixel_management_2.c \
+			       src/render_src/render.c \
+			       src/render_src/render_utils.c \
+			       src/render_src/trgb.c \
+			       src/render_src/abs.c \
+			       src/render_src/render_background.c \
+			       src/render_src/render_ath.c \
+			       src/render_src/render_win.c \
+			       src/render_src/render_death.c \
+			       src/render_src/draw_health.c 
 
 PARSER_SRC_BONUS = src/parser_src/gnl_no_nl.c \
-			 src/parser_src/gnl.c \
-			 src/parser_src/parse_assets.c \
-		 	 src/parser_src/parse_color.c \
-		 	 src/parser_src/parse_color_utils.c \
-		 	 src/parser_src/parse_map.c \
-		 	 src/parser_src/parse_texture.c \
-		 	 src/parser_src/parser.c \
-		 	 src/parser_src/parser_utils.c \
-			 src/parser_src/map_checker.c \
-		 	 src/parser_src/map_checker_utils_2.c \
-		 	 src/parser_src/map_display.c \
-             src/parser_src/map_checker_utils.c \
-			 src/parser_src/extract_map.c
+			       src/parser_src/gnl.c \
+			       src/parser_src/parse_assets.c \
+		 	       src/parser_src/parse_color.c \
+		 	       src/parser_src/parse_color_utils.c \
+		 	       src/parser_src/parse_map.c \
+		 	       src/parser_src/parse_texture.c \
+		 	       src/parser_src/parser.c \
+		 	       src/parser_src/parser_utils.c \
+			       src/parser_src/map_checker.c \
+		 	       src/parser_src/map_checker_utils_2.c \
+		 	       src/parser_src/map_display.c \
+                   src/parser_src/map_checker_utils.c \
+			       src/parser_src/extract_map.c
 
-GAME_SRC_BONUS = 	 src/game_src/game.c
+GAME_SRC_BONUS = src/game_src/game.c
 
 SRC = $(MAIN_SRC) $(INIT_SRC) $(CLEAN_UP_SRC) $(PARSER_SRC) $(UPDATE_SRC) $(RENDER_SRC) $(ENGINE_SRC) $(GAME_SRC)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))

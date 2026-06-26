@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pixel_management_2.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/26 12:34:53 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/26 12:34:56 by cycolonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
 
 void	put_img(t_img *dst, t_img *src, int pos_x, int pos_y)
@@ -42,8 +54,8 @@ void	put_tr(t_img *dst, t_img *src, int pos_x, int pos_y)
 			while (pos_x + x < 0)
 				x++;
 			color = get_pixel(src, x, y);
-			if (!is_transparent_color(color)
-				&& pos_x + x < dst->w && pos_y + y < dst->h)
+			if (!is_transparent_color(color) && pos_x + x < dst->w && pos_y
+				+ y < dst->h)
 				my_mlx_pixel_put(dst, pos_x + x, pos_y + y, color);
 			x++;
 		}
@@ -68,8 +80,8 @@ void	put_tr2(t_img *dst, t_img *src, int pos_x, int pos_y)
 			while (pos_x + x < 0)
 				x++;
 			color = get_pixel(src, x, y);
-			if (!is_close_color(0x000000, color, 10)
-				&& pos_x + x < dst->w && pos_y + y < dst->h)
+			if (!is_close_color(0x000000, color, 10) && pos_x + x < dst->w
+				&& pos_y + y < dst->h)
 				my_mlx_pixel_put(dst, pos_x + x, pos_y + y, color);
 			x++;
 		}
@@ -77,15 +89,14 @@ void	put_tr2(t_img *dst, t_img *src, int pos_x, int pos_y)
 	}
 }
 
-int ft_anti_aliasing(int color)
+int	ft_anti_aliasing(int color)
 {
-	int r;
-	int g;
-	int b;
+	int	r;
+	int	g;
+	int	b;
 
 	r = (color >> 16) & 0xFF;
 	g = (color >> 8) & 0xFF;
 	b = color & 0xFF;
-
 	return ((g > 30 && g > r * 1.4 && g > b * 1.4));
 }

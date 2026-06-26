@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:35:37 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/25 12:21:41 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/26 12:17:19 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,15 @@ typedef struct s_map
 	int					height;
 }						t_map;
 
+typedef struct s_player_icon
+{
+	double	angle;
+	int		size;
+	int		index;
+	t_point	src;
+	t_point	start;
+}			t_player_icon;
+
 typedef struct s_mini_map
 {
 	t_img				image;
@@ -492,6 +501,9 @@ void					ft_render_win(t_data *data, t_img over);
 
 // --- MINIMAP ---
 int						get_map_tile(char **grid, int h, int x, int y);
+int						get_tile_color(int a);
+void					draw_big_pixel(t_img *img, int x, int y, int color);
+int						is_edge_of_square(t_data *data, t_mini_map *map, int x, int y);
 void					init_mini_map(t_data *data, t_mini_map *map);
 void					draw_map_img(t_data *data, t_mini_map *map,
 							t_player player);
@@ -503,6 +515,8 @@ void					init_sprites_pos(t_sprite *sprites, t_map *map,
 							int type);
 t_sprite_order			*sort_sprites(t_data *data, int count);
 int						draw_sprites(t_data *data, t_player *player);
+void	draw_single_sprite(t_data *data, t_player *player, int sprite_id,
+		int type);
 
 // --- DOORS ---
 t_door					*get_door(char **grid, t_door *door, int x, int y);

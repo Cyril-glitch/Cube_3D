@@ -1,5 +1,19 @@
 #include "../../inc/cube_3d.h"
 
+int	get_map_tile(char **grid, int h, int x, int y)
+{
+	int	res;
+	int	len;
+
+	if (y < 0 || y > h)
+		return (-1);
+	len = ft_strlen(grid[y]);
+	if (x < 0 || x >= len)
+		return (-1);
+	res = grid[y][x] - '0';
+	return (res);
+}
+
 double	get_time(double start)
 {
 	t_timeval	tv;
