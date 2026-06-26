@@ -1,83 +1,82 @@
+/* ************************************************************************** */
+/* */
+/* :::      ::::::::   */
+/* render_background.c                                :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2026/06/26 13:09:50 by cycolonn          #+#    #+#             */
+/* Updated: 2026/06/26 13:09:58 by cycolonn         ###   ########.fr       */
+/* */
+/* ************************************************************************** */
+
 #include "../../inc/cube_3d.h"
 
-/*static void	ft_get_tex_pos(t_backgrd *flr, t_img tex, int x,int w)
+static void	ft_get_fov_pos(t_data *data, t_backgrd *flr)
 {
-	double	weight;
-	double	cur_x;
-	double	cur_y;
-
-	weight = (double)x / (double)(w - 1);
-	cur_x = (1.0 - weight) * flr->pos_x_left + weight * flr->pos_x_right;
-	cur_y = (1.0 - weight) * flr->pos_y_left + weight * flr->pos_y_right;
-	flr->tex_x = (int)((cur_x - (int)cur_x) * tex.w) % tex.w;
-	flr->tex_y = (int)((cur_y - (int)cur_y) * tex.h) % tex.h;	
-	if (flr->tex_x < 0)
-		flr->tex_x = 0;
-	if (flr->tex_y < 0)
-		flr->tex_y = 0;
-}*/
-
-static void	ft_get_floor_edge(t_player *player, t_backgrd *flr, int y)
-{
-	double dist;
-
-	dist = flr->dist[y];
-	flr->pos_x_left = player->pos_x + dist * flr->dir_x_left;
-	flr->pos_y_left = player->pos_y + dist * flr->dir_y_left;
-	flr->pos_x_right = player->pos_x + dist * flr->dir_x_right;
-	flr->pos_y_right = player->pos_y + dist * flr->dir_y_right;
+	flr->fov_x_left = data->player.dir_x - data->player.plane_x;
+	flr->fov_y_left = data->player.dir_y - data->player.plane_y;
+	flr->fov_x_right = data->player.dir_x + data->player.plane_x;
+	flr->fov_y_right = data->player.dir_y + data->player.plane_y;
 }
 
-void	ft_render_fc(t_data *data, t_backgrd *flr, t_img *floor_tex, t_img *cieling_tex)
+static void	ft_get_cur_floor_edge(t_data *data, t_player *player, t_backgrd *flr, int y)
 {
-	int x;
-	int y;
-	int color_floor;
-	int color_ceil;
-	double cur_x;
-	double cur_y;
-	double step_x;
-	double step_y;
-	double frac_x;
-	double frac_y;
+	double	dist;
 
-	flr->dir_x_left = data->player.dir_x - data->player.plane_x;
-	flr->dir_y_left = data->player.dir_y - data->player.plane_y;
-	flr->dir_x_right = data->player.dir_x + data->player.plane_x;
-	flr->dir_y_right = data->player.dir_y + data->player.plane_y;
-	y = (data->screen.half_h) + 1;
+	dist = (data->win_size.y / 2.0) / (y - data->win_size.y / 2.0);
+	flr->pos_x_left = player->pos_x + dist * flr->fov_x_left;
+	flr->pos_y_left = player->pos_y + dist * flr->fov_y_left;
+	flr->pos_x_right = player->pos_x + dist * flr->fov_x_right;
+	flr->pos_y_right = player->pos_y + dist * flr->fov_y_right;
+}
+
+static void	ft_get_scanline_steps(t_data *data, t_backgrd *flr,
+		double *step, double *cur)
+{
+	cur[0] = flr->pos_x_left;
+	cur[1] = flr->pos_y_left;
+	step[0] = (flr->pos_x_right - flr->pos_x_left) / data->win_size.x;
+	step[1] = (flr->pos_y_right - flr->pos_y_left) / data->win_size.x;
+}
+
+static void	ft_draw_scanline(t_data *data, t_backgrd *flr, t_img **t, int y)
+{
+	double	step[2];
+	double	map_pos[2];
+	int		x;
+	int		color[2];
+
+	ft_get_scanline_steps(data, flr, step, map_pos);
+	x = 0;
+	while (x < data->win_size.x)
+	{
+		flr->tex_x = (int)((map_pos[0] - (int)map_pos[0]) * t[0]->w);
+		flr->tex_y = (int)((map_pos[1] - (int)map_pos[1]) * t[0]->h);
+		color[0] = get_pixel(t[0], flr->tex_x, flr->tex_y);
+		color[1] = get_pixel(t[1], flr->tex_x, flr->tex_y);
+		my_mlx_pixel_put(&data->screen, x, y, color[0]);
+		my_mlx_pixel_put(&data->screen, x, data->win_size.y - y - 1, color[1]);
+		map_pos[0] += step[0];
+		map_pos[1] += step[1];
+		x++;
+	}
+}
+
+void	ft_render_fc(t_data *data, t_backgrd *flr,
+		t_img *floor_t, t_img *ceil_t)
+{
+	int		y;
+	t_img	*tex[2];
+
+	tex[0] = floor_t;
+	tex[1] = ceil_t;
+	ft_get_fov_pos(data, flr);
+	y = data->screen.half_h + 1;
 	while (y < data->win_size.y)
 	{
-		ft_get_floor_edge(&data->player, flr, y);
-		cur_x = flr->pos_x_left;
-		cur_y = flr->pos_y_left;
-		step_x = (flr->pos_x_right - flr->pos_x_left)
-			/ data->win_size.x;
-		step_y = (flr->pos_y_right - flr->pos_y_left)
-			/ data->win_size.x;
-		x = 0;
-		while (x < data->win_size.x)
-		{
-			frac_x = cur_x - (int)cur_x;
-			frac_y = cur_y - (int)cur_y;
-
-			flr->tex_x = (int)(frac_x * floor_tex->w);
-			flr->tex_y = (int)(frac_y * floor_tex->h);
-
-			color_floor = get_pixel(floor_tex, flr->tex_x, flr->tex_y);
-			color_ceil = get_pixel(cieling_tex, flr->tex_x, flr->tex_y);
-
-			my_mlx_pixel_put(&data->screen, x, y, color_floor);
-			my_mlx_pixel_put(&data->screen,
-							x,
-							data->win_size.y - y - 1,
-							color_ceil);
-
-			cur_x += step_x;
-			cur_y += step_y;
-
-			x++;
-		}
+		ft_get_cur_floor_edge(data, &data->player, flr, y);
+		ft_draw_scanline(data, flr, tex, y);
 		y++;
 	}
 }

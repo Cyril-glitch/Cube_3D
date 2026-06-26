@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 14:09:01 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/23 12:12:01 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/26 15:52:50 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	init_null(t_data *data)
 	data->doors = NULL;
 	data->bgrd.floor.img = NULL;
 	data->bgrd.ceiling.img = NULL;
-	data->bgrd.dist = NULL;
 	data->over.img = NULL;
 	data->ray = NULL;
 }

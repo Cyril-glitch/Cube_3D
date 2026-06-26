@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_cleaner.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:44:17 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/22 12:49:17 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/26 15:53:08 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	ft_free_data(t_data *data)
 	free(data->m_sprites);
 	free(data->p_sprites);
 	free(data->sprites);
-	free(data->bgrd.dist);
 	ft_free_maps_settings(data);
 	ft_free_mini_map(data, &data->mini_map);
 	ft_free_mlx(data);

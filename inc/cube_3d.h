@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:35:37 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/26 12:17:19 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/26 15:05:54 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,11 +294,10 @@ typedef struct s_mini_map
 
 typedef struct s_backgrd
 {
-	double				*dist;
-	double				dir_x_left;
-	double				dir_y_left;
-	double				dir_x_right;
-	double				dir_y_right;
+	double				fov_x_left;
+	double				fov_y_left;
+	double				fov_x_right;
+	double				fov_y_right;
 	double				pos_x_left;
 	double				pos_y_left;
 	double				pos_x_right;
