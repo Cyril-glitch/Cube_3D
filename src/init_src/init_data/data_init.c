@@ -51,9 +51,9 @@ void	init_null(t_data *data)
 	init_null_mini_map(&data->mini_map);
 	data->screen.img = NULL;
 	data->textures = NULL;
-	data->t_textures = NULL;
+	data->tr_textures = NULL;
 	data->m_textures = NULL;
-	data->t_sprites = NULL;
+	data->tr_sprites = NULL;
 	data->m_sprites = NULL;
 	data->sprites = NULL;
 	data->monsters = NULL;

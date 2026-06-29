@@ -75,7 +75,7 @@ void	init_monster_textures(t_data *data)
 
 	nb_frames = SPRITE_M_TEXT_NB;
 	data->m_textures = malloc(sizeof(t_img) * nb_frames);
-	if (!data->t_textures)
+	if (!data->tr_textures)
 		ft_game_exit(data, "monster textures init");
 	ft_load_texture(data, nb_frames);
 }

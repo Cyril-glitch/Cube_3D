@@ -16,7 +16,7 @@ void	ft_error_log(char *error)
 {
 	if (!error)
 		return ;
-	ft_putstr_fd(B_L_RED "Error: ", 2);
+	ft_putstr_fd(B_L_RED "Error\n", 2);
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd("\n\n" RESET, 2);
 }
@@ -25,7 +25,7 @@ void	ft_error_file(char *file_path)
 {
 	if (!file_path)
 		return ;
-	ft_putstr_fd(B_L_RED "Error: cannot open ", 2);
+	ft_putstr_fd(B_L_RED "Error\ncannot open ", 2);
 	ft_putstr_fd(file_path, 2);
 	ft_putstr_fd("\n" RESET, 2);
 }

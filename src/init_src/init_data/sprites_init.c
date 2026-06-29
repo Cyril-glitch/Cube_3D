@@ -19,7 +19,7 @@ void	ft_init_sprites(t_data *data)
 	ft_assign_t_sprites_textures(data);
 	init_sprites_pos(data->p_sprites, &data->map, SPRITE_P);
 	init_sprites_pos(data->m_sprites, &data->map, SPRITE_M);
-	init_sprites_pos(data->t_sprites, &data->map, SPRITE_T);
+	init_sprites_pos(data->tr_sprites, &data->map, SPRITE_T);
 	init_monsters(data);
 }
 
@@ -38,8 +38,8 @@ static	void	ft_assign_sprite_tab(t_data *data)
 		j++;
 	}
 	j = 0;
-	while (j < data->t_sprites->number)
-		data->sprites[i++] = data->t_sprites[j++];
+	while (j < data->tr_sprites->number)
+		data->sprites[i++] = data->tr_sprites[j++];
 	j = 0;
 	while (j < data->m_sprites->number)
 	{
@@ -51,7 +51,7 @@ static	void	ft_assign_sprite_tab(t_data *data)
 void	ft_init_global_sprites_tab(t_data *data)
 {
 	ft_init_sprites(data);
-	data->sprites = malloc(sizeof(t_sprite) * (data->t_sprites->number
+	data->sprites = malloc(sizeof(t_sprite) * (data->tr_sprites->number
 				+ data->m_sprites->number + data->p_sprites->number));
 	if (!data->sprites)
 		ft_game_exit(data, "sprites global init");

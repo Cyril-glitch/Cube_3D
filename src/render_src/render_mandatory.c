@@ -26,12 +26,10 @@ static void	ft_ceiling_draw(t_data *data, t_ray *ray, int x)
 	}
 }
 
-static void	ft_floor_draw(t_data *data, t_ray *ray, int x)
+static void	ft_floor_draw(t_data *data, int x, int y)
 {
 	int	color;
-	int	y;
 
-	y = ray[x].draw_end;
 	while (y < data->win_size.y)
 	{
 		color = data->map.floor_color;
@@ -59,7 +57,7 @@ void	ft_wall_draw(t_ray *ray, t_data *data)
 	{
 		ft_ceiling_draw(data, ray, x);
 		y = ray[x].draw_start;
-		while (y < ray[x].draw_end)
+		while (y <= ray[x].draw_end)
 		{
 			tex_x = ray[x].tex_x;
 			tex_y = (int)ray[x].tex_pos & (data->textures[ray[x].tex_num].h
@@ -70,7 +68,7 @@ void	ft_wall_draw(t_ray *ray, t_data *data)
 			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
-		ft_floor_draw(data, ray, x);
+		ft_floor_draw(data, x, y);
 		x++;
 	}
 }

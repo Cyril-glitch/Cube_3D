@@ -24,9 +24,9 @@ static void	get_tex_number(char **grid, int h, t_ray *ray)
 		if (ray->side == 0)
 		{
 			if (ray->step_x == 1)
-				ray->tex_num = 3;
-			else
 				ray->tex_num = 2;
+			else
+				ray->tex_num = 3;
 		}
 		else if (ray->side == 1)
 		{

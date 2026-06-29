@@ -97,7 +97,7 @@ void	ft_free_data(t_data *data)
 	free(data->doors);
 	ft_free_texture(data);
 	ft_free_monsters(data);
-	free(data->t_sprites);
+	free(data->tr_sprites);
 	free(data->m_sprites);
 	free(data->p_sprites);
 	free(data->sprites);

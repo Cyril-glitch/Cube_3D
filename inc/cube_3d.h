@@ -325,10 +325,10 @@ typedef struct s_data
 	t_img				congrats;
 	t_img				*textures;
 	t_img				*m_textures;
-	t_img				*t_textures;
+	t_img				*tr_textures;
 	t_img				*p_textures;
 	t_sprite			*m_sprites;
-	t_sprite			*t_sprites;
+	t_sprite			*tr_sprites;
 	t_sprite			*p_sprites;
 	t_sprite			*sprites;
 	t_door				*doors;

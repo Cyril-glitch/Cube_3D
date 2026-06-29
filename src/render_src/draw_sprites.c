@@ -18,7 +18,7 @@ int	draw_sprites(t_data *data, t_player *player)
 	int				i;
 	int				count;
 
-	count = data->t_sprites->number + data->m_sprites->number
+	count = data->tr_sprites->number + data->m_sprites->number
 		+ data->p_sprites->number;
 	order = sort_sprites(data, count);
 	if (!order)

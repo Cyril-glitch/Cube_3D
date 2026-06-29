@@ -35,15 +35,15 @@ static void	ft_free_treasures_tex(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data->t_textures)
+	if (data->tr_textures)
 	{
 		while (i < SPRITE_T_TEXT_NB)
 		{
-			if (data->t_textures[i].img)
-				mlx_destroy_image(data->mlx, data->t_textures[i].img);
+			if (data->tr_textures[i].img)
+				mlx_destroy_image(data->mlx, data->tr_textures[i].img);
 			i++;
 		}
-		free(data->t_textures);
+		free(data->tr_textures);
 	}
 }
 

@@ -14,7 +14,7 @@
 
 int	ft_is_map_content(char c)
 {
-	return (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == SPRITE_M
+	return (c == 'N' || c == 'S' || c == 'W' || c == 'E'
 		|| c == '1' || c == '0' || c == ' ');
 }
 
