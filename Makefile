@@ -2,7 +2,7 @@ NAME = bin/cube3d
 BONUS = bin/cube3d_bonus
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O3 -g3 -Wno-incompatible-pointer-types 
+CFLAGS = -Wall -Wextra -Werror -O3 -g3
 OBJ_DIR = obj
 BIN_DIR = bin
 

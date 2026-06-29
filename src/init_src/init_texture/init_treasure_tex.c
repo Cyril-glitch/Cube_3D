@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_treasure_tex.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 15:27:40 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/23 16:03:04 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/29 17:07:55 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	ft_load_image(t_data *data, int nb_frames)
 				&data->tr_textures[i].endian);
 		if (!data->tr_textures[i].addr)
 			ft_game_exit(data, "treasure textures init");
-		treat_transparency(&data->tr_textures[i].img, 0, 10);
+		treat_transparency(&data->tr_textures[i], 0, 10);
 		i++;
 	}
 }

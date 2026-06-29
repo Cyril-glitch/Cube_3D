@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_monsters_tex.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 15:34:09 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/23 15:58:37 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/29 17:08:42 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	ft_load_texture(t_data *data, int nb_frames)
 				&data->m_textures[i].endian);
 		if (!data->m_textures[i].addr)
 			ft_game_exit(data, "monster textures init");
-		treat_transparency(&data->m_textures[i].img, 0, 10);
+		treat_transparency(&data->m_textures[i], 0, 10);
 		i++;
 	}
 }

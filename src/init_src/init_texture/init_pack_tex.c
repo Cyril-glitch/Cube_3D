@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_pack_tex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 15:30:19 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/23 15:59:19 by cyril            ###   ########.fr       */
+/*   Updated: 2026/06/29 17:08:32 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	ft_load_texture(t_data *data, int nb_frames)
 				&data->p_textures[i].endian);
 		if (!data->p_textures[i].addr)
 			ft_game_exit(data, "pack textures init");
-		treat_transparency(&data->p_textures[i].img, 0x00FF00, 10);
+		treat_transparency(&data->p_textures[i], 0x00FF00, 10);
 		i++;
 	}
 }
