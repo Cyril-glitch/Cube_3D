@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 18:28:42 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/06/26 18:29:15 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/29 16:46:09 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	ft_dpersec(t_data *data, t_hp *hp)
 	else if (hp->health)
 	{
 		hp->last_hit = get_time(data->start);
-		hp->health -= 3;
+		hp->health -= 5;
 	}
 }
 

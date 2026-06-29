@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 11:35:37 by cyril             #+#    #+#             */
-/*   Updated: 2026/06/26 19:11:50 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/29 16:39:57 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUBE_3D_H
 
 # include "../libft/inc/libft.h"
-# include "../minilibx-linux/include/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "colors.h"
 # include <X11/keysym.h>
 # include <fcntl.h>

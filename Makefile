@@ -2,7 +2,7 @@ NAME = bin/cube3d
 BONUS = bin/cube3d_bonus
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O3 -g3 -Wno-incompatible-pointer-types
+CFLAGS = -Wall -Wextra -Werror -O3 -g3 -Wno-incompatible-pointer-types 
 OBJ_DIR = obj
 BIN_DIR = bin
 
@@ -13,7 +13,7 @@ LIB = $(LIBDIR)lib/libft.a
 MLX_DIR = ./minilibx-linux
 
 # MiniLibX 
-MLX_LIB_FILE = $(MLX_DIR)/lib/libmlx.a
+MLX_LIB_FILE = $(MLX_DIR)/libmlx.a
 MLX_INC = -I$(MLX_DIR)
 MLX_FLAGS = -L/usr/lib -lXext -lX11 -lm -lz
 
@@ -205,7 +205,7 @@ $(LIB):
 	make -C $(LIBDIR)
 
 $(MLX_LIB_FILE):
-	-make -C $(MLX_DIR)
+	make -C $(MLX_DIR)
 
 .PHONY: all clean fclean re
 
@@ -227,10 +227,12 @@ gdb : all
 clean:
 	rm -rf $(OBJ_DIR)
 	make clean -C $(LIBDIR)
+	make clean -C $(MLX_DIR)
 
 fclean: clean
 	make fclean -C $(LIBDIR)
 	rm -rf $(BIN_DIR)
+	rm -f $(MLX_LIB_FILE)
 
 re: fclean all
 

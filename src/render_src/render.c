@@ -6,7 +6,7 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/26 12:51:27 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/06/26 12:57:31 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/29 16:46:41 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_render_map(t_data *data, t_mini_map *map)
 
 static int	ft_render_event(t_data *data)
 {
-	if (data->player.hp.health == 0 && !data->player.scored)
+	if (data->player.hp.health <= 0 && !data->player.scored)
 		return (ft_render_death(data, data->over), 1);
 	else if (data->player.scored == 1)
 		return (ft_render_win(data, data->congrats), 1);
