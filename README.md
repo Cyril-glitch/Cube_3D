@@ -17,7 +17,7 @@ Built entirely in **C** and strictly adhering to the 42 Norm, the engine process
 
 <br />
 
-## 🚀 2. Instructions (How to Compile and Run)
+## 🚀 2. Instructions
 To compile and launch the game engine, use the following commands:
 
 ---
