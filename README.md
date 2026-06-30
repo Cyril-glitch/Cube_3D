@@ -28,8 +28,11 @@ To compile and launch the game engine, use the following commands:
 # Cloning the repo
 git clone [https://github.com/Cyril-glitch/cub3d.git](https://github.com/Cyril-glitch/cub3d.git)
 
+# Cloning the minilibx :
+cd into the cub3d repo
+git clone git@github.com:42paris/minilibx-linux.git
+
 # Compiling the project
-cd cub3d
 make
 
 # Compiling the bonus part
