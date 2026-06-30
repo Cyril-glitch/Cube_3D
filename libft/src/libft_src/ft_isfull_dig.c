@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isfull_dig.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/30 12:34:33 by cycolonn          #+#    #+#             */
+/*   Updated: 2026/06/30 12:39:01 by cycolonn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-int ft_isfull_dig(char *s)
+int	ft_isfull_dig(char *s)
 {
-    while (*s)
-    {
-        if (!ft_isdigit(*(s++)))
-            return (0);
-    }
-    return (1);
+	while (*s)
+	{
+		if (!ft_isdigit(*(s++)))
+			return (0);
+	}
+	return (1);
 }

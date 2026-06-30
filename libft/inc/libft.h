@@ -6,15 +6,15 @@
 /*   By: cycolonn <cycolonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 15:59:48 by cycolonn          #+#    #+#             */
-/*   Updated: 2026/05/29 12:00:38 by cycolonn         ###   ########.fr       */
+/*   Updated: 2026/06/30 12:33:13 by cycolonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# include "ft_printf.h"
 # include <stdlib.h>
 # include <unistd.h>
-# include "ft_printf.h"
 
 //# include <fcntl.h>
 //# include <stdio.h>
@@ -24,8 +24,8 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-}	t_list;	
-	
+}					t_list;
+
 # define RESET "\001\033[0m\002"
 // bold blue
 # define B_BLUE "\001\033[1;34m\002"
@@ -42,7 +42,7 @@ typedef struct s_list
 // ice blue
 # define ICE_BLUE "\001\033[38;5;117m\002"
 
-//gestion de memoire
+// gestion de memoire
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
@@ -53,7 +53,7 @@ void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_memrchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 
-//fonctions booleenes
+// fonctions booleenes
 int					ft_isspace(int c);
 int					ft_isascii(int c);
 int					ft_isdigit(int c);
@@ -66,12 +66,12 @@ int					ft_ischarset(char c, char set);
 int					ft_isset(char c, const char *set);
 int					ft_isfull_dig(char *s);
 
-//allocation
+// allocation
 void				*ft_calloc(size_t nmemb, size_t size);
 void				ft_freeiter(char **tab, int i);
 void				ft_freedtab(void *t);
 
-//manipulation des chaines de caracteres
+// manipulation des chaines de caracteres
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 size_t				ft_strlen(const char *s);
@@ -96,8 +96,8 @@ int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 
-int 				ft_str_append_str(char **s1, char *s2);
-int 				ft_str_append_mem(char **s1, char *s2, size_t size2);
+int					ft_str_append_str(char **s1, char *s2);
+int					ft_str_append_mem(char **s1, char *s2, size_t size2);
 char				*ft_strtrim(char const *s1, char const *set);
 int					ft_countword(const char *s, char set);
 int					ft_set_countword(char const *s, char *set);
@@ -105,17 +105,17 @@ char				**ft_split(char const *s, char c);
 char				**ft_set_split(char const *s, char *set);
 void				ft_sort(int size, char **tab);
 
-//manipulation de chaines avec pointeur de fonctions
+// manipulation de chaines avec pointeur de fonctions
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 
-//manipulation de fichiers
+// manipulation de fichiers
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
-//affichage des bases
+// affichage des bases
 int					ft_atoi(const char *nptr);
 long				ft_atol(const char *nbr);
 long long			ft_atoll(const char *nbr);
@@ -125,7 +125,7 @@ void				ft_putnbr(int nbr);
 void				ft_putdouble(double d_n, int precision);
 void				ft_putnbr_base(int nbr, char *base);
 
-//listes
+// listes
 t_list				*ft_lstnew(void *content);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);
