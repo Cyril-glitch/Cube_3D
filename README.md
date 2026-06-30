@@ -25,16 +25,31 @@ To compile and launch the game engine, use the following commands:
 <br />
 
 ```bash
-# Clone the repo
+# Cloning the repo
 git clone [https://github.com/Cyril-glitch/cub3d.git](https://github.com/Cyril-glitch/cub3d.git)
 
-# Compile the project
+# Compiling the project
 cd cub3d
 make
 
-# Run the simulation with a valid map
-# Format: ./cub3D [path_to_map.cub]
-./cub3D /config/map.cub
+# Compiling the bonus part
+make bonus
+
+# Running the simulation with a valid map
+# Format: ./bin/cub3D [path_to_map.cub]
+./bin/cub3D /config/map.cub
+# To run with the default map (config/map.cub) :
+make it
+# To run with valgrind and the default map :
+make start
+
+# Running the bonus part :
+# Format: ./bin/cub3D_bonus [path_to_map_bonus.cub]
+./bin/cub3D_bonus /config/map_bonus.cub
+# To run with the default map (config/map.cub) :
+make itb
+# To run with valgrind and the default map :
+make startb
 ```
 
 **🎮 Controls:**
